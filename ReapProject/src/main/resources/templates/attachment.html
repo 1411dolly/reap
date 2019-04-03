@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <title>Attachment</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/sb-admin.css}"  rel="stylesheet"/>
+
+</head>
+<body>
+<form th:action="@{/uploadFile}" method="post" enctype="multipart/form-data">
+    <input type="file" style=" border: thin;" name="file" required="required"/>
+    <br/>
+    <input type="submit" value="submit"/>
+</form>
+</body>
+</html>
