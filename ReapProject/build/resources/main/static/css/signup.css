@@ -44,3 +44,8 @@ input
 #backimage{
     background-image: url("/img/ttnBackground.jpg");
 }
+.error{
+    color: red;
+    font-size: 12px;
+    margin-left: 25px;
+}

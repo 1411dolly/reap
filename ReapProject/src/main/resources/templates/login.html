@@ -24,14 +24,15 @@
         </div>
    </div>
     <div id="bottom">
-        <form th:action="@{/register}" method="post">
+        <form th:action="@{/user}" method="post"  th:object="${user}">
+                    <label th:text="${valid}" class="error"></label>
                     <div class="form-element">
                         <label>Username:<sup>*</sup></label>
-                        <input type="text" name="title" required="required" placeholder="Enter your Email"/>
+                        <input type="text" name="title" required="required" placeholder="Enter your Email" th:field="*{email}"/>
                     </div>
                     <div class="form-element">
                         <label>Password:<sup>*</sup></label>
-                        <input type="text" name="Password" required="required" placeholder="Enter your password"/>
+                        <input type="password" name="Password" required="required" placeholder="Enter your password" th:field="*{password}"/>
                     </div>
                 <hr style="color:grey;"/>
                 <a href="#" class="btn btn-link">Forgot Password</a>

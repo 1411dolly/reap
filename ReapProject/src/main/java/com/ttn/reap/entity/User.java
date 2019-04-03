@@ -1,6 +1,8 @@
 package com.ttn.reap.entity;
 
 import org.hibernate.annotations.ColumnTransformer;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,7 +12,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-//    @NotNull
+    @NotNull
+    @Email
+    @NotEmpty
+    @Column(unique = true)
     String email;
 //    @NotNull
     String firstName;
@@ -24,6 +29,20 @@ public class User {
     boolean isActive=false;
     @OneToOne
     Attachment attachment;
+
+    public User() {
+    }
+
+    public User(String email, String firstName, String lastName, String password, int points, boolean isAdmin, boolean isActive, Attachment attachment) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.points = points;
+        this.isAdmin = isAdmin;
+        this.isActive = isActive;
+        this.attachment = attachment;
+    }
 
     public Attachment getAttachment() {
         return attachment;
@@ -114,4 +133,18 @@ public class User {
         isActive = active;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", points=" + points +
+                ", isAdmin=" + isAdmin +
+                ", isActive=" + isActive +
+                ", attachment=" + attachment +
+                '}';
+    }
 }

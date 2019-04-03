@@ -33,3 +33,8 @@ sup
     float:right;
     margin-right: 15px;
 }
+.error{
+    color: red;
+    font-size: 12px;
+    margin-left: 25px;
+}
