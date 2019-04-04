@@ -13,4 +13,4 @@
     function loadbadge() {
         console.log("clicked");
         window.location.href = "badges";
-    };
+    }

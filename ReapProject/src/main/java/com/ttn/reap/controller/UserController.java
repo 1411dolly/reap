@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 
@@ -50,10 +51,10 @@ public class UserController {
         Attachment attach = new Attachment(newfileName, file.getContentType(), "resources/uploads", LocalDate.now());
         fileStorageService.insert(attach);
         user.setAttachment(attach);
-        user.setRole(Role.USER);
         try {
             userService.save(user);
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("error occured");
             model.addAttribute("err", "Only unique email allowed!!!");
             return "signup";

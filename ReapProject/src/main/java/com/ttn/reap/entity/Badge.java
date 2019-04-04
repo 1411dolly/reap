@@ -2,7 +2,6 @@ package com.ttn.reap.entity;
 
 import javax.persistence.Embeddable;
 
-@Embeddable
 public enum Badge {
     GOLD(30), SILVER(20), BRONZE(10);
     int value;

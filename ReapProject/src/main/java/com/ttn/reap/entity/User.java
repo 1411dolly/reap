@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 public class User {
@@ -20,13 +21,17 @@ public class User {
     String lastName;
     @Transient
     String name;
+
     int availPoints;
+
     int redeemedPoints;
+
     String password;
-    int points = 0;
+
+    int points;
+
     String token;
 
-    @Embedded
     @Column(name = "user_role")
     Role role;
 
@@ -37,19 +42,47 @@ public class User {
     Attachment attachment;
 
     //COSTRUCTOR
-    public User(String email, String firstName, String lastName, String password, int points, Role role, boolean isAdmin, boolean isActive, Attachment attachment) {
+    public User() {
+    }
+
+    public User(String email, String firstName, String lastName, String name, int availPoints, int redeemedPoints, String password, int points, String token, Role role, boolean isAdmin, boolean isActive, Attachment attachment) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.name = name;
+        this.availPoints = availPoints;
+        this.redeemedPoints = redeemedPoints;
         this.password = password;
         this.points = points;
+        this.token = token;
         this.role = role;
         this.isAdmin = isAdmin;
         this.isActive = isActive;
         this.attachment = attachment;
     }
 
-    public User() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAvailPoints() {
+        return availPoints;
+    }
+
+    public void setAvailPoints(int availPoints) {
+        this.availPoints = availPoints;
+    }
+
+    public int getRedeemedPoints() {
+        return redeemedPoints;
+    }
+
+    public void setRedeemedPoints(int redeemedPoints) {
+        this.redeemedPoints = redeemedPoints;
     }
 
     //GETTER SETTERS
@@ -140,31 +173,8 @@ public class User {
     public void setAttachment(Attachment attachment) {
         this.attachment = attachment;
     }
+    //
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAvailPoints() {
-        return availPoints;
-    }
-
-    public void setAvailPoints(int availPoints) {
-        this.availPoints = availPoints;
-    }
-
-    public int getRedeemedPoints() {
-        return redeemedPoints;
-    }
-
-    public void setRedeemedPoints(int redeemedPoints) {
-        this.redeemedPoints = redeemedPoints;
-    }
-    //ToString
 
     @Override
     public String toString() {
@@ -173,8 +183,12 @@ public class User {
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", name='" + name + '\'' +
+                ", availPoints=" + availPoints +
+                ", redeemedPoints=" + redeemedPoints +
                 ", password='" + password + '\'' +
                 ", points=" + points +
+                ", token='" + token + '\'' +
                 ", role=" + role +
                 ", isAdmin=" + isAdmin +
                 ", isActive=" + isActive +
