@@ -90,7 +90,7 @@ public class UserController {
         {
             int id= (int) httpSession.getAttribute("userId");
             System.out.println("id::"+id);
-            return "ReapHomePage";
+            return "dashboard";
         }
         return "invalid";
     }
@@ -108,7 +108,7 @@ public class UserController {
         else {
             session.setAttribute("userId",checkuser.getId());
             model.addAttribute("user",checkuser);
-            return "ReapHomePage";}
+            return "dashboard";}
     }
 
 
@@ -121,7 +121,7 @@ public class UserController {
 
     @GetMapping("dashboard")
     String dashboard()
-    {return "ReapHomePage";}
+    {return "dashboard";}
 
     @GetMapping("badges")
     String badges()

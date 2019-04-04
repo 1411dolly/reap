@@ -1,0 +1,332 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.nopadding
+{
+    margin: 0;!important;
+    padding: 0;!important;
+}
+.bottom{
+    display: inline-block;
+    float: left;
+    margin-top: 15px;
+}
+#reap{
+    padding: 0 15px 0 15px;
+}
+#reapfull{
+    height: 35px;
+}
+.reapimg{
+    width: 100%;
+}
+
+#dashboard {
+    background-color: #d9177f;
+    font-size: 15px;
+    border: #d9177f;
+    border-radius: 5px;
+    color: white;
+    padding: 7px;
+}
+#back{
+    margin-left: 20px;
+}
+.newers {
+    cursor: pointer;
+    background-color: inherit;
+    border-color: transparent;
+    font-size: 15px;
+    padding: 5px;
+    /*margin-left: 15px;*/
+}
+
+.newers:hover {
+    background-color: #d9177f;
+    border-radius: 5px;
+    color: white;
+}
+
+.pic {
+    margin-right: 8px;
+}
+
+#picchange {
+    height: 20px;
+    width: 20px;
+}
+
+#badges {
+    padding-right: 30px;
+}
+
+#certificates {
+}
+
+#bell {
+    background-color: inherit;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    padding: 5px;
+}
+
+#bell:hover {
+    background-color: lightgray;
+}
+
+#bellimg {
+    margin-right: auto;
+    display: block;
+    margin-left: auto;
+}
+
+.profileimg {
+    width: inherit;
+    height: inherit;
+    border-radius: 5px;
+}
+
+.profile {
+    height: 45px;
+    width: 45px;
+    cursor: pointer;
+    word-wrap: break-word;
+}
+.lower{
+    /*margin-top: 80px;*/
+    background-color: #F0F3F5;
+    padding-top: 105px;
+
+}
+#section1 {
+    /*margin: 0px 5px 20px 1px;*/
+    width: 100%;
+}
+.lefthead {
+    background-color: #205182;
+    border-radius: 5px 5px 0 0;
+    color: white;
+    padding: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    width: 100%;
+}
+.leftbottom {
+    background-color: white;
+    width: 100%;
+
+}
+#search{
+    /*padding: 10px 0 0 25px;*/
+    margin-top:15px;
+    margin-bottom: 5px;
+}
+
+#newersearch {
+    border: lightgray 1px solid;
+    padding: 8px;
+    border-radius: 5px 0 0 5px;
+    float: left;
+    margin-top: 2px;
+}
+
+#searchbox{
+    width: auto;
+    padding-right: 130px;
+    display: inline-block;
+    border-left: 0;
+    float: left;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+    border: 1px solid lightgray;
+    padding: 5px;
+    padding-right: 15px;
+    border-radius: 5px;
+    padding-left: 15px;
+    margin-left: 20px;
+    color: #495057;
+}
+.icon{
+    margin-left: 5px;
+}
+.dropdown .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin: 0;
+}
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+.badgepic{
+    margin-right: 10px;
+    margin-left: 5px;
+}
+.weight{
+    margin-left: 10px;
+    font-style: italic;
+    color: lightgray;
+    float: right;
+    margin-right: 10px;
+}
+#selectBadge{
+    float: left;
+    display: inline-block;
+    margin-left: 20px;
+}
+#core{
+    display: inline-block;
+    width: 250px;
+    margin-left: 40px;
+}
+#reason{
+    font-weight: bold;
+    color: #495057;
+    margin: 5px;
+    font-size: 15px;
+}
+#karmaArea{
+    border-radius: 5px;
+    margin-top: 5px;
+    width: 100%;
+    color: gray;
+    height: 150px;
+}
+.fit{
+    margin-right:0;
+    margin-left:0;
+}
+#lowerleftbottom
+{
+    margin-right: 15px;
+    margin-left: 15px;
+}
+#recognise{
+    float: right;
+    background-color: #535573;
+    font-size: 15px;
+    border: #535573;
+    border-radius: 5px;
+    color: white;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+}
+
+.dropdown:hover {
+
+}
+.back{background-color: white;}
+.leftheadbottom
+{
+    background-color: #205182;
+    border-radius: 5px 5px 0 0;
+    color: white;
+    padding: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 40px;
+
+}
+.wall_of_fame{
+    margin-bottom: 100px;
+}
+.headimg{
+    margin-right: 8px;
+    margin-left: 10px;
+}
+#searchbox1
+{
+    width: 100px;
+    display: inline-block;
+    margin-left:200px;
+}
+.businessUnit
+{
+    border-radius: 5px;
+    background-color: white;
+    padding: 10px;
+}
+.leftdown{
+    background-color: white;
+    width: 100%;
+}
+.record{
+    margin: 10px 0 10px 0;
+}
+hr {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:lightgray;
+    opcaity: 0.5;
+}
+.mybadges{
+    background-color: white;
+    width: 100%;
+}
+.mybadgesimg
+{
+    margin: 20px;
+    float: left;
+}
+.mybadgesUsername
+{
+    font-weight: bold;
+    margin-top: 10px;
+}
+.panel
+{
+    position: fixed;
+}
+.mybadgealign{
+    margin-top: 150px;
+    width:280px;
+}
+.star{
+    float: left;
+}
+.points{
+    display: block;
+}
+.mybadgestar{
+    margin-left: 40px;
+}
+.calender
+{color: white;
+float: right;}
+.view{
+    background-color: white;
+    /*float: right;*/
+    display: inline;
+    width: 100%;
+    text-align: right;
+    cursor: pointer;
+    color: #337ab7;
+}
+.view:hover{
+    color: #d9177f;
+}
+.sticky {
+    position: fixed;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    -ms-transform: rotate(90deg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Safari 3-8 */
+    transform: rotate(90deg);
+    left: 95%;
+}
+.sticky_button{
+    background-color: #d9177f;
+    color: white;
+    border: white 1px solid;
+    padding: 2px;
+    border-radius: 5px;
+}
