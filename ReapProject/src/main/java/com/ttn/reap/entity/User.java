@@ -1,11 +1,11 @@
 package com.ttn.reap.entity;
 
-import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 public class User {
@@ -21,45 +21,35 @@ public class User {
     String firstName;
 //    @NotNull
     String lastName;
+
 //    @NotNull
     String password;
     int points=0;
-//    Role role;
+
+    @Embedded
+    @Column(name = "user_role")
+    List<Role> role;
     boolean isAdmin=false;
     boolean isActive=false;
     @OneToOne
     Attachment attachment;
+//COSTRUCTOR
 
-    public User() {
-    }
-
-    public User(String email, String firstName, String lastName, String password, int points, boolean isAdmin, boolean isActive, Attachment attachment) {
+    public User(String email, String firstName, String lastName, String password, int points, List<Role> role, boolean isAdmin, boolean isActive, Attachment attachment) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.points = points;
+        this.role = role;
         this.isAdmin = isAdmin;
         this.isActive = isActive;
         this.attachment = attachment;
     }
 
-    public Attachment getAttachment() {
-        return attachment;
+    public User() {
     }
-
-    public void setAttachment(Attachment attachment) {
-        this.attachment = attachment;
-    }
-    //    String photo;
-//
-//    public String getPhoto() {
-//        return photo;
-//    }
-//
-//    public void setPhoto(String photo) {
-//        this.photo = photo;
-//    }
+//GETTER SETTERS
 
     public int getId() {
         return id;
@@ -109,13 +99,13 @@ public class User {
         this.points = points;
     }
 
-//    public Role getRole() {
-//        return role;
-//    }
+    public List<Role> getRole() {
+        return role;
+    }
 
-//    public void setRole(Role role) {
-//        this.role = role;
-//    }
+    public void setRole(List<Role> role) {
+        this.role = role;
+    }
 
     public boolean isAdmin() {
         return isAdmin;
@@ -133,6 +123,15 @@ public class User {
         isActive = active;
     }
 
+    public Attachment getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(Attachment attachment) {
+        this.attachment = attachment;
+    }
+    //
+
     @Override
     public String toString() {
         return "User{" +
@@ -142,6 +141,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", password='" + password + '\'' +
                 ", points=" + points +
+                ", role=" + role +
                 ", isAdmin=" + isAdmin +
                 ", isActive=" + isActive +
                 ", attachment=" + attachment +

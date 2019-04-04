@@ -93,6 +93,7 @@
     height: 45px;
     width: 45px;
     cursor: pointer;
+    word-wrap: break-word;
 }
 .lower{
     /*margin-top: 80px;*/

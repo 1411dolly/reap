@@ -10,3 +10,7 @@
     $("#certificates").mouseout(function() {
             $( '#picchange' ).attr("src","../img/certificate.png");
         });
+    function loadbadge() {
+        console.log("clicked");
+        window.location.href = "badges";
+    };

@@ -1,5 +1,30 @@
 package com.ttn.reap.entity;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public enum Badge {
-    GOLD,SILVER,BRONZE;
+    GOLD(30),SILVER(20),BRONZE(10);
+    int value;
+
+    Badge() {
+    }
+
+    Badge(int value) {
+        this.value = value;
+    }
+
+    public int getValue()
+    {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return "Badge{" +
+                "value=" + value +
+                '}';
+    }
+
 }
+

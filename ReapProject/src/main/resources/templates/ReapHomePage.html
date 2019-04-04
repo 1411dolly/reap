@@ -5,7 +5,6 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
-<!--    <link rel="stylesheet" type="text/css" href="../css-pages/ReapHomePage.css"/>-->
     <link rel="stylesheet" th:href="@{/css/ReapHomePage.css}"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -33,8 +32,8 @@
                     <div class="col-sm-7 nopadding">
                         <div class="col-sm-3 bottom nopadding"><button class=" newers " id="back">Back to Newers World</button></div>
                         <div class="col-sm-2 bottom nopadding"><button class="" id="dashboard"><img class="pic" src="../img/dashboard.png"/>Dashboard</button></div>
-                        <div class="col-sm-2 bottom nopadding"><button class="newers" id="badges"><img class="pic" id="changepic" src="../img/badge.png"/>Badges</button></div>
-                        <div class="col-sm-2 bottom nopadding"><button class="newers " id="certificates"><img class="pic" id="picchange" src="../img/certificate.png"/>Certificates</button></div>
+                        <div class="col-sm-2 bottom nopadding"><button class="newers" id="badges" onclick="loadbadge()"><img class="pic" id="changepic" src="../img/badge.png"/>Badges</button></div>
+                        <div class="col-sm-2 bottom nopadding"><button class="newers " id="certificates" onclick="document.location.href='Badges.html';"><img class="pic" id="picchange" src="../img/certificate.png"/>Certificates</button></div>
                         <div class="col-sm-1 bottom nopadding"><div class="newers" id="bell"><img id="bellimg" src="../img/bell.png"/></div></div>
                         <div class="col-sm-2 bottom nopadding"><div class="profile"><img class="profileimg" src="../img/dummy.jpeg"/></div></div>
                     </div>
@@ -183,14 +182,14 @@
 
 
             <!--MY BADGES SECTION3-->
-            <section class="row fit panel">
+            <section class="row fit panel" >
                     <!--MY BADGE HEADER-->
                     <div class="lefthead " ><img src="../img/badgewhite.png" class="newer headimg"/>MY BADGES</div>
-                    <div class="mybadges">
+                    <div class="mybadges" th:object="${user}">
                         <!--MY BADGE PROFILE PIC-->
                         <div class="profile mybadgesimg"><img class="profileimg" src="../img/dummy.jpeg"/></div>
                         <!--MY BADGE USERNAME-->
-                        <div class="mybadgesUsername">Dolly .</div>
+                        <div class="mybadgesUsername" th:text="*{firstName}">username</div>
                         <div>
                             <!--GOLD BADGE-->
                              <span class="star">
@@ -309,7 +308,7 @@
 
 </div>
 
-<script type="text/javascript" src="../javascripts/ReapHomePage.js"></script>
+<script type="text/javascript" src="../js/ReapHomePage.js"></script>
 
 
 </body>
