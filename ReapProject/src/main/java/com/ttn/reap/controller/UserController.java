@@ -3,14 +3,17 @@ package com.ttn.reap.controller;
 import com.ttn.reap.entity.Attachment;
 import com.ttn.reap.entity.Role;
 import com.ttn.reap.entity.User;
+import com.ttn.reap.service.EmailService;
 import com.ttn.reap.service.FileStorageService;
 import com.ttn.reap.service.UserService;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpRequest;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,17 +26,23 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.Map;
+import java.util.UUID;
 
 @Controller
 public class UserController {
-
-    private static final Logger logger = LoggerFactory.getLogger(AttachmentController.class);
-
+    
     @Autowired
     private FileStorageService fileStorageService;
 
     @Autowired
     UserService userService;
+    
+    @Autowired
+    private EmailService emailService;
+    
+    @Value("${spring.mail.username}")
+    String fromMail;
 
     @GetMapping("signup")
     ModelAndView register()
@@ -117,6 +126,44 @@ public class UserController {
     @GetMapping("badges")
     String badges()
     {return  "Badges";
+    }
+    
+    @GetMapping("forgotPassword")
+    public String forgotPassword() {
+        return "forgotPassword";
+    }
+    
+    @GetMapping("forgotSubmit")
+    public String forgotSubmit(@RequestParam String email, HttpServletRequest request) {
+        User user = userService.findUserByEmail(email);
+        user.setToken(UUID.randomUUID().toString());
+        userService.save(user);
+        
+        String appUrl = request.getScheme() + "://" + request.getServerName();
+        
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom(fromMail);
+        mailMessage.setTo(user.getEmail());
+        mailMessage.setSubject("Forgot Password Link");
+        mailMessage.setText("To reset your password, click the link below: \n" + appUrl + ":8080/reset?token=" + user.getToken());
+        emailService.sendEmail(mailMessage);
+        return "signup";
+    }
+    
+    @GetMapping("/reset")
+    public String resetPassByToken(@RequestParam("token") String token,Model model) {
+        model.addAttribute("token",token);
+        return "resetPassword";
+    }
+    
+    @PostMapping("resetPassword")
+    public String resetPassword(@RequestParam Map<String, String> requestParamas){
+        System.out.println(requestParamas.get("token"));
+        User user = userService.findUserByToken(requestParamas.get("token"));
+        user.setPassword(requestParamas.get("password"));
+        user.setToken(null);
+        userService.save(user);
+        return "signup";
     }
 }
 

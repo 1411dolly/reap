@@ -17,15 +17,21 @@ public class User {
     @NotEmpty
     @Column(unique = true)
     String email;
-//    @NotNull
     String firstName;
-//    @NotNull
     String lastName;
 
-//    @NotNull
     String password;
     int points=0;
-
+    String token;
+    
+    public String getToken() {
+        return token;
+    }
+    
+    public void setToken(String token) {
+        this.token = token;
+    }
+    
     @Embedded
     @Column(name = "user_role")
     List<Role> role;

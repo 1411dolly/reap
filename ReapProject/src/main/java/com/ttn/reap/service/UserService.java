@@ -26,4 +26,11 @@ public class UserService {
     {
         return userRepository.findByEmailAndPassword(email,password);
     }
+    
+    public User findUserByEmail(String email){
+        return userRepository.findUserByEmail(email).orElse(null);
+    }
+    public User findUserByToken(String token){
+        return userRepository.findUserByToken(token).orElse(null);
+    }
 }
