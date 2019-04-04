@@ -4,7 +4,7 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public enum Badge {
-    GOLD(30),SILVER(20),BRONZE(10);
+    GOLD(30), SILVER(20), BRONZE(10);
     int value;
 
     Badge() {
@@ -14,8 +14,7 @@ public enum Badge {
         this.value = value;
     }
 
-    public int getValue()
-    {
+    public int getValue() {
         return value;
     }
 

@@ -2,15 +2,16 @@ package com.ttn.reap.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+
 @Entity
 public class BadgeTransaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-    @OneToOne
+    long id;
+    @ManyToOne
     @JoinColumn(name = "sender_id")
     User sender;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "reciever_id")
     User reciever;
     Date date;
@@ -18,11 +19,11 @@ public class BadgeTransaction {
     @Embedded
     Badge badge;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

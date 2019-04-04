@@ -5,13 +5,12 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    long id;
     @NotNull
     @Email
     @NotEmpty
@@ -19,29 +18,26 @@ public class User {
     String email;
     String firstName;
     String lastName;
-
+    @Transient
+    String name;
+    int availPoints;
+    int redeemedPoints;
     String password;
-    int points=0;
+    int points = 0;
     String token;
-    
-    public String getToken() {
-        return token;
-    }
-    
-    public void setToken(String token) {
-        this.token = token;
-    }
-    
+
     @Embedded
     @Column(name = "user_role")
-    List<Role> role;
-    boolean isAdmin=false;
-    boolean isActive=false;
+    Role role;
+
+    boolean isAdmin = false;
+
+    boolean isActive = false;
     @OneToOne
     Attachment attachment;
-//COSTRUCTOR
 
-    public User(String email, String firstName, String lastName, String password, int points, List<Role> role, boolean isAdmin, boolean isActive, Attachment attachment) {
+    //COSTRUCTOR
+    public User(String email, String firstName, String lastName, String password, int points, Role role, boolean isAdmin, boolean isActive, Attachment attachment) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -55,13 +51,21 @@ public class User {
 
     public User() {
     }
-//GETTER SETTERS
 
-    public int getId() {
+    //GETTER SETTERS
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -105,11 +109,11 @@ public class User {
         this.points = points;
     }
 
-    public List<Role> getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(List<Role> role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -136,7 +140,31 @@ public class User {
     public void setAttachment(Attachment attachment) {
         this.attachment = attachment;
     }
-    //
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAvailPoints() {
+        return availPoints;
+    }
+
+    public void setAvailPoints(int availPoints) {
+        this.availPoints = availPoints;
+    }
+
+    public int getRedeemedPoints() {
+        return redeemedPoints;
+    }
+
+    public void setRedeemedPoints(int redeemedPoints) {
+        this.redeemedPoints = redeemedPoints;
+    }
+    //ToString
 
     @Override
     public String toString() {

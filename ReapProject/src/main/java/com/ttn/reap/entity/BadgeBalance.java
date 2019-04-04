@@ -3,10 +3,10 @@ package com.ttn.reap.entity;
 import javax.persistence.*;
 
 @Entity
-public class BadgeSender {
+public class BadgeBalance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    long id;
     @OneToOne
     User userId;
     int goldCount;
@@ -24,11 +24,11 @@ public class BadgeSender {
                 '}';
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
