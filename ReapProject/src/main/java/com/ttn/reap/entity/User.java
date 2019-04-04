@@ -11,7 +11,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    long id;
     @NotNull
     @Email
     @NotEmpty
@@ -19,49 +19,86 @@ public class User {
     String email;
     String firstName;
     String lastName;
+    @Transient
+    String name;
+
+    int availPoints;
+
+    int redeemedPoints;
 
     String password;
-    int points=0;
+
+    int points;
+
     String token;
-    
-    public String getToken() {
-        return token;
-    }
-    
-    public void setToken(String token) {
-        this.token = token;
-    }
-    
-    @Embedded
+
     @Column(name = "user_role")
-    List<Role> role;
-    boolean isAdmin=false;
-    boolean isActive=false;
+    Role role;
+
+    boolean isAdmin = false;
+
+    boolean isActive = false;
     @OneToOne
     Attachment attachment;
-//COSTRUCTOR
 
-    public User(String email, String firstName, String lastName, String password, int points, List<Role> role, boolean isAdmin, boolean isActive, Attachment attachment) {
+    //COSTRUCTOR
+    public User() {
+    }
+
+    public User(String email, String firstName, String lastName, String name, int availPoints, int redeemedPoints, String password, int points, String token, Role role, boolean isAdmin, boolean isActive, Attachment attachment) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.name = name;
+        this.availPoints = availPoints;
+        this.redeemedPoints = redeemedPoints;
         this.password = password;
         this.points = points;
+        this.token = token;
         this.role = role;
         this.isAdmin = isAdmin;
         this.isActive = isActive;
         this.attachment = attachment;
     }
 
-    public User() {
+    public String getName() {
+        return name;
     }
-//GETTER SETTERS
 
-    public int getId() {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAvailPoints() {
+        return availPoints;
+    }
+
+    public void setAvailPoints(int availPoints) {
+        this.availPoints = availPoints;
+    }
+
+    public int getRedeemedPoints() {
+        return redeemedPoints;
+    }
+
+    public void setRedeemedPoints(int redeemedPoints) {
+        this.redeemedPoints = redeemedPoints;
+    }
+
+    //GETTER SETTERS
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -105,11 +142,11 @@ public class User {
         this.points = points;
     }
 
-    public List<Role> getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(List<Role> role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -138,6 +175,7 @@ public class User {
     }
     //
 
+
     @Override
     public String toString() {
         return "User{" +
@@ -145,8 +183,12 @@ public class User {
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", name='" + name + '\'' +
+                ", availPoints=" + availPoints +
+                ", redeemedPoints=" + redeemedPoints +
                 ", password='" + password + '\'' +
                 ", points=" + points +
+                ", token='" + token + '\'' +
                 ", role=" + role +
                 ", isAdmin=" + isAdmin +
                 ", isActive=" + isActive +

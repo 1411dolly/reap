@@ -1,5 +1,6 @@
 package com.ttn.reap.service;
 
+import com.ttn.reap.entity.Role;
 import com.ttn.reap.entity.User;
 import com.ttn.reap.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,20 @@ public class UserService {
 
     public void save(User user)
     {
+        user.setRole(Role.USER);
+        userRepository.save(user);
+        System.out.println(user);
+        System.out.println("user registeration successful!!!");
+    }
+
+    public void saveNewUser(User user)
+    {
+        user.setRole(Role.USER);
+        user.setAvailPoints(0);
+        user.setPoints(0);
+        user.setRedeemedPoints(0);
+        user.setToken(null);
+
         userRepository.save(user);
         System.out.println(user);
         System.out.println("user registeration successful!!!");
