@@ -122,7 +122,7 @@ public class UserController {
     }
 
     @GetMapping("forgotSubmit")
-    public String forgotSubmit(@RequestParam String email, HttpServletRequest request) {
+    public String forgotSubmit(@RequestParam String email, HttpServletRequest request,Model model) {
         User user = userService.findUserByEmail(email);
         user.setToken(UUID.randomUUID().toString());
         userService.save(user);
@@ -135,12 +135,14 @@ public class UserController {
         mailMessage.setSubject("Forgot Password Link");
         mailMessage.setText("To reset your password, click the link below: \n" + appUrl + ":8080/reset?token=" + user.getToken());
         emailService.sendEmail(mailMessage);
+        model.addAttribute(new User());
         return "signup";
     }
 
     @GetMapping("/reset")
     public String resetPassByToken(@RequestParam("token") String token, Model model) {
         model.addAttribute("token", token);
+        model.addAttribute("user",new User());
         return "resetPassword";
     }
 
