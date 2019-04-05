@@ -36,6 +36,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-web')
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+    compile group: 'org.apache.commons', name: 'commons-csv', version: '1.4'
     runtime('mysql:mysql-connector-java')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 //    compile ('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
