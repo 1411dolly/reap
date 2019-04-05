@@ -42,7 +42,6 @@ public class FileStorageService {
 
     public String storeFile(MultipartFile file) {
         // Normalize file name
-//        String fileName = file.getOriginalFilename()+LocalDate.now();
         String fileName = file.getOriginalFilename();
 
         try {

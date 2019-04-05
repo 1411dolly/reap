@@ -61,6 +61,7 @@ public class UserController {
         fileStorageService.insert(attach);
         user.setAttachment(attach);
         try {
+            System.out.println(user);
             userService.save(user);
             badgeBalanceService.setBadgeCount(user);
 
@@ -68,7 +69,6 @@ public class UserController {
 //            eroor page lagao
             //check id doesnt exist or duplicate id .......this is kaam chalau code
             model.addAttribute("err", "Only unique email allowed!!!");
-            throw new UserNotFoundException("user of this id doesnt exist !!!!!!!");
         }
         System.out.println(user);
         return "login";

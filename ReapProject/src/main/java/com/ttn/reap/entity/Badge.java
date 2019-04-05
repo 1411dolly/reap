@@ -19,9 +19,7 @@ public enum Badge {
 
     @Override
     public String toString() {
-        return "Badge{" +
-                "value=" + value +
-                '}';
+        return this.name();
     }
 
 }

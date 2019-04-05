@@ -1,5 +1,6 @@
 package com.ttn.reap.service;
 
+import com.ttn.reap.encryption.PasswordHelper;
 import com.ttn.reap.entity.Role;
 import com.ttn.reap.entity.User;
 import com.ttn.reap.repository.UserRepository;
@@ -17,6 +18,7 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
     BadgeBalanceService badgeBalanceService;
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -29,7 +31,7 @@ public class UserService {
 
     public User checkemailandpassword(String email,String password)
     {
-        return userRepository.findByEmailAndPassword(email,password);
+        return userRepository.findByEmailAndPassword(email, password);
     }
     
     public User findUserByEmail(String email){
