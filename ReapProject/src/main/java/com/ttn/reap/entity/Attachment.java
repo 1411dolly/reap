@@ -11,7 +11,7 @@ public class Attachment {
 
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column
     private String file_path;
@@ -29,6 +29,8 @@ public class Attachment {
         this.fileName = fileName;
         this.fileType = fileType;
     }
+
+
 
     public Attachment(String fileName, String fileType,String file_path, Date upload_date) {
         this.file_path = file_path;
@@ -53,5 +55,38 @@ public class Attachment {
         this.fileName = fileName;
     }
 
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getFile_path() {
+        return file_path;
+    }
+
+    public void setFile_path(String file_path) {
+        this.file_path = file_path;
+    }
+
+    public Date getUpload_date() {
+        return upload_date;
+    }
+
+    public void setUpload_date(Date upload_date) {
+        this.upload_date = upload_date;
+    }
+
+    @Override
+    public String toString() {
+        return "Attachment{" +
+                "id=" + id +
+                ", file_path='" + file_path + '\'' +
+                ", upload_date=" + upload_date +
+                ", fileName='" + fileName + '\'' +
+                ", fileType='" + fileType + '\'' +
+                '}';
+    }
 }

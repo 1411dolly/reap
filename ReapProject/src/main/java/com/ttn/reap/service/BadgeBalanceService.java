@@ -14,9 +14,10 @@ public class BadgeBalanceService {
     BadgeBalanceRepository badgeBalanceRepository;
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public void setBadgeCount(User user) {
+    public BadgeBalance setBadgeCount(User user) {
         BadgeBalance badgeBalance=new BadgeBalance(user,3,2,1);
         badgeBalanceRepository.save(badgeBalance);
+        return badgeBalance;
     }
 
 }

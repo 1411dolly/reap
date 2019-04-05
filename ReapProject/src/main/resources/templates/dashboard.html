@@ -51,7 +51,7 @@
                 <img alt="notification-bell" id="nav-list-fifth" src="/img/notification-bell.png"/>
             </li>
             <li class="col-md-2 nav-list-pad">
-                <img alt='User Image' class='user-image' src='/img/profile-pic.png'/>
+                <img alt='User Image' class='user-image' th:src="@{${userpic}}"/>
             </li>
         </ul>
     </div>
@@ -160,11 +160,11 @@
             </div>
             <div class="panel-body" th:object="${user}">
                 <div class="col-md-3">
-                    <img alt='User Image' class='user-image' src='/img/profile-pic.png'/>
+                    <img alt='User Image' class='user-image' th:src="@{${userpic}}"/>
                 </div>
                 <div class="col-md-9">
                     <div>
-                        <label style="padding-left: 20px" th:text="*{firstName}">Amarjeet Malik{ }</label>
+                        <label style="padding-left: 20px" th:text="*{name}">Amarjeet Malik{ }</label>
                     </div>
                     <div>
                         <div class="col-md-4">

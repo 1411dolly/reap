@@ -22,10 +22,10 @@ public class Bootstrap {
     @EventListener(ContextRefreshedEvent.class)
     void setup() {
         //populating user
-        Attachment attachment1=new Attachment("z.jpg2019-04-05","image/jpeg","resources/uploads", new Date());
-        Attachment attachment2=new Attachment("z.jpg2019-04-05","image/jpeg","resources/uploads", new Date());
-        Attachment attachment3=new Attachment("z.jpg2019-04-05","image/jpeg","resources/uploads", new Date());
-        Attachment attachment4=new Attachment("z.jpg2019-04-05","image/jpeg","resources/uploads", new Date());
+        Attachment attachment1=new Attachment("z.jpg","image/jpeg","resources/static/upload", new Date());
+        Attachment attachment2=new Attachment("z.jpg","image/jpeg","resources/static/upload", new Date());
+        Attachment attachment3=new Attachment("z.jpg","image/jpeg","resources/uploads", new Date());
+        Attachment attachment4=new Attachment("z.jpg","image/jpeg","resources/uploads", new Date());
         User user1=new User("1411dolly@gmail.com","dolly","singh","Dolly Singh",0,0,"12345",0,null, Role.USER,false,true,attachment1);
         User user2=new User("amarjeet@gmail.com","amarjeet","malik","Amarjeet Malik",0,0,"12345",0,null, Role.USER,false,true,attachment2);
         User user3=new User("aditya@gmail.com","aditya","singh","Aditya Singh",0,0,"12345",0,null, Role.USER,false,true,attachment3);

@@ -62,7 +62,7 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return firstName+" "+lastName;
     }
 
     public void setName(String name) {

@@ -1,14 +1,8 @@
 package com.ttn.reap.controller;
 
-import com.ttn.reap.entity.Attachment;
-import com.ttn.reap.entity.BadgeBalance;
-import com.ttn.reap.entity.Role;
-import com.ttn.reap.entity.User;
+import com.ttn.reap.entity.*;
 import com.ttn.reap.expections.UserNotFoundException;
-import com.ttn.reap.service.BadgeBalanceService;
-import com.ttn.reap.service.EmailService;
-import com.ttn.reap.service.FileStorageService;
-import com.ttn.reap.service.UserService;
+import com.ttn.reap.service.*;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +34,10 @@ public class UserController {
     private EmailService emailService;
     @Autowired
     private BadgeBalanceService badgeBalanceService;
+    @Autowired
+    private BadgeTransactionService badgeTransactionService;
+//    @Autowired
+
     @Value("${spring.mail.username}")
     String fromMail;
 
@@ -48,19 +46,23 @@ public class UserController {
     ModelAndView register() {
         ModelAndView modelAndView = new ModelAndView("signup");
         modelAndView.addObject("user", new User());
+//        modelAndView.addObject("badgebalance",new BadgeBalance());
         return modelAndView;
     }
 
     @PostMapping("register")
-    String submit(Model model, @ModelAttribute("user") User user, @RequestParam("file") MultipartFile file) {
+    String submit(Model model, @ModelAttribute("user") User user,@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
-        String newfileName = fileName;
-        Attachment attach = new Attachment(newfileName, file.getContentType(), "resources/uploads", new Date());
+        System.out.println(user.toString());
+//        String newfileName = fileName;
+        System.out.println(fileName);
+        Attachment attach = new Attachment(fileName, file.getContentType(), "resources/static/upload", new Date());
+        System.out.println(attach.toString());
         fileStorageService.insert(attach);
         user.setAttachment(attach);
         try {
             userService.save(user);
-//            badgeBalanceService.setBadgeCount(user);
+            badgeBalanceService.setBadgeCount(user);
 
         } catch (Exception e) {
 //            eroor page lagao
@@ -101,7 +103,12 @@ public class UserController {
         }
         else {
             session.setAttribute("userId",checkuser.getId());
+            System.out.println("session id::"+session.getAttribute("userId"));
+            Attachment attachmentUser=fileStorageService.findAttachmentById(checkuser.getId());
+            System.out.println(attachmentUser.toString());
+            String userPic=attachmentUser.getFile_path().substring(17)+"/"+attachmentUser.getFileName();
             model.addAttribute("user",checkuser);
+            model.addAttribute("userpic",userPic);
             return "dashboard";}
     }
 
@@ -165,6 +172,6 @@ public class UserController {
         model.addAttribute("user",new User());
         return "signup";
     }
-    
+
 }
 
