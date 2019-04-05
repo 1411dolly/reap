@@ -1,5 +1,6 @@
 package com.ttn.reap.entity;
 
+import com.ttn.reap.encryption.PasswordHelper;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -32,13 +33,13 @@ public class User {
 
     String token;
 
-    @Column(name = "user_role")
+    @Enumerated(EnumType.STRING)
     Role role;
 
     boolean isAdmin = false;
 
     boolean isActive = false;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     Attachment attachment;
 
     //COSTRUCTOR
@@ -52,7 +53,7 @@ public class User {
         this.name = name;
         this.availPoints = availPoints;
         this.redeemedPoints = redeemedPoints;
-        this.password = password;
+        this.password = PasswordHelper.encrypt(password);
         this.points = points;
         this.token = token;
         this.role = role;
@@ -62,7 +63,7 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return this.firstName +" "+ this.lastName;
     }
 
     public void setName(String name) {
@@ -131,7 +132,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = PasswordHelper.encrypt(password);
     }
 
     public int getPoints() {

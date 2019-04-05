@@ -42,7 +42,7 @@ public class FileStorageService {
 
     public String storeFile(MultipartFile file) {
         // Normalize file name
-        String fileName = file.getOriginalFilename()+LocalDate.now();
+        String fileName = file.getOriginalFilename();
 
         try {
             // Check if the file's name contains invalid characters
@@ -81,5 +81,10 @@ public class FileStorageService {
             Resource resource = new UrlResource(filePath.toUri());
             return resource;
         }
+    }
+
+    public Attachment findAttachmentById(long id)
+    {
+        return iFileRepository.findById(id);
     }
 }

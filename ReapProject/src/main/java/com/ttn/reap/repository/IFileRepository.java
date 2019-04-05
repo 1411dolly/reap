@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface IFileRepository extends CrudRepository<Attachment,Long> {
     Attachment save(Attachment uploadFileResponse);
-    Attachment findById(int id);
+    Attachment findById(long id);
 }

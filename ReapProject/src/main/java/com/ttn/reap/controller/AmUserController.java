@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -14,7 +13,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class AmUserController {
     @GetMapping("/sample")
-    public ModelAndView modal(){
+    public ModelAndView modal() {
         ModelAndView modelAndView = new ModelAndView("sample");
         modelAndView.addObject("user", new User());
         return modelAndView;
@@ -28,12 +27,13 @@ public class AmUserController {
     }*/
 
     @PostMapping("/manage")
-    public ModelAndView manageUser(@ModelAttribute("user") User user, Model model, HttpSession session){
+    public ModelAndView manageUser(@ModelAttribute("user") User user, Model model, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("manageUser");
         modelAndView.addObject("user", new User());
         return modelAndView;
     }
-//
+
+    //
 //    @GetMapping("/badges2")
 //    public ModelAndView badges2() {
 //        ModelAndView modelAndView = new ModelAndView("badges");
@@ -41,10 +41,10 @@ public class AmUserController {
 //        return modelAndView;
 //    }
     @PostMapping("/badges")
-    public ModelAndView badges( HttpSession session) {
+    public ModelAndView badges(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("badges");
-        User user= (User) session.getAttribute("user");
-        System.out.println("session:"+ session.getAttribute("user"));
+        User user = (User) session.getAttribute("user");
+        System.out.println("session:" + session.getAttribute("user"));
         modelAndView.addObject("user", user);
         return modelAndView;
     }
