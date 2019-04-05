@@ -1,7 +1,6 @@
 package com.ttn.reap.controller;
 
 import com.ttn.reap.entity.Attachment;
-import com.ttn.reap.entity.Role;
 import com.ttn.reap.entity.User;
 import com.ttn.reap.service.EmailService;
 import com.ttn.reap.service.FileStorageService;
@@ -21,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 
@@ -75,11 +73,10 @@ public class UserController {
 
         System.out.println(httpSession.isNew());
 
-        System.out.println(httpSession.getAttribute("userId")+"---------------------");
-        if(!httpSession.getId().isEmpty())
-        {
-            int id= (int) httpSession.getAttribute("userId");
-            System.out.println("id::"+id);
+        System.out.println(httpSession.getAttribute("userId") + "---------------------");
+        if (!httpSession.getId().isEmpty()) {
+            int id = (int) httpSession.getAttribute("userId");
+            System.out.println("id::" + id);
             return "dashboard";
         }
         return "invalid";
@@ -93,11 +90,12 @@ public class UserController {
         if (checkuser == null) {
             model.addAttribute("valid", "Enter valid username and password!!!");
             return "login";
+        } else {
+            session.setAttribute("userId", checkuser.getId());
+            session.setAttribute("user", checkuser);
+            model.addAttribute("user", checkuser);
+            return "dashboard";
         }
-        else {
-            session.setAttribute("userId",checkuser.getId());
-            model.addAttribute("user",checkuser);
-            return "dashboard";}
     }
 
 
@@ -108,13 +106,14 @@ public class UserController {
     }
 
     @GetMapping("dashboard")
-    String dashboard()
-    {return "dashboard";}
+    String dashboard() {
+        return "dashboard";
+    }
 
-    @GetMapping("badges")
+    /*@GetMapping("badges")
     String badges() {
         return "Badges";
-    }
+    }*/
 
     @GetMapping("forgotPassword")
     public String forgotPassword() {

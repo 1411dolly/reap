@@ -1,9 +1,3 @@
-$("#nav-list-second").mouseover(function(){
-    $("#dashboard").attr("src","/img/dashboard2.png");
-});
-$("#nav-list-second").mouseout(function(){
-    $("#dashboard").attr("src","/img/dashboard1.png");
-});
 $("#nav-list-third").mouseover(function(){
     $("#badges").attr("src","/img/badges2.png");
 });
