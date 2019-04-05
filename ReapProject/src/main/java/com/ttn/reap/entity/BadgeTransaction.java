@@ -16,7 +16,7 @@ public class BadgeTransaction {
     User reciever;
     Date date;
     String reason;
-    @Embedded
+    @Enumerated(EnumType.STRING)
     Badge badge;
 
     public long getId() {
@@ -77,5 +77,16 @@ public class BadgeTransaction {
                 ", reason='" + reason + '\'' +
                 ", badge=" + badge +
                 '}';
+    }
+
+    public BadgeTransaction(User sender, User reciever, Date date, String reason, Badge badge) {
+        this.sender = sender;
+        this.reciever = reciever;
+        this.date = date;
+        this.reason = reason;
+        this.badge = badge;
+    }
+
+    public BadgeTransaction() {
     }
 }

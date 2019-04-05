@@ -7,11 +7,21 @@ public class BadgeBalance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REFRESH,orphanRemoval = true)
     User userId;
     int goldCount;
     int silverCount;
     int bronzeCount;
+
+    public BadgeBalance(User userId, int goldCount, int silverCount, int bronzeCount) {
+        this.userId = userId;
+        this.goldCount = goldCount;
+        this.silverCount = silverCount;
+        this.bronzeCount = bronzeCount;
+    }
+
+    public BadgeBalance() {
+    }
 
     @Override
     public String toString() {

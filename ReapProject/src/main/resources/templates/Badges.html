@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>REAP</title>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
-<!--        <link rel="stylesheet" type="text/css" href="../css-pages/Badges.css">-->
-        <link rel="stylesheet" th:href="@{/css/Badges.css}"/>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <link rel="icon" href="../img/ttn.ico" type="image/gif" sizes="20x20"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<head>
+    <title>REAP</title>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+    <!--        <link rel="stylesheet" type="text/css" href="../css-pages/Badges.css">-->
+    <link rel="stylesheet" th:href="@{/css/Badges.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="../img/ttn.ico" rel="icon" sizes="20x20" type="image/gif"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-    </head>
+</head>
 <body class="wrap">
 <div class="container-fluid nopadding wrap">
 
@@ -26,17 +26,35 @@
                 <header class="row nopadding">
                     <!--REAP IMAGE-->
                     <div class="col-sm-5 nopadding">
-                        <div class="col-sm-4 nopadding bottom"><img id="reap" class="reapimg" src="../img/reap.png"/></div>
-                        <div class="col-sm-8 nopadding bottom"><img id="reapfull" class="reapimg" src="../img/reapfull.png"/></div>
+                        <div class="col-sm-4 nopadding bottom"><img class="reapimg" id="reap" src="../img/reap.png"/>
+                        </div>
+                        <div class="col-sm-8 nopadding bottom"><img class="reapimg" id="reapfull"
+                                                                    src="../img/reapfull.png"/></div>
                     </div>
                     <!--SIDE NAV BAR-->
                     <div class="col-sm-7 nopadding">
-                        <div class="col-sm-3 bottom nopadding"><button class=" newers " id="back">Back to Newers World</button></div>
-                        <div class="col-sm-2 bottom nopadding"><button class="" id="dashboard"><img class="pic" src="../img/dashboard.png"/>Dashboard</button></div>
-                        <div class="col-sm-2 bottom nopadding"><button class="newers" id="badges"><img class="pic" id="changepic" src="../img/badge.png"/>Badges</button></div>
-                        <div class="col-sm-2 bottom nopadding"><button class="newers " id="certificates"><img class="pic" id="picchange" src="../img/certificate.png"/>Certificates</button></div>
-                        <div class="col-sm-1 bottom nopadding"><div class="newers" id="bell"><img id="bellimg" src="../img/bell.png"/></div></div>
-                        <div class="col-sm-2 bottom nopadding"><div class="profile"><img class="profileimg" src="../img/dummy.jpeg"/></div></div>
+                        <div class="col-sm-3 bottom nopadding">
+                            <button class=" newers " id="back">Back to Newers World</button>
+                        </div>
+                        <div class="col-sm-2 bottom nopadding">
+                            <button class="" id="dashboard"><img class="pic" src="../img/dashboard.png"/>Dashboard
+                            </button>
+                        </div>
+                        <div class="col-sm-2 bottom nopadding">
+                            <button class="newers" id="badges"><img class="pic" id="changepic" src="../img/badge.png"/>Badges
+                            </button>
+                        </div>
+                        <div class="col-sm-2 bottom nopadding">
+                            <button class="newers " id="certificates"><img class="pic" id="picchange"
+                                                                           src="../img/certificate.png"/>Certificates
+                            </button>
+                        </div>
+                        <div class="col-sm-1 bottom nopadding">
+                            <div class="newers" id="bell"><img id="bellimg" src="../img/bell.png"/></div>
+                        </div>
+                        <div class="col-sm-2 bottom nopadding">
+                            <div class="profile"><img class="profileimg" src="../img/dummy.jpeg"/></div>
+                        </div>
                     </div>
                 </header>
             </nav>
@@ -44,16 +62,15 @@
     </div>
 
 
-
-    <div class="row nopadding lower" >
+    <div class="row nopadding lower">
 
         <!--BADGES AND POINTS AND REDEEM POINTS(LEFT)-->
         <div class="col-sm-4">
 
             <!-- BADGES -->
             <section class="row fit panel">
-            <!-- BADGE AND POINTS HEADER-->
-                <div class="lefthead " ><img src="../img/badgewhite.png" class="newer headimg"/>BADGES AND POINTS</div>
+                <!-- BADGE AND POINTS HEADER-->
+                <div class="lefthead "><img class="newer headimg" src="../img/badgewhite.png"/>BADGES AND POINTS</div>
                 <div class="mybadges" style="overflow: hidden">
                     <div class="col-sm-8 nopadding" style="float:left;">
                         <!--BADGE PROFILE PIC-->
@@ -93,10 +110,8 @@
         </div>
 
 
-
         <!--BADGES INFO NAVIGATION  -->
         <div class="col-sm-8">
-
 
 
             <div class="topnav">
@@ -117,7 +132,7 @@
 
 </div>
 
-<script type="text/javascript" src="../javascripts/ReapHomePage.js"></script>
+<script src="../javascripts/ReapHomePage.js" type="text/javascript"></script>
 
 </body>
 </html>

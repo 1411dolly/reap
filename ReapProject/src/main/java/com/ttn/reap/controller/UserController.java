@@ -1,8 +1,11 @@
 package com.ttn.reap.controller;
 
 import com.ttn.reap.entity.Attachment;
+import com.ttn.reap.entity.BadgeBalance;
 import com.ttn.reap.entity.Role;
 import com.ttn.reap.entity.User;
+import com.ttn.reap.expections.UserNotFoundException;
+import com.ttn.reap.service.BadgeBalanceService;
 import com.ttn.reap.service.EmailService;
 import com.ttn.reap.service.FileStorageService;
 import com.ttn.reap.service.UserService;
@@ -22,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
@@ -30,12 +34,15 @@ public class UserController {
 
     @Autowired
     UserService userService;
-    @Value("${spring.mail.username}")
-    String fromMail;
     @Autowired
     private FileStorageService fileStorageService;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private BadgeBalanceService badgeBalanceService;
+    @Value("${spring.mail.username}")
+    String fromMail;
+
 
     @GetMapping("signup")
     ModelAndView register() {
@@ -48,16 +55,18 @@ public class UserController {
     String submit(Model model, @ModelAttribute("user") User user, @RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
         String newfileName = fileName;
-        Attachment attach = new Attachment(newfileName, file.getContentType(), "resources/uploads", LocalDate.now());
+        Attachment attach = new Attachment(newfileName, file.getContentType(), "resources/uploads", new Date());
         fileStorageService.insert(attach);
         user.setAttachment(attach);
         try {
             userService.save(user);
+//            badgeBalanceService.setBadgeCount(user);
+
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("error occured");
+//            eroor page lagao
+            //check id doesnt exist or duplicate id .......this is kaam chalau code
             model.addAttribute("err", "Only unique email allowed!!!");
-            return "signup";
+            throw new UserNotFoundException("user of this id doesnt exist !!!!!!!");
         }
         System.out.println(user);
         return "login";
@@ -72,14 +81,11 @@ public class UserController {
 
     @GetMapping("user")
     String user(HttpSession httpSession) {
-
-        System.out.println(httpSession.isNew());
-
-        System.out.println(httpSession.getAttribute("userId") + "---------------------");
-        if (!httpSession.getId().isEmpty()) {
-            int id = (int) httpSession.getAttribute("userId");
-            System.out.println("id::" + id);
-            return "ReapHomePage";
+        if(!httpSession.getId().isEmpty())
+        {
+            int id= (int) httpSession.getAttribute("userId");
+            System.out.println("id::"+id);
+            return "dashboard";
         }
         return "invalid";
     }
@@ -92,11 +98,11 @@ public class UserController {
         if (checkuser == null) {
             model.addAttribute("valid", "Enter valid username and password!!!");
             return "login";
-        } else {
-            session.setAttribute("userId", checkuser.getId());
-            model.addAttribute("user", checkuser);
-            return "ReapHomePage";
         }
+        else {
+            session.setAttribute("userId",checkuser.getId());
+            model.addAttribute("user",checkuser);
+            return "dashboard";}
     }
 
 
@@ -107,8 +113,11 @@ public class UserController {
     }
 
     @GetMapping("dashboard")
-    String dashboard() {
-        return "ReapHomePage";
+    ModelAndView dashboard(HttpSession session)
+    {
+        System.out.println("session id::"+session.getAttribute("userId")+"role::"+session.getAttribute("role"));
+        ModelAndView modelAndView=new ModelAndView("dashboard");
+        return modelAndView;
     }
 
     @GetMapping("badges")
@@ -147,13 +156,15 @@ public class UserController {
     }
 
     @PostMapping("resetPassword")
-    public String resetPassword(@RequestParam Map<String, String> requestParamas) {
+    public String resetPassword(@RequestParam Map<String, String> requestParamas,Model model) {
         System.out.println(requestParamas.get("token"));
         User user = userService.findUserByToken(requestParamas.get("token"));
         user.setPassword(requestParamas.get("password"));
         user.setToken(null);
         userService.save(user);
+        model.addAttribute("user",new User());
         return "signup";
     }
+    
 }
 

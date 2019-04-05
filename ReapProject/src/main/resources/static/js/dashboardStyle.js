@@ -1,0 +1,18 @@
+$("#nav-list-second").mouseover(function(){
+    $("#dashboard").attr("src","/img/dashboard2.png");
+});
+$("#nav-list-second").mouseout(function(){
+    $("#dashboard").attr("src","/img/dashboard1.png");
+});
+$("#nav-list-third").mouseover(function(){
+    $("#badges").attr("src","/img/badges2.png");
+});
+$("#nav-list-third").mouseout(function(){
+    $("#badges").attr("src","/img/badges1.png");
+});
+$("#nav-list-fourth").mouseover(function(){
+    $("#certificate").attr("src","/img/certificate2.png");
+});
+$("#nav-list-fourth").mouseout(function(){
+    $("#certificate").attr("src","/img/certificate1.png");
+});

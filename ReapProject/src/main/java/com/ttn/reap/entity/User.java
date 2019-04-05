@@ -32,13 +32,13 @@ public class User {
 
     String token;
 
-    @Column(name = "user_role")
+    @Enumerated(EnumType.STRING)
     Role role;
 
     boolean isAdmin = false;
 
     boolean isActive = false;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     Attachment attachment;
 
     //COSTRUCTOR
