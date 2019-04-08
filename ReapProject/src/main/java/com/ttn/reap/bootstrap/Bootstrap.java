@@ -22,14 +22,14 @@ public class Bootstrap {
     @EventListener(ContextRefreshedEvent.class)
     void setup() {
         //populating user
-        Attachment attachment1=new Attachment("z.jpg","image/jpeg","resources/static/upload", new Date());
-        Attachment attachment2=new Attachment("z.jpg","image/jpeg","resources/static/upload", new Date());
-        Attachment attachment3=new Attachment("z.jpg","image/jpeg","resources/uploads", new Date());
-        Attachment attachment4=new Attachment("z.jpg","image/jpeg","resources/uploads", new Date());
-        User user1=new User("1411dolly@gmail.com","dolly","singh","Dolly Singh",0,0,"12345",0,null, Role.USER,false,true,attachment1);
-        User user2=new User("amarjeet@gmail.com","amarjeet","malik","Amarjeet Malik",0,0,"12345",0,null, Role.USER,false,true,attachment2);
-        User user3=new User("aditya@gmail.com","aditya","singh","Aditya Singh",0,0,"12345",0,null, Role.USER,false,true,attachment3);
-        User user4=new User("dharmendra@gmail.com","dharmendra","saini","Dharmendra Saini",0,0,"12345",0,null, Role.USER,false,true,attachment4);
+        Attachment attachment1=new Attachment("/upload/1.jpeg","image/jpeg", new Date());
+        Attachment attachment2=new Attachment("/upload/2.jpeg","image/jpeg", new Date());
+        Attachment attachment3=new Attachment("/upload/3.jpeg","image/jpeg", new Date());
+        Attachment attachment4=new Attachment("/upload/4.jpeg","image/jpeg", new Date());
+        User user1=new User("1411dolly@gmail.com","dolly","singh",0,0,"12345",0,null, Role.USER,false,true,attachment1);
+        User user2=new User("amarjeet@gmail.com","amarjeet","malik",0,0,"12345",0,null, Role.USER,false,true,attachment2);
+        User user3=new User("aditya@gmail.com","aditya","singh",0,0,"12345",0,null, Role.USER,false,true,attachment3);
+        User user4=new User("dharmendra@gmail.com","dharmendra","saini",0,0,"12345",0,null, Role.USER,false,true,attachment4);
         BadgeBalance badgeBalance1=new BadgeBalance(user1,2,2,1);
         BadgeBalance badgeBalance2=new BadgeBalance(user2,3,1,1);
         BadgeBalance badgeBalance3=new BadgeBalance(user3,2,2,1);

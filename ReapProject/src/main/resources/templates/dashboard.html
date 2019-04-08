@@ -53,8 +53,7 @@
                 <img alt="notification-bell" id="nav-list-fifth" src="/img/notification-bell.png"/>
             </li>
             <li class="col-md-2 nav-list-pad">
-                <img alt='User Image' class='user-image' data-target="#myModal" data-toggle="modal"
-                     src="/img/profile-pic.png"/>
+                <img alt='User Image' class='user-image' data-target="#myModal" data-toggle="modal" th:src="@{${userpic}}"/>
                 <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog">
 
@@ -72,7 +71,7 @@
                                     <label>Email id</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <label th:text="*{firstName}"></label>
+                                    <label th:text="*{name}"></label>
                                     <label th:text="*{email}"></label>
                                 </div>
                             </div>
@@ -137,8 +136,8 @@
                     <input class="form-control" placeholder="Search" type="text"/>
                 </div>
 
-                <img alt="calender" class="pull-right user-image2" src="/img/cal.png" style="margin-left: 10px"/>
-                <img alt="csv-download" class="pull-right user-image2" src="/img/download.png"/>
+                <img alt="calender" class="pull-right user-image2" src="/img/cal.png" style="margin-left: 10px" th:unless="${role}"/>
+                <img alt="csv-download" class="pull-right user-image2" src="/img/download.png" th:unless="${role}"/>
             </div>
             <div class="panel-body">
                 <div class="col-md-2">
@@ -154,7 +153,7 @@
                     </p>
                 </div>
                 <div class="col-md-1">
-                    <img src="/img/delete.png"/>
+                    <img src="/img/delete.png" th:unless="${role}"/>
                 </div>
             </div>
             <div class="panel-body">
@@ -170,7 +169,7 @@
                         search</p>
                 </div>
                 <div class="col-md-1">
-                    <img src="/img/delete.png" style="color: white;background-color: #FFFFFF"/>
+                    <img src="/img/delete.png" style="color: white;background-color: #FFFFFF" th:unless="${role}"/>
                 </div>
             </div>
             <div class="panel-body">
@@ -186,7 +185,7 @@
                         search</p>
                 </div>
                 <div class="col-md-1">
-                    <img src="/img/delete.png"/>
+                    <img src="/img/delete.png" th:unless="${role}"/>
                 </div>
             </div>
 
@@ -200,24 +199,24 @@
             </div>
             <div class="panel-body" th:object="${user}">
                 <div class="col-md-3">
-                    <img alt='User Image' class='user-image' th:src="@{${userpic}}"/>
+                    <img alt='User Image' class='user-image' th:src="${user.getAttachment().getFileName()}" />
                 </div>
                 <div class="col-md-9">
                     <div>
                         <label style="padding-left: 20px" th:text="*{name}">Amarjeet Malik{ }</label>
                     </div>
-                    <div>
+                    <div th:object="${badge}">
                         <div class="col-md-4">
                             <img alt="Gold" src="/img/badgeOrange.png"/>
-                            <span>0</span>
+                            <span th:text="*{goldCount}">0</span>
                         </div>
                         <div class="col-md-4">
                             <img alt="silver" src="/img/badgeGrey.png"/>
-                            <span>0</span>
+                            <span th:text="*{silverCount}">0</span>
                         </div>
                         <div class="col-md-4">
                             <img alt="bronze" src="/img/badgeBrown.png"/>
-                            <span>0</span>
+                            <span th:text="*{bronzeCount}">0</span>
                         </div>
                     </div>
                 </div>
@@ -228,79 +227,84 @@
                 <b>NEWER'S BOARD</b>
                 <!--<img src="/img/cal.png" class="user-image2">-->
             </div>
-            <div class="panel-body">
-                <div class="col-md-3">
-                    <img alt='User Image' class='user-image' src='/img/profile-pic.png'/>
-                </div>
-                <div class="col-md-9">
-                    <div>
-                        <label style="padding-left: 20px">Amarjeet Malik{ }</label>
-                    </div>
-                    <div>
-                        <div class="col-md-4">
-                            <img alt="Gold" src="/img/badgeOrange.png"/>
-                            <span>0</span>
-                        </div>
-                        <div class="col-md-4">
-                            <img alt="silver" src="/img/badgeGrey.png"/>
-                            <span>0</span>
-                        </div>
-                        <div class="col-md-4">
-                            <img alt="bronze" src="/img/badgeBrown.png"/>
-                            <span>0</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <!-- dummy data -->
-            <div class="panel-body">
+
+            <div class="panel-body" th:each="bad : ${badgelist}" >
                 <div class="col-md-3">
-                    <img alt='User Image' class='user-image' src='/img/profile-pic.png'/>
+                    <img alt='User Image' class='user-image' th:src="${bad.getUserId().getAttachment().getFileName()}"/>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-9" >
                     <div>
-                        <label style="padding-left: 20px">Amarjeet Malik{ }</label>
+                        <label style="padding-left: 20px" th:text="*{bad.getUserId().getName()}">Amarjeet Malik{ }</label>
                     </div>
                     <div>
                         <div class="col-md-4">
                             <img alt="Gold" src="/img/badgeOrange.png"/>
-                            <span>0</span>
+                            <span th:text="*{bad.getGoldCount()}">0</span>
                         </div>
                         <div class="col-md-4">
                             <img alt="silver" src="/img/badgeGrey.png"/>
-                            <span>0</span>
+                            <span th:text="*{bad.getSilverCount()}">0</span>
                         </div>
                         <div class="col-md-4">
                             <img alt="bronze" src="/img/badgeBrown.png"/>
-                            <span>0</span>
+                            <span th:text="*{bad.getBronzeCount()}">0</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="panel-body">
-                <div class="col-md-3">
-                    <img alt='User Image' class='user-image' src='/img/profile-pic.png'/>
-                </div>
-                <div class="col-md-9">
-                    <div>
-                        <label style="padding-left: 20px">Amarjeet Malik{ }</label>
-                    </div>
-                    <div>
-                        <div class="col-md-4">
-                            <img alt="Gold" src="/img/badgeOrange.png"/>
-                            <span>0</span>
-                        </div>
-                        <div class="col-md-4">
-                            <img alt="silver" src="/img/badgeGrey.png"/>
-                            <span>0</span>
-                        </div>
-                        <div class="col-md-4">
-                            <img alt="bronze" src="/img/badgeBrown.png"/>
-                            <span>0</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+<!--            <div class="panel-body">-->
+<!--                <div class="col-md-3">-->
+<!--                    <img alt='User Image' class='user-image' src='/img/profile-pic.png'/>-->
+<!--                </div>-->
+<!--                <div class="col-md-9">-->
+<!--                    <div>-->
+<!--                        <label style="padding-left: 20px">Amarjeet Malik{ }</label>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="col-md-4">-->
+<!--                            <img alt="Gold" src="/img/badgeOrange.png"/>-->
+<!--                            <span>0</span>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-4">-->
+<!--                            <img alt="silver" src="/img/badgeGrey.png"/>-->
+<!--                            <span>0</span>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-4">-->
+<!--                            <img alt="bronze" src="/img/badgeBrown.png"/>-->
+<!--                            <span>0</span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="panel-body">-->
+<!--                <div class="col-md-3">-->
+<!--                    <img alt='User Image' class='user-image' src='/img/profile-pic.png'/>-->
+<!--                </div>-->
+<!--                <div class="col-md-9">-->
+<!--                    <div>-->
+<!--                        <label style="padding-left: 20px">Amarjeet Malik{ }</label>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="col-md-4">-->
+<!--                            <img alt="Gold" src="/img/badgeOrange.png"/>-->
+<!--                            <span>0</span>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-4">-->
+<!--                            <img alt="silver" src="/img/badgeGrey.png"/>-->
+<!--                            <span>0</span>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-4">-->
+<!--                            <img alt="bronze" src="/img/badgeBrown.png"/>-->
+<!--                            <span>0</span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
             <a class="pull-right" href="">View all</a>
         </div>
     </div>

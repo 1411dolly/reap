@@ -9,9 +9,9 @@ public class BadgeBalance {
     long id;
     @OneToOne(cascade = CascadeType.REFRESH,orphanRemoval = true)
     User userId;
-    int goldCount;
-    int silverCount;
-    int bronzeCount;
+     int goldCount;
+     int silverCount;
+     int bronzeCount;
 
     public BadgeBalance(User userId, int goldCount, int silverCount, int bronzeCount) {
         this.userId = userId;
@@ -19,6 +19,7 @@ public class BadgeBalance {
         this.silverCount = silverCount;
         this.bronzeCount = bronzeCount;
     }
+
 
     public BadgeBalance() {
     }
