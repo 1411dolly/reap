@@ -157,28 +157,6 @@ public class UserController {
         return "signup";
     }
 
-    @GetMapping("data")
-    @ResponseBody
-    public List<BadgeTransaction> getdata() {
-        List<BadgeTransaction> badgeTransactionList = badgeTransactionService.findAllByOrderByDateDesc();
-        return badgeTransactionList;
-    }
-
-    @PostMapping("/badges")
-    public ModelAndView badges(HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("badges");
-        long id = (long) session.getAttribute("userId");
-        User user = userService.findUserId(id);
-        BadgeBalance badge = badgeBalanceService.getBadgeById(id);
-        if (user != null)
-            modelAndView.addObject("user", user);
-        else {
-            //do something if user is null
-            System.out.println("user is null in badge mapping");
-        }
-        modelAndView.addObject("badge", badge);
-        return modelAndView;
-    }
 
     @PostMapping("/redeem")
     public ModelAndView redeem(HttpSession session) {
@@ -199,9 +177,10 @@ public class UserController {
     }
 
     @PostMapping("/manage")
-    public ModelAndView manageUser(@ModelAttribute("user") User user, Model model, HttpSession session) {
+    public ModelAndView manageUser( HttpSession session) {
+        System.out.println(session.getAttribute("userId"));
         ModelAndView modelAndView = new ModelAndView("manageUser");
-        modelAndView.addObject("user", new User());
+//        modelAndView.addObject("user", new User());
         return modelAndView;
     }
     

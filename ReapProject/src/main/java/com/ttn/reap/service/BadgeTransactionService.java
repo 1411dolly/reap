@@ -14,24 +14,36 @@ import java.util.List;
 public class BadgeTransactionService {
     @Autowired
     BadgeTransactionRepository badgeTransactionRepository;
-    
-    public List<BadgeTransaction> findAllByOrderByDateDesc(){
+
+    public List<BadgeTransaction> findAllByOrderByDateDesc() {
         return badgeTransactionRepository.findAllByOrderByDateDesc();
     }
-    
-    public List<BadgeTransaction> findAllByDateBetween(Date start, Date end){
-        return badgeTransactionRepository.findAllByDateBetween(start,end);
+
+    public List<BadgeTransaction> findAllByDateBetween(Date start, Date end) {
+        return badgeTransactionRepository.findAllByDateBetween(start, end);
     }
 
     public BadgeTransaction findBadgeTransactionId(long id) {
-        return badgeTransactionRepository.findById(id).orElse(null);}
+        return badgeTransactionRepository.findById(id).orElse(null);
+    }
 
-    public Integer countByRecieverAndBadge(User user, Badge badge)
-    {
-        return badgeTransactionRepository.countByRecieverAndBadge(user,badge);
+    public Integer countByRecieverAndBadge(User user, Badge badge) {
+        return badgeTransactionRepository.countByRecieverAndBadge(user, badge);
     }
-    public void saveNewTranscation(User sender, User receiver, Date date, String reason, Badge badge){
-        badgeTransactionRepository.save(new BadgeTransaction(sender,receiver,date,reason,badge));
+
+    public void saveNewTranscation(User sender, User receiver, Date date, String reason, Badge badge) {
+        badgeTransactionRepository.save(new BadgeTransaction(sender, receiver, date, reason, badge));
     }
-    
+
+    public List<BadgeTransaction> findAllByRecieverOrderByDateDesc(User user) {
+        return badgeTransactionRepository.findAllByRecieverOrderByDateDesc(user);
+    }
+
+    public List<BadgeTransaction> findAllBySenderOrderByDateDesc(User user) {
+        return badgeTransactionRepository.findAllBySenderOrderByDateDesc(user);
+    }
+
+    public List<BadgeTransaction> findAllBySenderOrRecieverOrderByDateDesc(User reciever,User sender){
+        return badgeTransactionRepository.findAllBySenderOrRecieverOrderByDateDesc(sender,reciever);
+    }
 }
