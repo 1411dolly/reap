@@ -34,7 +34,7 @@ public class UserController {
     private EmailService emailService;
     @Autowired
     private BadgeBalanceService badgeBalanceService;
-//    @Autowired
+    //    @Autowired
     @Autowired
     private BadgeTransactionService badgeTransactionService;
 
@@ -49,11 +49,7 @@ public class UserController {
     @PostMapping("register")
     String submit(Model model, @ModelAttribute("user") User user, @RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
-        System.out.println(user.toString());
-//        String newfileName = fileName;
-        System.out.println(fileName);
         Attachment attach = new Attachment(fileName, file.getContentType(), "resources/static/upload", new Date());
-        System.out.println(attach.toString());
         fileStorageService.insert(attach);
         user.setAttachment(attach);
         try {
@@ -87,10 +83,10 @@ public class UserController {
             return "login";
         } else {
             session.setAttribute("userId", checkuser.getId());
-            System.out.println("session id::" + session.getAttribute("userId"));
             Attachment attachmentUser = fileStorageService.findAttachmentById(checkuser.getId());
-            System.out.println(attachmentUser.toString());
-            String userPic = attachmentUser.getFile_path().substring(17) + "/" + attachmentUser.getFileName();
+            String userPic = attachmentUser.getFile_path().substring(16) + "/" + attachmentUser.getFileName();
+            System.out.println("userPic" + userPic);
+
             model.addAttribute("user", checkuser);
             model.addAttribute("userpic", userPic);
             return "dashboard";

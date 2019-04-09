@@ -6,7 +6,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Entity
 public class User {
@@ -39,7 +38,7 @@ public class User {
     boolean isAdmin = false;
 
     boolean isActive = false;
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     Attachment attachment;
 
     //COSTRUCTOR
@@ -63,7 +62,7 @@ public class User {
     }
 
     public String getName() {
-        return this.firstName +" "+ this.lastName;
+        return this.firstName + " " + this.lastName;
     }
 
     public void setName(String name) {

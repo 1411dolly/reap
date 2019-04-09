@@ -1,6 +1,8 @@
 package com.ttn.reap.controller;
 
 import com.ttn.reap.entity.User;
+import com.ttn.reap.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,19 +14,15 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class AmUserController {
+    @Autowired
+    UserRepository userRepository;
+
     @GetMapping("/sample")
     public ModelAndView modal() {
         ModelAndView modelAndView = new ModelAndView("sample");
         modelAndView.addObject("user", new User());
         return modelAndView;
     }
-
-    /*@GetMapping("/manage")
-    public ModelAndView manageUser(){
-        ModelAndView modelAndView = new ModelAndView("manageUser");
-        modelAndView.addObject("user", new User());
-        return modelAndView;
-    }*/
 
     @PostMapping("/manage")
     public ModelAndView manageUser(@ModelAttribute("user") User user, Model model, HttpSession session) {
@@ -33,19 +31,20 @@ public class AmUserController {
         return modelAndView;
     }
 
-    //
-//    @GetMapping("/badges2")
-//    public ModelAndView badges2() {
-//        ModelAndView modelAndView = new ModelAndView("badges");
-//        modelAndView.addObject("user", new User());
-//        return modelAndView;
-//    }
     @PostMapping("/badges")
     public ModelAndView badges(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("badges");
-        User user = (User) session.getAttribute("user");
-        System.out.println("session:" + session.getAttribute("user"));
-        modelAndView.addObject("user", user);
+        Long userId = (Long) session.getAttribute("userId");
+//        Optional<User> optionalUser = userRepository.findById(userId);
+//        User user=optionalUser.get();
+
+        User user = userRepository.findById(userId);
+        if (user != null) {
+            modelAndView.addObject("user", user);
+        } else {
+            //do something if user is null
+            System.out.println("user is null in badge mapping");
+        }
         return modelAndView;
     }
 }
