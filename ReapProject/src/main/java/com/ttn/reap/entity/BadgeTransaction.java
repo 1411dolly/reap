@@ -1,5 +1,7 @@
 package com.ttn.reap.entity;
 
+import com.ttn.reap.enums.Badge;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -7,17 +9,30 @@ import java.util.Date;
 public class BadgeTransaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private long id;
+
     @ManyToOne
     @JoinColumn(name = "sender_id")
-    User sender;
+    private User sender;
+
     @ManyToOne
     @JoinColumn(name = "reciever_id")
-    User reciever;
-    Date date;
-    String reason;
+    private User reciever;
+    private Date date;
+    private String reason;
     @Enumerated(EnumType.STRING)
-    Badge badge;
+    private Badge badge;
+
+    public BadgeTransaction(User sender, User reciever, Date date, String reason, Badge badge) {
+        this.sender = sender;
+        this.reciever = reciever;
+        this.date = date;
+        this.reason = reason;
+        this.badge = badge;
+    }
+
+    public BadgeTransaction() {
+    }
 
     public long getId() {
         return id;
@@ -77,16 +92,5 @@ public class BadgeTransaction {
                 ", reason='" + reason + '\'' +
                 ", badge=" + badge +
                 '}';
-    }
-
-    public BadgeTransaction(User sender, User reciever, Date date, String reason, Badge badge) {
-        this.sender = sender;
-        this.reciever = reciever;
-        this.date = date;
-        this.reason = reason;
-        this.badge = badge;
-    }
-
-    public BadgeTransaction() {
     }
 }

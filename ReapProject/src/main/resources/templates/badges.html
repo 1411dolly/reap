@@ -1,20 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>REAP</title>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
-    <!--        <link rel="stylesheet" type="text/css" href="../css-pages/Badges.css">-->
-    <link rel="stylesheet" th:href="@{/css/Badges.css}"/>
-    <link rel="stylesheet" th:href="@{css/dashStyle.css}"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link href="../img/ttn.ico" rel="icon" sizes="20x20" type="image/gif"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
+    <link href="../img/ttn.ico" rel="icon" sizes="20x20" type="image/gif"/>
+    <link rel="stylesheet" th:href="@{css/dashStyle.css}"/>
 </head>
 <body class="wrap">
 
@@ -58,7 +52,8 @@
                 <img alt="notification-bell" id="nav-list-fifth" src="/img/notification-bell.png"/>
             </li>
             <li class="col-md-2 nav-list-pad">
-                <img alt='User Image' class='user-image' data-target="#myModal" data-toggle="modal" th:src="@{${user.getAttachment().getFileName()}}"/>
+                <img alt='User Image' class='user-image' data-target="#myModal" data-toggle="modal"
+                     th:src="@{${user.getFileName()}}"/>
                 <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog">
 
@@ -69,7 +64,7 @@
                             </div>
                             <div class="modal-body" style="height: 100px">
                                 <div class="col-md-3">
-                                    <img alt='User Image' class='user-image' th:src="@{${user.getAttachment().getFileName()}}"/>
+                                    <img alt='User Image' class='user-image' th:src="@{${user.getFileName()}}"/>
                                 </div>
                                 <div class="col-md-3">
                                     <label>Newer Name</label>
@@ -100,14 +95,9 @@
     </div>
 </nav>
 
-
-
-
 <div class="container-fluid nopadding wrap">
 
     <!--TOP NAV BAR -->
-
-
     <div class="row nopadding lower">
 
         <!--BADGES AND POINTS AND REDEEM POINTS(LEFT)-->
@@ -120,7 +110,8 @@
                 <div class="mybadges" style="overflow: hidden">
                     <div class="col-sm-8 nopadding" style="float:left;" th:object="${user}">
                         <!--BADGE PROFILE PIC-->
-                        <div class="profile mybadgesimg"><img class="profileimg" th:src="@{${user.getAttachment().getFileName()}}"/></div>
+                        <div class="profile mybadgesimg"><img class="profileimg" th:src="@{${user.getFileName()}}"/>
+                        </div>
                         <!--BADGE USERNAME-->
                         <div class="mybadgesUsername" th:text="*{name}"></div>
                         <div th:object="${badge}">
@@ -148,18 +139,16 @@
                 </div>
             </section>
 
-
-            <div class="view">
-                <button class="redeem" >Redeem Points</button>
-            </div>
+            <form method="post" th:action="@{/redeem}" th:object="${user}">
+                <div class="view">
+                    <button class="redeem">Redeem Points</button>
+                </div>
+            </form>
 
         </div>
 
-
         <!--BADGES INFO NAVIGATION  -->
         <div class="col-sm-8">
-
-
             <div class="topnav">
                 <a class="active" href="#home">All<span>(0)</span></a>
                 <a th:href="@{/badges/shared}">Badges Shared<span>(0)</span></a>
@@ -178,7 +167,6 @@
 
 </div>
 
-<script src="../javascripts/ReapHomePage.js" type="text/javascript"></script>
-
+<script src="/js/dashboardStyle.js"></script>
 </body>
 </html>

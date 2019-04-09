@@ -1,6 +1,7 @@
 package com.ttn.reap.entity;
 
 import com.ttn.reap.encryption.PasswordHelper;
+import com.ttn.reap.enums.Role;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -11,40 +12,34 @@ import javax.validation.constraints.NotNull;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private long id;
+
     @NotNull
     @Email
     @NotEmpty
     @Column(unique = true)
-    String email;
-    String firstName;
-    String lastName;
+    private String email;
+    private String firstName;
+    private String lastName;
+
     @Transient
-    String name;
-
-    int availPoints;
-
-    int redeemedPoints;
-
-    String password;
-
-    int points;
-
-    String token;
+    private String name;
+    private int availPoints;
+    private int redeemedPoints;
+    private String password;
+    private int points;
+    private String token;
 
     @Enumerated(EnumType.STRING)
-    Role role;
-
-    boolean isAdmin = false;
-
-    boolean isActive = false;
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    Attachment attachment;
+    private Role role;
+    private boolean isAdmin = false;
+    private boolean isActive = false;
+    private String fileName;
 
     public User() {
     }
 
-    public User(String email, String firstName, String lastName, int availPoints, int redeemedPoints, String password, int points, String token, Role role, boolean isAdmin, boolean isActive, Attachment attachment) {
+    public User(String email, String firstName, String lastName, int availPoints, int redeemedPoints, String password, int points, String token, Role role, boolean isAdmin, boolean isActive, String fileName) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -56,8 +51,9 @@ public class User {
         this.role = role;
         this.isAdmin = isAdmin;
         this.isActive = isActive;
-        this.attachment = attachment;
+        this.fileName = fileName;
     }
+
 
     public String getName() {
         this.setName(this.getFirstName().substring(0, 1).toUpperCase() + this.getFirstName().substring(1) + " " +
@@ -165,12 +161,12 @@ public class User {
         isActive = active;
     }
 
-    public Attachment getAttachment() {
-        return attachment;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setAttachment(Attachment attachment) {
-        this.attachment = attachment;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     @Override
@@ -189,7 +185,7 @@ public class User {
                 ", role=" + role +
                 ", isAdmin=" + isAdmin +
                 ", isActive=" + isActive +
-                ", attachment=" + attachment +
+                ", fileName='" + fileName + '\'' +
                 '}';
     }
 }

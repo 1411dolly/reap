@@ -1,6 +1,7 @@
 package com.ttn.reap.controller;
 
 import com.ttn.reap.entity.*;
+import com.ttn.reap.enums.Role;
 import com.ttn.reap.repository.UserRepository;
 import com.ttn.reap.service.*;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
@@ -14,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -49,14 +49,13 @@ public class UserController {
     @PostMapping("register")
     String submit(Model model, @ModelAttribute("user") User user, @RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
-        Attachment attach = new Attachment("/upload/" + fileName, file.getContentType(), new Date());
-        fileStorageService.insert(attach);
-        user.setAttachment(attach);
+//        Attachment attach = new Attachment("/upload/" + fileName, file.getContentType(), new Date());
+        user.setFileName("/upload/"+fileName);
+//        fileStorageService.insert(user);
+//        user.setAttachment(attach);
         try {
-            System.out.println(user);
             userService.save(user);
             badgeBalanceService.setBadgeCount(user);
-
         } catch (Exception e) {
 //            eroor page lagao
             //check id doesnt exist or duplicate id .......this is kaam chalau code
@@ -77,6 +76,7 @@ public class UserController {
     //check for ADMIN and redirect to admin dashboard.....now user dashboard......
     @PostMapping("user")
     String user(@ModelAttribute("user") User user, Model model, HttpSession session) {
+        System.out.print("user_dashboard::"+user.toString());
         User checkuser = userService.checkemailandpassword(user.getEmail(), user.getPassword());
         BadgeBalance badge = badgeBalanceService.getBadgeById(checkuser.getId());
         List<BadgeBalance> badgeBalanceList = badgeBalanceService.getbalancecount().subList(0, 3);

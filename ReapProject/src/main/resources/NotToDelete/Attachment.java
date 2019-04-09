@@ -1,4 +1,4 @@
-package com.ttn.reap.entity;
+package NotToDelete;
 
 import javax.persistence.*;
 //import java.sql.Date;
@@ -18,7 +18,7 @@ public class Attachment {
     @Column
     private Date upload_date;
     @Column(name = "filename")
-    private String fileName;
+
     private String fileType;
 
     public Attachment() {

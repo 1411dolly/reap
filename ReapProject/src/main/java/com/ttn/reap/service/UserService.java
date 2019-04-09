@@ -1,6 +1,6 @@
 package com.ttn.reap.service;
 
-import com.ttn.reap.entity.Role;
+import com.ttn.reap.enums.Role;
 import com.ttn.reap.entity.User;
 import com.ttn.reap.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
