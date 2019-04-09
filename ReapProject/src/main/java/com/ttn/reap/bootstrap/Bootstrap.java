@@ -44,9 +44,9 @@ public class Bootstrap {
         badgeBalanceRepository.save(badgeBalance3);
         badgeBalanceRepository.save(badgeBalance4);
 
-        BadgeTransaction badgeTransaction1=new BadgeTransaction(user1,user2,new Date(),"reason1",Badge.GOLD);
-        BadgeTransaction badgeTransaction2=new BadgeTransaction(user2,user3,new Date(),"reason2",Badge.SILVER);
-        BadgeTransaction badgeTransaction3=new BadgeTransaction(user4,user1,new Date(),"reason3",Badge.BRONZE);
+        BadgeTransaction badgeTransaction1=new BadgeTransaction(user1,user2,new Date("4/8/19"),"reason1",Badge.GOLD);
+        BadgeTransaction badgeTransaction2=new BadgeTransaction(user2,user3,new Date("7/6/19"),"reason2",Badge.SILVER);
+        BadgeTransaction badgeTransaction3=new BadgeTransaction(user4,user1,new Date("6/4/19"),"reason3",Badge.BRONZE);
         BadgeTransaction badgeTransaction4=new BadgeTransaction(user3,user4,new Date(),"reason4",Badge.GOLD);
 
 

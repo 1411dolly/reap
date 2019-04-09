@@ -14,5 +14,5 @@ public interface BadgeTransactionRepository extends JpaRepository<BadgeTransacti
     Optional<BadgeTransaction> findById(long id);
     List<BadgeTransaction> findAll();
     List<BadgeTransaction> findAllByDateBetween(Date start, Date end);
-
+    List<BadgeTransaction> findAllByOrderByDateDesc();
 }

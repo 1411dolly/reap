@@ -1,9 +1,6 @@
 package com.ttn.reap.controller;
 
-import com.ttn.reap.entity.Attachment;
-import com.ttn.reap.entity.BadgeBalance;
-import com.ttn.reap.entity.Role;
-import com.ttn.reap.entity.User;
+import com.ttn.reap.entity.*;
 import com.ttn.reap.service.*;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +28,6 @@ public class UserController {
     private EmailService emailService;
     @Autowired
     private BadgeBalanceService badgeBalanceService;
-//    @Autowired
     @Autowired
     private BadgeTransactionService badgeTransactionService;
 
@@ -80,20 +76,19 @@ public class UserController {
     String user(@ModelAttribute("user") User user, Model model, HttpSession session) {
         User checkuser = userService.checkemailandpassword(user.getEmail(), user.getPassword());
         BadgeBalance badge=badgeBalanceService.getBadgeById(checkuser.getId());
-        List<BadgeBalance> badgeBalanceList=badgeBalanceService.getbalancecount();
+        List<BadgeBalance> badgeBalanceList=badgeBalanceService.getbalancecount().subList(0,3);
+        List<BadgeTransaction> badgeTransactionList=badgeTransactionService.findAllByOrderByDateDesc().subList(0,3);
         boolean role =getRoleofUser(checkuser);
-//        System.out.println(badge);
         if (checkuser == null) {
             model.addAttribute("valid", "Enter valid username and password!!!");
             return "login";
         } else {
             session.setAttribute("userId", checkuser.getId());
-//            Attachment attachmentUser = fileStorageService.findAttachmentById(checkuser.getId());
-//            String userPic = attachmentUser.getFile_path().substring(16) + "/" + attachmentUser.getFileName();
+            System.out.println(session.getAttribute("userId"));
             model.addAttribute("badgelist",badgeBalanceList);
+            model.addAttribute("badgetransactionlist",badgeTransactionList);
             model.addAttribute("user", checkuser);
             model.addAttribute("badge",badge);
-//            model.addAttribute("userpic", userPic);
             model.addAttribute("role",role);
             return "dashboard";
         }
@@ -111,13 +106,6 @@ public class UserController {
     private String logout(HttpSession httpSession) {
         httpSession.invalidate();
         return "redirect:/signup";
-    }
-
-    @GetMapping("dashboard")
-    ModelAndView dashboard(HttpSession session) {
-        System.out.println("session id::" + session.getAttribute("userId") + "role::" + session.getAttribute("role"));
-        ModelAndView modelAndView = new ModelAndView("dashboard");
-        return modelAndView;
     }
 
     @GetMapping("forgotPassword")
@@ -163,9 +151,34 @@ public class UserController {
 
     @GetMapping("data")
     @ResponseBody
-    public List<BadgeBalance> getdata()
+    public List<BadgeTransaction> getdata()
     {
-        List<BadgeBalance> badgeBalanceList= badgeBalanceService.getbalancecount().subList(0,3);
-        return  badgeBalanceList;
+        List<BadgeTransaction> badgeTransactionList=badgeTransactionService.findAllByOrderByDateDesc();
+        return  badgeTransactionList;
     }
+
+    @PostMapping("/badges")
+    public ModelAndView badges(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("badges");
+        long id= (long) session.getAttribute("userId");
+        System.out.println("session::" + id);
+        User user=userService.findUserId(id);
+        BadgeBalance badge=badgeBalanceService.getBadgeById(id);
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("badge", badge);
+        return modelAndView;
+    }
+
+     @PostMapping("/redeem")
+        public ModelAndView redeem(HttpSession session) {
+            ModelAndView modelAndView = new ModelAndView("redeem");
+            long id= (long) session.getAttribute("userId");
+            System.out.println("session::" + id);
+            User user=userService.findUserId(id);
+            BadgeBalance badge=badgeBalanceService.getBadgeById(id);
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("badge", badge);
+            return modelAndView;
+        }
+
 }

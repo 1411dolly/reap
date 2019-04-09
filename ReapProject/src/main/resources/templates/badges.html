@@ -7,6 +7,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
     <!--        <link rel="stylesheet" type="text/css" href="../css-pages/Badges.css">-->
     <link rel="stylesheet" th:href="@{/css/Badges.css}"/>
+    <link rel="stylesheet" th:href="@{css/dashStyle.css}"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -16,50 +17,95 @@
 
 </head>
 <body class="wrap">
+
+<nav class="navbar navbar-default navbar-fixed-top navbar-expand-md main-header">
+    <div class="container-fluid">
+        <div class="navbar-header col-md-5">
+            <a class="navbar-brand col-md-3" href="/">
+                <img alt="logo" src="/img/reap.png" style="width: 125px"/>
+            </a>
+            <img alt="reap" class="col-md-9" src="/img/RewardEAP.png"
+                 style="margin-top: 10px;margin-left: 10px; height: 40px"/>
+        </div>
+        <ul class="nav navbar-nav col-md-7">
+            <li class="col-md-3">
+                <a href="http://newersworld.tothenew.com" id="nav-list-first">
+                    Back to Newers World
+                </a>
+            </li>
+            <li class="col-md-2 nav-list-pad">
+                <a id="nav-list-second">
+                    <img alt="dashboard" id="dashboard-image" src="/img/dashboard2.png"/>
+                    Dashboard
+                </a>
+            </li>
+            <li class="col-md-2 nav-list-pad">
+                <form method="post" th:action="@{/badges}" th:object="${user}">
+                    <button id="nav-list-third" type="submit">
+                        <img alt="badges" id="badges" src="/img/badges1.png"/>
+                        Badges
+                    </button>
+                </form>
+            </li>
+            <li class="col-md-2 nav-list-pad">
+                <a href="" id="nav-list-fourth">
+                    <img alt="certificate" id="certificate" src="/img/certificate1.png"
+                         style="width: 21px;height: 23px;margin-left: -2%"/>
+                    Certificate
+                </a>
+            </li>
+            <li class="col-md-1 nav-list-pad">
+                <img alt="notification-bell" id="nav-list-fifth" src="/img/notification-bell.png"/>
+            </li>
+            <li class="col-md-2 nav-list-pad">
+                <img alt='User Image' class='user-image' data-target="#myModal" data-toggle="modal" th:src="@{${user.getAttachment().getFileName()}}"/>
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content" th:object="${user}">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Your Profile</h4>
+                            </div>
+                            <div class="modal-body" style="height: 100px">
+                                <div class="col-md-3">
+                                    <img alt='User Image' class='user-image' th:src="@{${user.getAttachment().getFileName()}}"/>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Newer Name</label>
+                                    <label>Email id</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <label th:text="*{name}"></label>
+                                    <label th:text="*{email}"></label>
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="background-color: #f4f4f4">
+                                <form class="col-md-6" id="manageForm" method="post" th:action="@{/manage}"
+                                      th:object="${user}">
+                                    <button id="manage-button" type="submit">
+                                        Manage
+                                    </button>
+                                </form>
+                                <a class="col-md-6" href="login" style="text-align: center;text-decoration: none">
+                                    <img alt="logout" src="/img/logout.png"/>
+                                    Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+
+
 <div class="container-fluid nopadding wrap">
 
     <!--TOP NAV BAR -->
-    <div class="row">
-        <div style="display: block">
-            <nav class="navbar-default navbar navbar-expand-sm fixed-top back">
-                <!--HEADER-->
-                <header class="row nopadding">
-                    <!--REAP IMAGE-->
-                    <div class="col-sm-5 nopadding">
-                        <div class="col-sm-4 nopadding bottom"><img class="reapimg" id="reap" src="../img/reap.png"/>
-                        </div>
-                        <div class="col-sm-8 nopadding bottom"><img class="reapimg" id="reapfull"
-                                                                    src="../img/reapfull.png"/></div>
-                    </div>
-                    <!--SIDE NAV BAR-->
-                    <div class="col-sm-7 nopadding">
-                        <div class="col-sm-3 bottom nopadding">
-                            <button class=" newers " id="back">Back to Newers World</button>
-                        </div>
-                        <div class="col-sm-2 bottom nopadding">
-                            <button class="" id="dashboard"><img class="pic" src="../img/dashboard.png"/>Dashboard
-                            </button>
-                        </div>
-                        <div class="col-sm-2 bottom nopadding">
-                            <button class="newers" id="badges"><img class="pic" id="changepic" src="../img/badge.png"/>Badges
-                            </button>
-                        </div>
-                        <div class="col-sm-2 bottom nopadding">
-                            <button class="newers " id="certificates"><img class="pic" id="picchange"
-                                                                           src="../img/certificate.png"/>Certificates
-                            </button>
-                        </div>
-                        <div class="col-sm-1 bottom nopadding">
-                            <div class="newers" id="bell"><img id="bellimg" src="../img/bell.png"/></div>
-                        </div>
-                        <div class="col-sm-2 bottom nopadding">
-                            <div class="profile"><img class="profileimg" src="../img/dummy.jpeg"/></div>
-                        </div>
-                    </div>
-                </header>
-            </nav>
-        </div>
-    </div>
 
 
     <div class="row nopadding lower">
@@ -74,24 +120,24 @@
                 <div class="mybadges" style="overflow: hidden">
                     <div class="col-sm-8 nopadding" style="float:left;" th:object="${user}">
                         <!--BADGE PROFILE PIC-->
-                        <div class="profile mybadgesimg"><img class="profileimg" src="../img/dummy.jpeg"/></div>
+                        <div class="profile mybadgesimg"><img class="profileimg" th:src="@{${user.getAttachment().getFileName()}}"/></div>
                         <!--BADGE USERNAME-->
-                        <div class="mybadgesUsername" th:text="*{firstName}"></div>
-                        <div>
+                        <div class="mybadgesUsername" th:text="*{name}"></div>
+                        <div th:object="${badge}">
                             <!--GOLD BADGE-->
                             <span class="star">
                             <img src="../img/badgeOrange.png"/>
-                            <span class="points">0</span>
+                            <span class="points" th:text="*{goldCount}">0</span>
                             </span>
                             <!--SILVER BADGE-->
                             <span class="star mybadgestar">
                             <img src="../img/badgeGrey.png"/>
-                            <span class="points">0</span>
+                            <span class="points" th:text="*{silverCount}">0</span>
                             </span>
                             <!--BRONZE BADGE-->
                             <span class="star mybadgestar">
                             <img src="../img/badgeBrown.png"/>
-                            <span class="points">0</span>
+                            <span class="points" th:text="*{bronzeCount}">0</span>
                             </span>
                         </div>
                     </div>
@@ -104,7 +150,7 @@
 
 
             <div class="view">
-                <button class="redeem">Redeem Points</button>
+                <button class="redeem" >Redeem Points</button>
             </div>
 
         </div>
@@ -116,7 +162,7 @@
 
             <div class="topnav">
                 <a class="active" href="#home">All<span>(0)</span></a>
-                <a href="#news">Badges Shared<span>(0)</span></a>
+                <a th:href="@{/badges/shared}">Badges Shared<span>(0)</span></a>
                 <a href="#contact">Badges Recieved<span>(0)</span></a>
                 <a href="#about">Badge History</a>
                 <a href="#about">Points Redeemed</a>

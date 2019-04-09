@@ -40,12 +40,15 @@ public class AmUserController {
 //        modelAndView.addObject("user", new User());
 //        return modelAndView;
 //    }
-    @PostMapping("/badges")
-    public ModelAndView badges(HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("badges");
-        User user = (User) session.getAttribute("user");
-        System.out.println("session:" + session.getAttribute("user"));
-        modelAndView.addObject("user", user);
-        return modelAndView;
-    }
+
+
+//    @PostMapping("/badges")
+//    public ModelAndView badges(HttpSession session) {
+//        ModelAndView modelAndView = new ModelAndView("badges");
+//        long id= (long) session.getAttribute("userId");
+//        System.out.println("session::" + id);
+//
+////        modelAndView.addObject("user", user);
+//        return modelAndView;
+//    }
 }
