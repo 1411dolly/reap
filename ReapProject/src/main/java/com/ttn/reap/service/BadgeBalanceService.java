@@ -1,5 +1,6 @@
 package com.ttn.reap.service;
 
+import com.sun.corba.se.spi.activation.BadServerDefinitionHelper;
 import com.ttn.reap.entity.BadgeBalance;
 import com.ttn.reap.entity.User;
 import com.ttn.reap.repository.BadgeBalanceRepository;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class BadgeBalanceService {
@@ -20,4 +23,14 @@ public class BadgeBalanceService {
         return badgeBalance;
     }
 
+    public BadgeBalance getBadgeById(long id) {
+        return badgeBalanceRepository.getById(id);
+    }
+
+    public List<BadgeBalance> getbalancecount()
+    {
+        List<BadgeBalance> badgeBalanceList= badgeBalanceRepository.findAllByOrderByGoldCountDescSilverCountDescBronzeCountDesc();
+        return badgeBalanceList;
+//        return badgeBalanceRepository.findAllOrderByGoldCountDescOrderBySilverCountDescOrderByBronzeCountDesc();
+    }
 }

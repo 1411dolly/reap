@@ -41,15 +41,13 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     Attachment attachment;
 
-    //COSTRUCTOR
     public User() {
     }
 
-    public User(String email, String firstName, String lastName, String name, int availPoints, int redeemedPoints, String password, int points, String token, Role role, boolean isAdmin, boolean isActive, Attachment attachment) {
+    public User(String email, String firstName, String lastName, int availPoints, int redeemedPoints, String password, int points, String token, Role role, boolean isAdmin, boolean isActive, Attachment attachment) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.name = name;
         this.availPoints = availPoints;
         this.redeemedPoints = redeemedPoints;
         this.password = PasswordHelper.encrypt(password);
@@ -62,7 +60,9 @@ public class User {
     }
 
     public String getName() {
-        return this.firstName + " " + this.lastName;
+        this.setName(this.getFirstName().substring(0, 1).toUpperCase() + this.getFirstName().substring(1) + " " +
+                this.getLastName().substring(0, 1).toUpperCase() + this.getLastName().substring(1));
+        return this.name;
     }
 
     public void setName(String name) {
@@ -85,7 +85,6 @@ public class User {
         this.redeemedPoints = redeemedPoints;
     }
 
-    //GETTER SETTERS
     public String getToken() {
         return token;
     }
@@ -173,8 +172,6 @@ public class User {
     public void setAttachment(Attachment attachment) {
         this.attachment = attachment;
     }
-    //
-
 
     @Override
     public String toString() {

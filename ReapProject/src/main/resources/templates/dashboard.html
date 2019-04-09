@@ -11,6 +11,7 @@
     <link href="/img/ttn.ico" rel="icon" sizes="20x20" type="image/gif"/>
     <link rel="stylesheet" th:href="@{css/dashStyle.css}"/>
 </head>
+
 <body>
 
 <nav class="navbar navbar-default navbar-fixed-top navbar-expand-md main-header">
@@ -54,7 +55,7 @@
             </li>
             <li class="col-md-2 nav-list-pad">
                 <img alt='User Image' class='user-image' data-target="#myModal" data-toggle="modal"
-                     src="/img/profile-pic.png"/>
+                     th:src="@{${user.getAttachment().getFileName()}}"/>
                 <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog">
 
@@ -65,14 +66,15 @@
                             </div>
                             <div class="modal-body" style="height: 100px">
                                 <div class="col-md-3">
-                                    <img alt='User Image' class='user-image' th:src="@{${userpic}}"/>
+                                    <img alt='User Image' class='user-image'
+                                         th:src="@{${user.getAttachment().getFileName()}}"/>
                                 </div>
                                 <div class="col-md-3">
                                     <label>Newer Name</label>
                                     <label>Email id</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <label th:text="*{firstName}"></label>
+                                    <label th:text="*{name}"></label>
                                     <label th:text="*{email}"></label>
                                 </div>
                             </div>
@@ -136,9 +138,9 @@
                     <span class="glyphicon glyphicon-search form-control-feedback"></span>
                     <input class="form-control" placeholder="Search" type="text"/>
                 </div>
-
-                <img alt="calender" class="pull-right user-image2" src="/img/cal.png" style="margin-left: 10px"/>
-                <img alt="csv-download" class="pull-right user-image2" src="/img/download.png"/>
+                <img alt="calender" class="pull-right user-image2" src="/img/cal.png" style="margin-left: 10px"
+                     th:if="${role}"/>
+                <img alt="csv-download" class="pull-right user-image2" src="/img/download.png" th:unless="${role}"/>
             </div>
             <div class="panel-body">
                 <div class="col-md-2">
@@ -171,23 +173,30 @@
                     <img src="/img/delete.png" style="color: white;background-color: #FFFFFF"/>
                 </div>
             </div>
-            <div class="panel-body">
+            <div class="panel-body" th:each="tranlist:${badgetransactionlist}">
                 <div class="col-md-2">
-                    <img alt='User Image' class='user-image' src='/img/profile-pic.png'/>
+                    <img alt='User Image' class='user-image'
+                         th:src="@{${tranlist.getReciever().getAttachment().getFileName()}}"/>
                 </div>
                 <div class="col-md-9">
-                    <p>The pagination component should be wrapped in a element to identify it as a navigation section to
-                        screen readers and other assistive technologies. In addition, as a page is likely to have more
-                        than one such navigation section already (such as the primary navigation in the header, or a
-                        sidebar navigation), it is advisable to provide a descriptive aria-label for the which reflects
-                        its purpose. For example, if the pagination component is used to navigate between a set of
-                        search</p>
+                    <span th:text="${tranlist.getReciever().getName()}"></span>
+                    has recieved
+                    <span th:with="var=${tranlist.getBadge()}">
+                        <span th:if="${var == T(com.ttn.reap.entity.Badge).GOLD}"><img
+                                src="/img/badgeOrange.png"/></span>
+                        <span th:if="${var == T(com.ttn.reap.entity.Badge).SILVER}"><img
+                                src="/img/badgeGrey.png"/></span>
+                        <span th:if="${var == T(com.ttn.reap.entity.Badge).BRONZE}"><img
+                                src="/img/badgeBrown.png"/></span>
+                    </span>
+                    from
+                    <span th:text="${tranlist.getSender().getName()}"></span> for Reason:
+                    <span th:text="${tranlist.getReason()}"></span>
                 </div>
                 <div class="col-md-1">
-                    <img src="/img/delete.png"/>
+                    <img src="/img/delete.png" th:unless="${role}"/>
                 </div>
             </div>
-
         </div>
     </div>
     <div class="col-md-3">
@@ -198,24 +207,24 @@
             </div>
             <div class="panel-body" th:object="${user}">
                 <div class="col-md-3">
-                    <img alt='User Image' class='user-image' th:src="${userpic}"/>
+                    <img alt='User Image' class='user-image' th:src="@{${user.getAttachment().getFileName()}}"/>
                 </div>
                 <div class="col-md-9">
                     <div>
                         <label style="padding-left: 20px" th:text="*{name}"></label>
                     </div>
-                    <div>
+                    <div th:object="${badge}">
                         <div class="col-md-4">
                             <img alt="Gold" src="/img/badgeOrange.png"/>
-                            <span>0</span>
+                            <span th:text="*{goldCount}">0</span>
                         </div>
                         <div class="col-md-4">
                             <img alt="silver" src="/img/badgeGrey.png"/>
-                            <span>0</span>
+                            <span th:text="*{silverCount}">0</span>
                         </div>
                         <div class="col-md-4">
                             <img alt="bronze" src="/img/badgeBrown.png"/>
-                            <span>0</span>
+                            <span th:text="*{bronzeCount}">0</span>
                         </div>
                     </div>
                 </div>
@@ -226,80 +235,37 @@
                 <b>NEWER'S BOARD</b>
                 <!--<img src="/img/cal.png" class="user-image2">-->
             </div>
-            <div class="panel-body">
-                <div class="col-md-3">
-                    <img alt='User Image' class='user-image' src='/img/profile-pic.png'/>
-                </div>
-                <div class="col-md-9">
-                    <div>
-                        <label style="padding-left: 20px">Amarjeet Malik{ }</label>
-                    </div>
-                    <div>
-                        <div class="col-md-4">
-                            <img alt="Gold" src="/img/badgeOrange.png"/>
-                            <span>0</span>
-                        </div>
-                        <div class="col-md-4">
-                            <img alt="silver" src="/img/badgeGrey.png"/>
-                            <span>0</span>
-                        </div>
-                        <div class="col-md-4">
-                            <img alt="bronze" src="/img/badgeBrown.png"/>
-                            <span>0</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <!-- dummy data -->
-            <div class="panel-body">
+
+            <div class="panel-body" th:each="bad : ${badgelist}">
                 <div class="col-md-3">
-                    <img alt='User Image' class='user-image' src='/img/profile-pic.png'/>
+                    <img alt='User Image' class='user-image' th:src="${bad.getUserId().getAttachment().getFileName()}"/>
                 </div>
                 <div class="col-md-9">
                     <div>
-                        <label style="padding-left: 20px">Amarjeet Malik{ }</label>
+                        <label style="padding-left: 20px" th:text="*{bad.getUserId().getName()}">Amarjeet Malik{
+                            }</label>
                     </div>
                     <div>
                         <div class="col-md-4">
                             <img alt="Gold" src="/img/badgeOrange.png"/>
-                            <span>0</span>
+                            <span th:text="*{bad.getGoldCount()}">0</span>
                         </div>
                         <div class="col-md-4">
                             <img alt="silver" src="/img/badgeGrey.png"/>
-                            <span>0</span>
+                            <span th:text="*{bad.getSilverCount()}">0</span>
                         </div>
                         <div class="col-md-4">
                             <img alt="bronze" src="/img/badgeBrown.png"/>
-                            <span>0</span>
+                            <span th:text="*{bad.getBronzeCount()}">0</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="panel-body">
-                <div class="col-md-3">
-                    <img alt='User Image' class='user-image' src='/img/profile-pic.png'/>
-                </div>
-                <div class="col-md-9">
-                    <div>
-                        <label style="padding-left: 20px">Amarjeet Malik{ }</label>
-                    </div>
-                    <div>
-                        <div class="col-md-4">
-                            <img alt="Gold" src="/img/badgeOrange.png"/>
-                            <span>0</span>
-                        </div>
-                        <div class="col-md-4">
-                            <img alt="silver" src="/img/badgeGrey.png"/>
-                            <span>0</span>
-                        </div>
-                        <div class="col-md-4">
-                            <img alt="bronze" src="/img/badgeBrown.png"/>
-                            <span>0</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <a class="pull-right" href="">View all</a>
+
+
+            <a class="pull-right">View all</a>
         </div>
     </div>
 </section>

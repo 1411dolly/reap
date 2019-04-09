@@ -1,7 +1,7 @@
 package com.ttn.reap.controller;
 
 import com.ttn.reap.entity.BadgeTransaction;
-import com.ttn.reap.service.BadgeTranscationService;
+import com.ttn.reap.service.BadgeTransactionService;
 import com.ttn.reap.service.FileStorageService;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -31,7 +31,7 @@ public class CSVController {
     private static final String NEW_LINE_SEPARATOR = "\n";
     private static final Object[] FILE_HEADER = {"Date", "Receiver Name", "Receiver Email", "Sender Name", "Sender Email", "Star", "Comment"};
     @Autowired
-    BadgeTranscationService badgeTranscationService;
+    BadgeTransactionService badgeTransactionService;
     @Autowired
     FileStorageService fileStorageService;
 
@@ -40,7 +40,7 @@ public class CSVController {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate = format.parse(start);
         Date lastDate = format.parse(end);
-        List<BadgeTransaction> transactions = badgeTranscationService.findAllByDateBetween(startDate, lastDate);
+        List<BadgeTransaction> transactions = badgeTransactionService.findAllByDateBetween(startDate, lastDate);
         File file = new File("users_new.csv");
         FileWriter out = new FileWriter(file);
         CSVFormat csvFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
