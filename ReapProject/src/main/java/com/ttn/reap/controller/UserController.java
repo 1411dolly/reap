@@ -1,7 +1,9 @@
 package com.ttn.reap.controller;
 
+import com.ttn.reap.dto.UserDto;
 import com.ttn.reap.entity.BadgeBalance;
 import com.ttn.reap.entity.BadgeTransaction;
+import com.ttn.reap.entity.RecognizeCO;
 import com.ttn.reap.entity.User;
 import com.ttn.reap.enums.Badge;
 import com.ttn.reap.enums.Role;
@@ -97,6 +99,7 @@ public class UserController {
             model.addAttribute("gold",gold);
             model.addAttribute("silver",silver);
             model.addAttribute("bronze",bronze);
+            model.addAttribute("recognizeco",new RecognizeCO());
             return "dashboard";
         }
     }
@@ -201,6 +204,19 @@ public class UserController {
         modelAndView.addObject("user", new User());
         return modelAndView;
     }
-
+    
+    @GetMapping("getUserListActive")
+    @ResponseBody
+    public List<UserDto> getUserListActive(@RequestParam String term, @RequestParam String user_id) {
+        return userService.simulateSearchResult(term, Long.parseLong(user_id));
+    }
+    
+    @PostMapping("recognize")
+    public void recognizeNewer(@ModelAttribute RecognizeCO recognizeCO) {
+        int s = recognizeCO.getReceiver_email().indexOf("(");
+        int e = recognizeCO.getReceiver_email().indexOf(")");
+        recognizeCO.setReceiver_email(recognizeCO.getReceiver_email().substring(s + 1, e));
+        System.out.println(recognizeCO);
+    }
 
 }

@@ -2,6 +2,7 @@ package com.ttn.reap.service;
 
 import com.ttn.reap.entity.BadgeBalance;
 import com.ttn.reap.entity.User;
+import com.ttn.reap.enums.Badge;
 import com.ttn.reap.repository.BadgeBalanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,5 +30,14 @@ public class BadgeBalanceService {
     public List<BadgeBalance> getbalancecount() {
         List<BadgeBalance> badgeBalanceList = badgeBalanceRepository.findAllByOrderByGoldCountDescSilverCountDescBronzeCountDesc();
         return badgeBalanceList;
+    }
+    public void recognizeBadgeBalance(){
+    
+    }
+    public void substractBadgeBalance(User user, Badge badge, Integer count){
+    
+    }
+    public void addBadgeBalance(User user, Badge badge, Integer count){
+    
     }
 }

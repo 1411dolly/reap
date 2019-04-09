@@ -105,25 +105,29 @@
                 <b>RECOGNIZE NEWER</b>
             </div>
             <div class="panel-body">
-                <form>
+                <form id="recognise_form" th:object="${recognizeco}" th:action="@{/recognize}" method="post">
                     <div class="form-group">
                         <img alt="person" src="/img/newer.png"/>
-                        <input id="searchNewer" placeholder="Select a newer" type="text"/>
-                        <select>
-                            <option value="">Select a Badge</option>
-                            <option value="1">Gold ()</option>
-                            <option value="2">Silver ()</option>
-                            <option value="3">Bronze ()</option>
+                        <input type="hidden" th:field="*{sender_email}" id="hidden_send_email"/>
+                        <input id="searchNewer" placeholder="Select a newer" type="text" th:field="*{receiver_email}"/>
+                        <select th:field="*{badge_val}">
+                            <div th:object="${badge}">
+                                <option value="">Select a Badge</option>
+                                <option value="gold">Gold(<span th:text="*{goldCount}"></span>)</option>
+                                <option value="silver">Silver(<span th:text="*{silverCount}"></span>)</option>
+                                <option value="bronze">Bronze(<span th:text="*{bronzeCount}"></span>)</option>
+                            </div>
                         </select>
                     </div>
                     <div class="form-group">
                         <label><b>Reasons:</b></label>
                         <textarea class="form-control" placeholder="Give recognition reason/message..."
-                                  style="height: 100px"></textarea>
+                                  style="height: 100px" th:field="*{message_val}" ></textarea>
                     </div>
-                    <button class="btn btn-default pull-right" type="submit">Recognize</button>
+                    <button class="btn btn-default pull-right" type="submit" id="recognize_btn">Recognize</button>
                 </form>
             </div>
+
         </div>
         <div class="panel panel-primary">
             <div class="panel-heading" style="height: 50px">
@@ -174,6 +178,7 @@
                 <b>MY BADGES</b>
             </div>
             <div class="panel-body" th:object="${user}">
+                <input type="hidden" id="user-id" th:value="${user.getId()}"/>
                 <div class="col-md-3">
                     <img alt='User Image' class='user-image' th:src="@{${user.getFileName()}}"/>
                 </div>
@@ -233,5 +238,23 @@
 </section>
 
 <script src="/js/dashboardStyle.js"></script>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script
+        src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+        crossorigin="anonymous"></script>
+<script src="/js/ajax_js.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    document.getElementById('hidden_send_email').value = /*[[${user.getEmail()}]]*/ 'default';
+
+    /*]]>*/
+</script>
+
+
 </body>
 </html>

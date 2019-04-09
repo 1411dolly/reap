@@ -30,5 +30,8 @@ public class BadgeTransactionService {
     {
         return badgeTransactionRepository.countByRecieverAndBadge(user,badge);
     }
-
+    public void saveNewTranscation(User sender, User receiver, Date date, String reason, Badge badge){
+        badgeTransactionRepository.save(new BadgeTransaction(sender,receiver,date,reason,badge));
+    }
+    
 }
