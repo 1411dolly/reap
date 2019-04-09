@@ -3,6 +3,7 @@ package com.ttn.reap.controller;
 import com.ttn.reap.entity.BadgeBalance;
 import com.ttn.reap.entity.BadgeTransaction;
 import com.ttn.reap.entity.User;
+import com.ttn.reap.enums.Badge;
 import com.ttn.reap.enums.Role;
 import com.ttn.reap.repository.UserRepository;
 import com.ttn.reap.service.*;
@@ -77,6 +78,9 @@ public class UserController {
         System.out.print("user_dashboard::" + user.toString());
         User checkuser = userService.checkemailandpassword(user.getEmail(), user.getPassword());
         BadgeBalance badge = badgeBalanceService.getBadgeById(checkuser.getId());
+        int gold=badgeTransactionService.countByRecieverAndBadge(checkuser, Badge.GOLD);
+        int silver=badgeTransactionService.countByRecieverAndBadge(checkuser, Badge.SILVER);
+        int bronze=badgeTransactionService.countByRecieverAndBadge(checkuser, Badge.BRONZE);
         List<BadgeBalance> badgeBalanceList = badgeBalanceService.getbalancecount().subList(0, 3);
         List<BadgeTransaction> badgeTransactionList = badgeTransactionService.findAllByOrderByDateDesc().subList(0, 3);
         boolean role = getRoleofUser(checkuser);
@@ -90,6 +94,9 @@ public class UserController {
             model.addAttribute("user", checkuser);
             model.addAttribute("badge", badge);
             model.addAttribute("role", role);
+            model.addAttribute("gold",gold);
+            model.addAttribute("silver",silver);
+            model.addAttribute("bronze",bronze);
             return "dashboard";
         }
     }
@@ -194,5 +201,6 @@ public class UserController {
         modelAndView.addObject("user", new User());
         return modelAndView;
     }
+
 
 }

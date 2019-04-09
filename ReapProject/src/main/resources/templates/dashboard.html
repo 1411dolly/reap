@@ -181,18 +181,18 @@
                     <div>
                         <label style="padding-left: 20px" th:text="*{name}"></label>
                     </div>
-                    <div th:object="${badge}">
+                    <div>
                         <div class="col-md-4">
                             <img alt="Gold" src="/img/badgeOrange.png"/>
-                            <span th:text="*{goldCount}">0</span>
+                            <span th:text="${gold}">0</span>
                         </div>
                         <div class="col-md-4">
                             <img alt="silver" src="/img/badgeGrey.png"/>
-                            <span th:text="*{silverCount}">0</span>
+                            <span th:text="${silver}">0</span>
                         </div>
                         <div class="col-md-4">
                             <img alt="bronze" src="/img/badgeBrown.png"/>
-                            <span th:text="*{bronzeCount}">0</span>
+                            <span th:text="${bronze}">0</span>
                         </div>
                     </div>
                 </div>

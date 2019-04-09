@@ -45,10 +45,23 @@ public class Bootstrap {
         BadgeTransaction badgeTransaction2=new BadgeTransaction(user2,user3,new Date("7/6/19"),"reason2",Badge.SILVER);
         BadgeTransaction badgeTransaction3=new BadgeTransaction(user4,user1,new Date("6/4/19"),"reason3",Badge.BRONZE);
         BadgeTransaction badgeTransaction4=new BadgeTransaction(user3,user4,new Date(),"reason4",Badge.GOLD);
+        BadgeTransaction badgeTransaction5=new BadgeTransaction(user1,user4,new Date(),"reason5",Badge.SILVER);
+        BadgeTransaction badgeTransaction6=new BadgeTransaction(user2,user3,new Date(),"reason6",Badge.BRONZE);
+        BadgeTransaction badgeTransaction7=new BadgeTransaction(user3,user2,new Date(),"reason7",Badge.GOLD);
+        BadgeTransaction badgeTransaction8=new BadgeTransaction(user4,user1,new Date(),"reason8",Badge.SILVER);
+        BadgeTransaction badgeTransaction9=new BadgeTransaction(user2,user1,new Date(),"reason9",Badge.SILVER);
+        BadgeTransaction badgeTransaction10=new BadgeTransaction(user3,user4,new Date(),"reason10",Badge.GOLD);
 
         badgeTransactionRepository.save(badgeTransaction1);
         badgeTransactionRepository.save(badgeTransaction2);
         badgeTransactionRepository.save(badgeTransaction3);
         badgeTransactionRepository.save(badgeTransaction4);
+        badgeTransactionRepository.save(badgeTransaction5);
+        badgeTransactionRepository.save(badgeTransaction6);
+        badgeTransactionRepository.save(badgeTransaction7);
+        badgeTransactionRepository.save(badgeTransaction8);
+        badgeTransactionRepository.save(badgeTransaction9);
+        badgeTransactionRepository.save(badgeTransaction10);
+
     }
 }
