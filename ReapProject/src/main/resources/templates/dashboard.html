@@ -201,10 +201,7 @@
         <div class="panel panel-primary" style="margin-top: 170px;position: fixed;margin-right: 25px">
             <div class="panel-heading">
                 <b>NEWER'S BOARD</b>
-                <!--<img src="/img/cal.png" class="user-image2">-->
             </div>
-
-            <!-- dummy data -->
 
             <div class="panel-body" th:each="bad : ${badgelist}">
                 <div class="col-md-3">
@@ -212,8 +209,7 @@
                 </div>
                 <div class="col-md-9">
                     <div>
-                        <label style="padding-left: 20px" th:text="*{bad.getUserId().getName()}">Amarjeet Malik{
-                            }</label>
+                        <label style="padding-left: 20px" th:text="*{bad.getUserId().getName()}"></label>
                     </div>
                     <div>
                         <div class="col-md-4">

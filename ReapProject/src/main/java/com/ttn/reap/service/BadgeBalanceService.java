@@ -1,6 +1,5 @@
 package com.ttn.reap.service;
 
-import com.sun.corba.se.spi.activation.BadServerDefinitionHelper;
 import com.ttn.reap.entity.BadgeBalance;
 import com.ttn.reap.entity.User;
 import com.ttn.reap.repository.BadgeBalanceRepository;
@@ -18,7 +17,7 @@ public class BadgeBalanceService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public BadgeBalance setBadgeCount(User user) {
-        BadgeBalance badgeBalance=new BadgeBalance(user,3,2,1);
+        BadgeBalance badgeBalance = new BadgeBalance(user, 3, 2, 1);
         badgeBalanceRepository.save(badgeBalance);
         return badgeBalance;
     }
@@ -27,10 +26,8 @@ public class BadgeBalanceService {
         return badgeBalanceRepository.getById(id);
     }
 
-    public List<BadgeBalance> getbalancecount()
-    {
-        List<BadgeBalance> badgeBalanceList= badgeBalanceRepository.findAllByOrderByGoldCountDescSilverCountDescBronzeCountDesc();
+    public List<BadgeBalance> getbalancecount() {
+        List<BadgeBalance> badgeBalanceList = badgeBalanceRepository.findAllByOrderByGoldCountDescSilverCountDescBronzeCountDesc();
         return badgeBalanceList;
-//        return badgeBalanceRepository.findAllOrderByGoldCountDescOrderBySilverCountDescOrderByBronzeCountDesc();
     }
 }
