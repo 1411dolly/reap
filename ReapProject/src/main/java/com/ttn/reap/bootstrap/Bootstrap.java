@@ -27,10 +27,10 @@ public class Bootstrap {
         User user2=new User("amarjeet@gmail.com","amarjeet","malik",0,0,"12345",0,null, Role.USER,false,true,"/upload/2.jpeg");
         User user3=new User("aditya@gmail.com","aditya","singh",0,0,"12345",0,null, Role.USER,false,true,"/upload/3.jpeg");
         User user4=new User("dharmendra@gmail.com","dharmendra","saini",0,0,"12345",0,null, Role.USER,false,true,"/upload/4.jpeg");
-        BadgeBalance badgeBalance1=new BadgeBalance(user1,2,2,1);
-        BadgeBalance badgeBalance2=new BadgeBalance(user2,3,1,1);
-        BadgeBalance badgeBalance3=new BadgeBalance(user3,2,2,1);
-        BadgeBalance badgeBalance4=new BadgeBalance(user4,3,2,0);
+        BadgeBalance badgeBalance1=new BadgeBalance(user1,1,2,3);
+        BadgeBalance badgeBalance2=new BadgeBalance(user2,1,2,3);
+        BadgeBalance badgeBalance3=new BadgeBalance(user3,1,2,3);
+        BadgeBalance badgeBalance4=new BadgeBalance(user4,1,2,3);
 
         userRepository.save(user1);
         userRepository.save(user2);
