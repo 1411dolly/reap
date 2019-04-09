@@ -1,10 +1,18 @@
 package com.ttn.reap.entity;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class PurchaseHistory {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
     private User userId;
+
+    @ManyToOne
     private Item itemId;
     private Date purchaseTimestamp;
     private int purchaseQuantity;
@@ -14,7 +22,7 @@ public class PurchaseHistory {
         this.userId = userId;
         this.itemId = itemId;
         this.purchaseTimestamp = purchaseTimestamp;
-        this.purchaseQuantity= purchaseQuantity;
+        this.purchaseQuantity = purchaseQuantity;
     }
 
     public Long getId() {

@@ -3,7 +3,7 @@ package com.ttn.reap.controller;
 import com.ttn.reap.dto.UserDto;
 import com.ttn.reap.entity.BadgeBalance;
 import com.ttn.reap.entity.BadgeTransaction;
-import com.ttn.reap.entity.RecognizeCO;
+import com.ttn.reap.co.RecognizeCO;
 import com.ttn.reap.entity.User;
 import com.ttn.reap.enums.Badge;
 import com.ttn.reap.enums.Role;

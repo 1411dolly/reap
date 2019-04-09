@@ -1,4 +1,4 @@
-package com.ttn.reap.entity;
+package com.ttn.reap.co;
 
 
 public class RecognizeCO {
