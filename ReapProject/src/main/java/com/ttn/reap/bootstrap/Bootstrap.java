@@ -16,7 +16,7 @@ public class Bootstrap {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    BadgeBalanceRepository badgeBalanceRepository;
+    BadgeBalanceRepository badgeBalance1lanceRepository;
     @Autowired
     BadgeTransactionRepository badgeTransactionRepository;
     @EventListener(ContextRefreshedEvent.class)
@@ -30,10 +30,10 @@ public class Bootstrap {
         User user2=new User("amarjeet@gmail.com","amarjeet","malik",0,0,"12345",0,null, Role.USER,false,true,attachment2);
         User user3=new User("aditya@gmail.com","aditya","singh",0,0,"12345",0,null, Role.USER,false,true,attachment3);
         User user4=new User("dharmendra@gmail.com","dharmendra","saini",0,0,"12345",0,null, Role.USER,false,true,attachment4);
-        BadgeBalance badgeBalance1=new BadgeBalance(user1,2,2,1);
-        BadgeBalance badgeBalance2=new BadgeBalance(user2,3,1,1);
-        BadgeBalance badgeBalance3=new BadgeBalance(user3,2,2,1);
-        BadgeBalance badgeBalance4=new BadgeBalance(user4,3,2,0);
+        BadgeBalance badgeBalance1=new BadgeBalance(user1,2,1,1);
+        BadgeBalance badgeBalance2=new BadgeBalance(user2,3,0,0);
+        BadgeBalance badgeBalance3=new BadgeBalance(user3,0,2,1);
+        BadgeBalance badgeBalance4=new BadgeBalance(user4,3,1,0);
 
         userRepository.save(user1);
         userRepository.save(user2);
@@ -48,6 +48,12 @@ public class Bootstrap {
         BadgeTransaction badgeTransaction2=new BadgeTransaction(user2,user3,new Date("7/6/19"),"reason2",Badge.SILVER);
         BadgeTransaction badgeTransaction3=new BadgeTransaction(user4,user1,new Date("6/4/19"),"reason3",Badge.BRONZE);
         BadgeTransaction badgeTransaction4=new BadgeTransaction(user3,user4,new Date(),"reason4",Badge.GOLD);
+        BadgeTransaction badgeTransaction5=new BadgeTransaction(user1,user4,new Date(),"reason5",Badge.SILVER);
+        BadgeTransaction badgeTransaction6=new BadgeTransaction(user2,user3,new Date(),"reason6",Badge.BRONZE);
+        BadgeTransaction badgeTransaction7=new BadgeTransaction(user3,user2,new Date(),"reason7",Badge.GOLD);
+        BadgeTransaction badgeTransaction8=new BadgeTransaction(user4,user1,new Date(),"reason8",Badge.SILVER);
+        BadgeTransaction badgeTransaction9=new BadgeTransaction(user2,user1,new Date(),"reason9",Badge.SILVER);
+        BadgeTransaction badgeTransaction10=new BadgeTransaction(user3,user4,new Date(),"reason10",Badge.GOLD);
 
 
 
@@ -55,6 +61,12 @@ public class Bootstrap {
         badgeTransactionRepository.save(badgeTransaction2);
         badgeTransactionRepository.save(badgeTransaction3);
         badgeTransactionRepository.save(badgeTransaction4);
+        badgeTransactionRepository.save(badgeTransaction5);
+        badgeTransactionRepository.save(badgeTransaction6);
+        badgeTransactionRepository.save(badgeTransaction7);
+        badgeTransactionRepository.save(badgeTransaction8);
+        badgeTransactionRepository.save(badgeTransaction9);
+        badgeTransactionRepository.save(badgeTransaction10);
 
 
     }
