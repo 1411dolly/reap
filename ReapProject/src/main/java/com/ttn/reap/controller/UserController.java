@@ -3,7 +3,7 @@ package com.ttn.reap.controller;
 import com.ttn.reap.dto.UserDto;
 import com.ttn.reap.entity.BadgeBalance;
 import com.ttn.reap.entity.BadgeTransaction;
-import com.ttn.reap.entity.RecognizeCO;
+import com.ttn.reap.co.RecognizeCO;
 import com.ttn.reap.entity.User;
 import com.ttn.reap.enums.Badge;
 import com.ttn.reap.enums.Role;
@@ -194,22 +194,7 @@ public class UserController {
         return badgeTransactionList;
     }
     
-    @PostMapping("/badges")
-    public ModelAndView badges(HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("badges");
-        long id = (long) session.getAttribute("userId");
-        User user = userService.findUserId(id);
-        BadgeBalance badge = badgeBalanceService.getBadgeById(id);
-        if (user != null)
-            modelAndView.addObject("user", user);
-        else {
-            //do something if user is null
-            System.out.println("user is null in badge mapping");
-        }
-        modelAndView.addObject("badge", badge);
-        return modelAndView;
-    }
-    
+
     @PostMapping("/redeem")
     public ModelAndView redeem(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("redeem");
@@ -229,9 +214,10 @@ public class UserController {
     }
     
     @PostMapping("/manage")
-    public ModelAndView manageUser(@ModelAttribute("user") User user, Model model, HttpSession session) {
+    public ModelAndView manageUser( HttpSession session) {
+        System.out.println(session.getAttribute("userId"));
         ModelAndView modelAndView = new ModelAndView("manageUser");
-        modelAndView.addObject("user", new User());
+//        modelAndView.addObject("user", new User());
         return modelAndView;
     }
     
