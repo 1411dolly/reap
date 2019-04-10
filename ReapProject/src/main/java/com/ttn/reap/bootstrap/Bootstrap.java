@@ -1,6 +1,8 @@
 package com.ttn.reap.bootstrap;
 
 import com.ttn.reap.entity.*;
+import com.ttn.reap.enums.Badge;
+import com.ttn.reap.enums.Role;
 import com.ttn.reap.repository.BadgeBalanceRepository;
 import com.ttn.reap.repository.BadgeTransactionRepository;
 import com.ttn.reap.repository.UserRepository;
@@ -21,6 +23,7 @@ public class Bootstrap {
     BadgeTransactionRepository badgeTransactionRepository;
     @EventListener(ContextRefreshedEvent.class)
     void setup() {
+<<<<<<< HEAD
         //populating user
         Attachment attachment1=new Attachment("/upload/1.jpeg","image/jpeg", new Date());
         Attachment attachment2=new Attachment("/upload/2.jpeg","image/jpeg", new Date());
@@ -34,6 +37,16 @@ public class Bootstrap {
         BadgeBalance badgeBalance2=new BadgeBalance(user2,3,0,0);
         BadgeBalance badgeBalance3=new BadgeBalance(user3,0,2,1);
         BadgeBalance badgeBalance4=new BadgeBalance(user4,3,1,0);
+=======
+        User user1=new User("1411dolly@gmail.com","dolly","singh",0,0,"12345",null, Role.USER,false,true,"/upload/1.jpeg");
+        User user2=new User("amarjeet@gmail.com","amarjeet","malik",0,0,"12345",null, Role.USER,false,true,"/upload/2.jpeg");
+        User user3=new User("aditya@gmail.com","aditya","singh",0,0,"12345",null, Role.USER,false,true,"/upload/3.jpeg");
+        User user4=new User("dharmendra@gmail.com","dharmendra","saini",0,0,"12345",null, Role.USER,true,true,"/upload/4.jpeg");
+        BadgeBalance badgeBalance1=new BadgeBalance(user1,1,2,3);
+        BadgeBalance badgeBalance2=new BadgeBalance(user2,1,2,3);
+        BadgeBalance badgeBalance3=new BadgeBalance(user3,1,2,3);
+        BadgeBalance badgeBalance4=new BadgeBalance(user4,1,2,3);
+>>>>>>> 2b614a0ae2911e001b389bd6ab6ce1c1a95050ec
 
         userRepository.save(user1);
         userRepository.save(user2);
@@ -44,7 +57,7 @@ public class Bootstrap {
         badgeBalanceRepository.save(badgeBalance3);
         badgeBalanceRepository.save(badgeBalance4);
 
-        BadgeTransaction badgeTransaction1=new BadgeTransaction(user1,user2,new Date("4/8/19"),"reason1",Badge.GOLD);
+        BadgeTransaction badgeTransaction1=new BadgeTransaction(user1,user2,new Date("4/8/19"),"reason1", Badge.GOLD);
         BadgeTransaction badgeTransaction2=new BadgeTransaction(user2,user3,new Date("7/6/19"),"reason2",Badge.SILVER);
         BadgeTransaction badgeTransaction3=new BadgeTransaction(user4,user1,new Date("6/4/19"),"reason3",Badge.BRONZE);
         BadgeTransaction badgeTransaction4=new BadgeTransaction(user3,user4,new Date(),"reason4",Badge.GOLD);
@@ -54,8 +67,11 @@ public class Bootstrap {
         BadgeTransaction badgeTransaction8=new BadgeTransaction(user4,user1,new Date(),"reason8",Badge.SILVER);
         BadgeTransaction badgeTransaction9=new BadgeTransaction(user2,user1,new Date(),"reason9",Badge.SILVER);
         BadgeTransaction badgeTransaction10=new BadgeTransaction(user3,user4,new Date(),"reason10",Badge.GOLD);
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 2b614a0ae2911e001b389bd6ab6ce1c1a95050ec
 
         badgeTransactionRepository.save(badgeTransaction1);
         badgeTransactionRepository.save(badgeTransaction2);
@@ -67,7 +83,10 @@ public class Bootstrap {
         badgeTransactionRepository.save(badgeTransaction8);
         badgeTransactionRepository.save(badgeTransaction9);
         badgeTransactionRepository.save(badgeTransaction10);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2b614a0ae2911e001b389bd6ab6ce1c1a95050ec
 
     }
 }

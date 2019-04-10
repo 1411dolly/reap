@@ -1,69 +1,61 @@
 package com.ttn.reap.entity;
 
 import com.ttn.reap.encryption.PasswordHelper;
+import com.ttn.reap.enums.Role;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private long id;
+
     @NotNull
     @Email
     @NotEmpty
     @Column(unique = true)
-    String email;
-    String firstName;
-    String lastName;
+    private String email;
+    private String firstName;
+    private String lastName;
+
     @Transient
-    String name;
-
-    int availPoints;
-
-    int redeemedPoints;
-
-    String password;
-
-    int points;
-
-    String token;
+    private String name;
+    private int availPoints;
+    private int redeemedPoints;
+    private String password;
+    private String token;
 
     @Enumerated(EnumType.STRING)
-    Role role;
+    private Role role;
+    private boolean isAdmin = false;
+    private boolean isActive = false;
+    private String fileName;
 
-    boolean isAdmin = false;
-
-    boolean isActive = false;
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
-    Attachment attachment;
-
-    //COSTRUCTOR
     public User() {
     }
 
-    public User(String email, String firstName, String lastName, int availPoints, int redeemedPoints, String password, int points, String token, Role role, boolean isAdmin, boolean isActive, Attachment attachment) {
+    public User(String email, String firstName, String lastName, int availPoints, int redeemedPoints, String password, String token, Role role, boolean isAdmin, boolean isActive, String fileName) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.availPoints = availPoints;
         this.redeemedPoints = redeemedPoints;
         this.password = PasswordHelper.encrypt(password);
-        this.points = points;
         this.token = token;
         this.role = role;
         this.isAdmin = isAdmin;
         this.isActive = isActive;
-        this.attachment = attachment;
+        this.fileName = fileName;
     }
 
+
     public String getName() {
-        this.setName(this.getFirstName().substring(0,1).toUpperCase()+this.getFirstName().substring(1)+" "+
-                this.getLastName().substring(0,1).toUpperCase()+this.getLastName().substring(1));
+        this.setName(this.getFirstName().substring(0, 1).toUpperCase() + this.getFirstName().substring(1) + " " +
+                this.getLastName().substring(0, 1).toUpperCase() + this.getLastName().substring(1));
         return this.name;
     }
 
@@ -87,7 +79,6 @@ public class User {
         this.redeemedPoints = redeemedPoints;
     }
 
-    //GETTER SETTERS
     public String getToken() {
         return token;
     }
@@ -136,14 +127,6 @@ public class User {
         this.password = PasswordHelper.encrypt(password);
     }
 
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
     public Role getRole() {
         return role;
     }
@@ -168,15 +151,13 @@ public class User {
         isActive = active;
     }
 
-    public Attachment getAttachment() {
-        return attachment;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setAttachment(Attachment attachment) {
-        this.attachment = attachment;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
-    //
-
 
     @Override
     public String toString() {
@@ -189,12 +170,11 @@ public class User {
                 ", availPoints=" + availPoints +
                 ", redeemedPoints=" + redeemedPoints +
                 ", password='" + password + '\'' +
-                ", points=" + points +
                 ", token='" + token + '\'' +
                 ", role=" + role +
                 ", isAdmin=" + isAdmin +
                 ", isActive=" + isActive +
-                ", attachment=" + attachment +
+                ", fileName='" + fileName + '\'' +
                 '}';
     }
 }

@@ -6,12 +6,13 @@ import javax.persistence.*;
 public class BadgeBalance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
-    @OneToOne(cascade = CascadeType.REFRESH,orphanRemoval = true)
-    User userId;
-     int goldCount;
-     int silverCount;
-     int bronzeCount;
+    private long id;
+
+    @OneToOne(cascade = CascadeType.REFRESH, orphanRemoval = true)
+    private User userId;
+    private int goldCount;
+    private int silverCount;
+    private int bronzeCount;
 
     public BadgeBalance(User userId, int goldCount, int silverCount, int bronzeCount) {
         this.userId = userId;

@@ -1,20 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>REAP</title>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
-    <!--        <link rel="stylesheet" type="text/css" href="../css-pages/Badges.css">-->
-    <link rel="stylesheet" th:href="@{/css/Badges.css}"/>
-    <link rel="stylesheet" th:href="@{css/dashStyle.css}"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <link href="../img/ttn.ico" rel="icon" sizes="20x20" type="image/gif"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" th:href="@{css/dashStyle.css}"/>
 </head>
 <body class="wrap">
 
@@ -58,7 +52,8 @@
                 <img alt="notification-bell" id="nav-list-fifth" src="/img/notification-bell.png"/>
             </li>
             <li class="col-md-2 nav-list-pad">
-                <img alt='User Image' class='user-image' data-target="#myModal" data-toggle="modal" th:src="@{${user.getAttachment().getFileName()}}"/>
+                <img alt='User Image' class='user-image' data-target="#myModal" data-toggle="modal"
+                     th:src="@{${user.getFileName()}}"/>
                 <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog">
 
@@ -69,7 +64,7 @@
                             </div>
                             <div class="modal-body" style="height: 100px">
                                 <div class="col-md-3">
-                                    <img alt='User Image' class='user-image' th:src="@{${user.getAttachment().getFileName()}}"/>
+                                    <img alt='User Image' class='user-image' th:src="@{${user.getFileName()}}"/>
                                 </div>
                                 <div class="col-md-3">
                                     <label>Newer Name</label>
@@ -77,6 +72,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label th:text="*{name}"></label>
+                                    <br/>
                                     <label th:text="*{email}"></label>
                                 </div>
                             </div>
@@ -100,85 +96,127 @@
     </div>
 </nav>
 
-
-
-
 <div class="container-fluid nopadding wrap">
-
-    <!--TOP NAV BAR -->
-
-
     <div class="row nopadding lower">
-
-        <!--BADGES AND POINTS AND REDEEM POINTS(LEFT)-->
         <div class="col-sm-4">
-
-            <!-- BADGES -->
             <section class="row fit panel">
                 <!-- BADGE AND POINTS HEADER-->
                 <div class="lefthead "><img class="newer headimg" src="../img/badgewhite.png"/>BADGES AND POINTS</div>
                 <div class="mybadges" style="overflow: hidden">
                     <div class="col-sm-8 nopadding" style="float:left;" th:object="${user}">
                         <!--BADGE PROFILE PIC-->
-                        <div class="profile mybadgesimg"><img class="profileimg" th:src="@{${user.getAttachment().getFileName()}}"/></div>
+                        <div class="profile mybadgesimg"><img class="profileimg" th:src="@{${user.getFileName()}}"/>
+                        </div>
                         <!--BADGE USERNAME-->
                         <div class="mybadgesUsername" th:text="*{name}"></div>
-                        <div th:object="${badge}">
+                        <div>
                             <!--GOLD BADGE-->
                             <span class="star">
                             <img src="../img/badgeOrange.png"/>
-                            <span class="points" th:text="*{goldCount}">0</span>
+                            <span class="points" th:text="${gold}">0</span>
                             </span>
                             <!--SILVER BADGE-->
                             <span class="star mybadgestar">
                             <img src="../img/badgeGrey.png"/>
-                            <span class="points" th:text="*{silverCount}">0</span>
+                            <span class="points" th:text="${silver}">0</span>
                             </span>
                             <!--BRONZE BADGE-->
                             <span class="star mybadgestar">
                             <img src="../img/badgeBrown.png"/>
-                            <span class="points" th:text="*{bronzeCount}">0</span>
+                            <span class="points" th:text="${bronze}">0</span>
                             </span>
                         </div>
                     </div>
                     <!--POINTS-->
                     <div class="col-sm-4 nopadding point_img"><img src="../img/points.png"/></div>
-                    <div class="bottom-left zero">0</div>
+                    <div class="bottom-left zero" th:text="${user.availPoints}">0</div>
                     <div class="bottom-left pts">pts</div>
                 </div>
             </section>
-
-
-            <div class="view">
-                <button class="redeem" >Redeem Points</button>
-            </div>
-
+            <form method="post" th:action="@{/redeem}" th:object="${user}">
+                <div class="view">
+                    <button class="redeem">Redeem Points</button>
+                </div>
+            </form>
         </div>
-
-
-        <!--BADGES INFO NAVIGATION  -->
         <div class="col-sm-8">
+            <ul class="nav nav-tabs topnav" role="tablist">
+                <li class="active"><a href="#all" role="tab" data-toggle="tab">ALL<span>(0)</span></a></li>
+                <li><a href="#shared" role="tab" data-toggle="tab">BADGES SHARED<span>(0)</span></a></li>
+                <li><a href="#recieved" role="tab" data-toggle="tab">BADGES RECIEVED<span>(0)</span></a></li>
+                <li><a href="#redeemed" role="tab" data-toggle="tab">POINTS REDEEMED</a></li>
+            </ul>
+
+            <div class="nodata tab-content">
+                <div class="tab-pane" id="shared">
+
+                    <div class="panel-body" th:each="tranlist:${badgetransactionlistsender}">
+                        <div class="col-md-2">
+                            <img alt='User Image' class='user-image' th:src="@{${tranlist.getReciever().getFileName()}}"/>
+                        </div>
+                        <div class="col-md-9">
+                            <span th:text="${tranlist.getReciever().getName()}"></span>
+                            has recieved
+                            <span th:with="var=${tranlist.getBadge()}">
+                            <span th:if="${var == T(com.ttn.reap.enums.Badge).GOLD}"><img src="/img/badgeOrange.png"/></span>
+                            <span th:if="${var == T(com.ttn.reap.enums.Badge).SILVER}"><img src="/img/badgeGrey.png"/></span>
+                            <span th:if="${var == T(com.ttn.reap.enums.Badge).BRONZE}"><img src="/img/badgeBrown.png"/></span>
+                            </span>
+                            from
+                            <span th:text="${tranlist.getSender().getName()}"></span> for Reason:
+                            <span th:text="${tranlist.getReason()}"></span>
+                        </div>
+                    </div>
+                </div>
 
 
-            <div class="topnav">
-                <a class="active" href="#home">All<span>(0)</span></a>
-                <a th:href="@{/badges/shared}">Badges Shared<span>(0)</span></a>
-                <a href="#contact">Badges Recieved<span>(0)</span></a>
-                <a href="#about">Badge History</a>
-                <a href="#about">Points Redeemed</a>
+                <div class="tab-pane" id="recieved">
+
+                    <div class="panel-body" th:each="tranlist:${badgetransactionlistreciever}">
+                        <div class="col-md-2">
+                            <img alt='User Image' class='user-image' th:src="@{${tranlist.getReciever().getFileName()}}"/>
+                        </div>
+                        <div class="col-md-9">
+                            <span th:text="${tranlist.getReciever().getName()}"></span>
+                            has recieved
+                            <span th:with="var=${tranlist.getBadge()}">
+                            <span th:if="${var == T(com.ttn.reap.enums.Badge).GOLD}"><img src="/img/badgeOrange.png"/></span>
+                            <span th:if="${var == T(com.ttn.reap.enums.Badge).SILVER}"><img src="/img/badgeGrey.png"/></span>
+                            <span th:if="${var == T(com.ttn.reap.enums.Badge).BRONZE}"><img src="/img/badgeBrown.png"/></span>
+                            </span>
+                            from
+                            <span th:text="${tranlist.getSender().getName()}"></span> for Reason:
+                            <span th:text="${tranlist.getReason()}"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane" id="redeemed">redeemed tab</div>
+                <div class="tab-pane active" id="all">
+                    <div class="panel-body" th:each="tranlist:${badgetransactionlistsenderorreciever}">
+                        <div class="col-md-2">
+                            <img alt='User Image' class='user-image' th:src="@{${tranlist.getReciever().getFileName()}}"/>
+                        </div>
+                        <div class="col-md-9">
+                            <span th:text="${tranlist.getReciever().getName()}"></span>
+                            has recieved
+                            <span th:with="var=${tranlist.getBadge()}">
+                            <span th:if="${var == T(com.ttn.reap.enums.Badge).GOLD}"><img src="/img/badgeOrange.png"/></span>
+                            <span th:if="${var == T(com.ttn.reap.enums.Badge).SILVER}"><img src="/img/badgeGrey.png"/></span>
+                            <span th:if="${var == T(com.ttn.reap.enums.Badge).BRONZE}"><img src="/img/badgeBrown.png"/></span>
+                            </span>
+                            from
+                            <span th:text="${tranlist.getSender().getName()}"></span> for Reason:
+                            <span th:text="${tranlist.getReason()}"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="nodata">No data found</div>
-
         </div>
-
-
     </div>
-
-
 </div>
 
-<script src="../javascripts/ReapHomePage.js" type="text/javascript"></script>
-
+<script src="/js/badges.js"></script>
 </body>
 </html>

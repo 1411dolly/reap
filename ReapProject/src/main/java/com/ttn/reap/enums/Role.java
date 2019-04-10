@@ -1,7 +1,4 @@
-package com.ttn.reap.entity;
-
-import javax.persistence.Embeddable;
-
+package com.ttn.reap.enums;
 
 public enum Role {
     USER("USER"), SUPERVISOR("SUPERVISOR"), PRACTICE_HEAD("PRACTICE_HEAD");

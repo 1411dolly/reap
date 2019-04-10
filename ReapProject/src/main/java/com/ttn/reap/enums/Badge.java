@@ -1,6 +1,4 @@
-package com.ttn.reap.entity;
-
-import javax.persistence.Embeddable;
+package com.ttn.reap.enums;
 
 public enum Badge {
     GOLD(30), SILVER(20), BRONZE(10);
