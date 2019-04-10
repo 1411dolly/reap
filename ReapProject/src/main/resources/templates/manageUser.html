@@ -30,10 +30,12 @@
                 </a>
             </li>
             <li class="col-md-2 nav-list-pad">
-                <button class="" id="dashboard">
-                    <img class="pic" src="/img/dashboard.png"/>
-                    Dashboard
-                </button>
+                <form method="get" th:action="@{/dashboard}"> <!--th:object="${user}"-->
+                    <button id="dashboard" type="submit">
+                        <img class="pic" src="/img/dashboard.png"/>
+                        Dashboard
+                    </button>
+                </form>
             </li>
             <li class="col-md-2 nav-list-pad">
                 <form method="post" th:action="@{/badges}" th:object="${user}">
@@ -44,7 +46,7 @@
                 </form>
             </li>
             <li class="col-md-2 nav-list-pad">
-                <a href="" id="nav-list-fourth">
+                <a id="nav-list-fourth">
                     <img alt="certificate" id="certificate" src="/img/certificate1.png"
                          style="width: 21px;height: 23px;margin-left: -2%"/>
                     Certificate
@@ -73,7 +75,7 @@
                                     <label>Email id</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <label th:text="*{firstName}"></label>
+                                    <label th:text="*{firstName}"></label><br/>
                                     <label th:text="*{email}"></label>
                                 </div>
                             </div>
@@ -159,6 +161,7 @@
         </div>
     </div>
 </section>
+
 <section class="container-fluid back-color">
     <div>
         <div class="col-md-2">

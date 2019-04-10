@@ -18,6 +18,4 @@ public interface BadgeBalanceRepository extends JpaRepository<BadgeBalance,Long>
     List<Object[]> getallbycount();
 
     List<BadgeBalance> */
-
-
 }

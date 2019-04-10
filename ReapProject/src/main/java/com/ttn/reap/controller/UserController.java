@@ -1,9 +1,9 @@
 package com.ttn.reap.controller;
 
+import com.ttn.reap.co.RecognizeCO;
 import com.ttn.reap.dto.UserDto;
 import com.ttn.reap.entity.BadgeBalance;
 import com.ttn.reap.entity.BadgeTransaction;
-import com.ttn.reap.co.RecognizeCO;
 import com.ttn.reap.entity.User;
 import com.ttn.reap.enums.Badge;
 import com.ttn.reap.enums.Role;
@@ -62,7 +62,7 @@ public class UserController {
             //check id doesnt exist or duplicate id .......this is kaam chalau code
             model.addAttribute("err", "Only unique email allowed!!!");
         }
-        System.out.println(user);
+        System.out.println("registered!!!"+user);
         return "login";
     }
 
@@ -79,10 +79,12 @@ public class UserController {
     String user(@ModelAttribute("user") User user, Model model, HttpSession session) {
         System.out.print("user_dashboard::" + user.toString());
         User checkuser = userService.checkemailandpassword(user.getEmail(), user.getPassword());
+        System.out.println("checkuser id:::"+checkuser.getId());
         BadgeBalance badge = badgeBalanceService.getBadgeById(checkuser.getId());
-        int gold=badgeTransactionService.countByRecieverAndBadge(checkuser, Badge.GOLD);
-        int silver=badgeTransactionService.countByRecieverAndBadge(checkuser, Badge.SILVER);
-        int bronze=badgeTransactionService.countByRecieverAndBadge(checkuser, Badge.BRONZE);
+        System.out.println("badge in user:::"+badge.toString());
+        int gold = badgeTransactionService.countByRecieverAndBadge(checkuser, Badge.GOLD);
+        int silver = badgeTransactionService.countByRecieverAndBadge(checkuser, Badge.SILVER);
+        int bronze = badgeTransactionService.countByRecieverAndBadge(checkuser, Badge.BRONZE);
         List<BadgeBalance> badgeBalanceList = badgeBalanceService.getbalancecount().subList(0, 3);
         List<BadgeTransaction> badgeTransactionList = badgeTransactionService.findAllByOrderByDateDesc().subList(0, 3);
         boolean role = getRoleofUser(checkuser);
@@ -96,21 +98,50 @@ public class UserController {
             model.addAttribute("user", checkuser);
             model.addAttribute("badge", badge);
             model.addAttribute("role", role);
-            model.addAttribute("gold",gold);
-            model.addAttribute("silver",silver);
-            model.addAttribute("bronze",bronze);
-            model.addAttribute("recognizeco",new RecognizeCO());
+            model.addAttribute("gold", gold);
+            model.addAttribute("silver", silver);
+            model.addAttribute("bronze", bronze);
+            model.addAttribute("recognizeco", new RecognizeCO());
             return "dashboard";
         }
     }
 
+    @GetMapping("/dashboard")
+    public ModelAndView dashboard(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("dashboard");
+        if (session.getAttribute("userId") == null) {
+            //do something to handle it
+        } else {
+            long id = (long) session.getAttribute("userId");
+            System.out.println("getmapping::dashboard::userId:: " + id);
+            User user = userService.findUserId(id);
+            modelAndView.addObject("user", user);
+            BadgeBalance badge = badgeBalanceService.getBadgeById(user.getId());
+            int gold = badgeTransactionService.countByRecieverAndBadge(user, Badge.GOLD);
+            int silver = badgeTransactionService.countByRecieverAndBadge(user, Badge.SILVER);
+            int bronze = badgeTransactionService.countByRecieverAndBadge(user, Badge.BRONZE);
+            List<BadgeBalance> badgeBalanceList = badgeBalanceService.getbalancecount().subList(0, 3);
+            List<BadgeTransaction> badgeTransactionList = badgeTransactionService.findAllByOrderByDateDesc().subList(0, 3);
+            boolean role = getRoleofUser(user);
+            session.setAttribute("userId", user.getId());
+            modelAndView.addObject("badgelist", badgeBalanceList);
+            modelAndView.addObject("badgetransactionlist", badgeTransactionList);
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("badge", badge);
+            modelAndView.addObject("role", role);
+            modelAndView.addObject("gold", gold);
+            modelAndView.addObject("silver", silver);
+            modelAndView.addObject("bronze", bronze);
+            modelAndView.addObject("recognizeco", new RecognizeCO());
+        }
+        return modelAndView;
+    }
 
     private boolean getRoleofUser(User checkuser) {
         if (checkuser.getRole().equals(Role.USER))
             return true;
         else return false;
     }
-
 
     @GetMapping("logout")
     private String logout(HttpSession httpSession) {
@@ -168,6 +199,7 @@ public class UserController {
     public ModelAndView badges(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("badges");
         long id = (long) session.getAttribute("userId");
+        System.out.println("userId in bages:: " + id);
         User user = userService.findUserId(id);
         BadgeBalance badge = badgeBalanceService.getBadgeById(id);
         if (user != null)
@@ -199,18 +231,20 @@ public class UserController {
     }
 
     @PostMapping("/manage")
-    public ModelAndView manageUser(@ModelAttribute("user") User user, Model model, HttpSession session) {
+    public ModelAndView manageUser(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("manageUser");
-        modelAndView.addObject("user", new User());
+        long id = (Long) session.getAttribute("userId");
+        User user = userService.findUserId(id);
+        modelAndView.addObject("user", user);
         return modelAndView;
     }
-    
+
     @GetMapping("getUserListActive")
     @ResponseBody
     public List<UserDto> getUserListActive(@RequestParam String term, @RequestParam String user_id) {
         return userService.simulateSearchResult(term, Long.parseLong(user_id));
     }
-    
+
     @PostMapping("recognize")
     public void recognizeNewer(@ModelAttribute RecognizeCO recognizeCO) {
         int s = recognizeCO.getReceiver_email().indexOf("(");

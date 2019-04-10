@@ -8,6 +8,7 @@ import com.ttn.reap.repository.BadgeTransactionRepository;
 import com.ttn.reap.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -62,6 +63,5 @@ public class Bootstrap {
         badgeTransactionRepository.save(badgeTransaction8);
         badgeTransactionRepository.save(badgeTransaction9);
         badgeTransactionRepository.save(badgeTransaction10);
-
     }
 }

@@ -17,8 +17,7 @@ public class PurchaseHistory {
     private Date purchaseTimestamp;
     private int purchaseQuantity;
 
-    public PurchaseHistory(Long id, User userId, Item itemId, Date purchaseTimestamp, int purchaseQuantity) {
-        this.id = id;
+    public PurchaseHistory(User userId, Item itemId, Date purchaseTimestamp, int purchaseQuantity) {
         this.userId = userId;
         this.itemId = itemId;
         this.purchaseTimestamp = purchaseTimestamp;
