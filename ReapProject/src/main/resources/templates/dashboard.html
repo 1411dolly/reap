@@ -74,6 +74,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label th:text="*{name}"></label>
+                                    <br/>
                                     <label th:text="*{email}"></label>
                                 </div>
                             </div>
@@ -84,7 +85,7 @@
                                         Manage
                                     </button>
                                 </form>
-                                <a class="col-md-6" href="login" style="text-align: center;text-decoration: none">
+                                <a class="col-md-6" href="/logout" style="text-align: center;text-decoration: none">
                                     <img alt="logout" src="/img/logout.png"/>
                                     Logout
                                 </a>
@@ -141,9 +142,8 @@
                     <span class="glyphicon glyphicon-search form-control-feedback"></span>
                     <input class="form-control" placeholder="Search" type="text"/>
                 </div>
-                <img alt="calender" class="pull-right user-image2" src="/img/cal.png" style="margin-left: 10px"
-                     th:if="${role}"/>
-                <img alt="csv-download" class="pull-right user-image2" src="/img/download.png" th:unless="${role}"/>
+                <img alt="calender" class="pull-right user-image2" src="/img/cal.png" style="margin-left: 10px" />
+                <img alt="csv-download" class="pull-right user-image2" src="/img/download.png" th:if="${role}"/>
             </div>
             <div class="panel-body" th:each="tranlist:${badgetransactionlist}">
                 <div class="col-md-2">
@@ -166,7 +166,7 @@
                     <span th:text="${tranlist.getReason()}"></span>
                 </div>
                 <div class="col-md-1">
-                    <img src="/img/delete.png" th:unless="${role}"/>
+                    <img src="/img/delete.png" th:if="${role}"/>
                 </div>
             </div>
         </div>

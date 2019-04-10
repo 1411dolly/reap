@@ -20,4 +20,7 @@ public interface BadgeTransactionRepository extends JpaRepository<BadgeTransacti
     List<BadgeTransaction> findAllByOrderByDateDesc();
     Integer countByRecieverAndBadge(@Param("reciever")User reciever, @Param("badge")Badge badge);
 
+    List<BadgeTransaction> findAllByRecieverOrderByDateDesc(@Param("reciever")User reciever);
+    List<BadgeTransaction> findAllBySenderOrderByDateDesc(@Param("sender")User reciever);
+    List<BadgeTransaction> findAllBySenderOrRecieverOrderByDateDesc(@Param("sender")User sender,@Param("reciever")User reciever);
 }

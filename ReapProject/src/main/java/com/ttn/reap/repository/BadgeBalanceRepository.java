@@ -1,6 +1,7 @@
 package com.ttn.reap.repository;
 
 import com.ttn.reap.entity.BadgeBalance;
+import com.ttn.reap.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -18,4 +19,6 @@ public interface BadgeBalanceRepository extends JpaRepository<BadgeBalance,Long>
     List<Object[]> getallbycount();
 
     List<BadgeBalance> */
+
+   BadgeBalance findByUserId(User user);
 }

@@ -26,10 +26,12 @@
                 </a>
             </li>
             <li class="col-md-2 nav-list-pad">
-                <a id="nav-list-second">
-                    <img alt="dashboard" id="dashboard-image" src="/img/dashboard2.png"/>
-                    Dashboard
-                </a>
+                <form method="get" th:action="@{/user}">
+                    <button id="dashboard" type="submit">
+                        <img class="pic" src="/img/dashboard.png"/>
+                        Dashboard
+                    </button>
+                </form>
             </li>
             <li class="col-md-2 nav-list-pad">
                 <form method="post" th:action="@{/badges}" th:object="${user}">

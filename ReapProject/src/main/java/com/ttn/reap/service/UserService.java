@@ -1,8 +1,10 @@
 package com.ttn.reap.service;
 
 import com.ttn.reap.dto.UserDto;
-import com.ttn.reap.entity.User;
+
+import com.ttn.reap.enums.Badge;
 import com.ttn.reap.enums.Role;
+import com.ttn.reap.entity.User;
 import com.ttn.reap.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,10 +65,10 @@ public class UserService {
         }
         return result;
     }
-/*
-    public void updatePointsRecognize(User sender, User receiver,){
-    
-    }*/
 
-
+    @Transactional
+    public void updatePointsRecognize(User receiver, Badge badge){
+    User user = userRepository.findUserByEmail(receiver.getEmail()).get();
+    user.setAvailPoints(user.getAvailPoints()+badge.getValue());
+    }
 }
