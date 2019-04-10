@@ -6,7 +6,10 @@ import com.ttn.reap.enums.Badge;
 import com.ttn.reap.repository.BadgeTransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +17,8 @@ import java.util.List;
 public class BadgeTransactionService {
     @Autowired
     BadgeTransactionRepository badgeTransactionRepository;
+    @Autowired
+    BadgeBalanceService badgeBalanceService;
     
     public List<BadgeTransaction> findAllByOrderByDateDesc(){
         return badgeTransactionRepository.findAllByOrderByDateDesc();
@@ -30,8 +35,10 @@ public class BadgeTransactionService {
     {
         return badgeTransactionRepository.countByRecieverAndBadge(user,badge);
     }
+    
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void saveNewTranscation(User sender, User receiver, Date date, String reason, Badge badge){
         badgeTransactionRepository.save(new BadgeTransaction(sender,receiver,date,reason,badge));
+        badgeBalanceService.substractBadgeBalance(sender,receiver,badge);
     }
-    
 }

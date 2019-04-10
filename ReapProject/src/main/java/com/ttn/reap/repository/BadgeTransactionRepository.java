@@ -19,5 +19,6 @@ public interface BadgeTransactionRepository extends JpaRepository<BadgeTransacti
     List<BadgeTransaction> findAllByDateBetween(Date start, Date end);
     List<BadgeTransaction> findAllByOrderByDateDesc();
     Integer countByRecieverAndBadge(@Param("reciever")User reciever, @Param("badge")Badge badge);
+    
 
 }

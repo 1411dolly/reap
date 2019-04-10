@@ -24,18 +24,18 @@ $("#searchNewer").autocomplete({
     }
 });
 
-var $form = $('#recognise_form');
-$form.on('submit', function(e) {
-    e.preventDefault();
-    $.ajax({
-        url: $form.attr('action'),
-        type: 'post',
-        data: $form.serialize(),
-        success: function(data)
-        {
-            alert("recognized");
-        }
-    });
-
-    return false;
-});
+// var $form = $('#recognise_form');
+// $form.on('submit', function(e) {
+//     e.preventDefault();
+//     $.ajax({
+//         url: $form.attr('action'),
+//         type: 'post',
+//         data: $form.serialize(),
+//         success: function(data)
+//         {
+//             alert("recognized");
+//         }
+//     });
+//
+//     return false;
+// });
