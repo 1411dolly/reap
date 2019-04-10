@@ -114,7 +114,7 @@
                         <select th:field="*{badge_val}">
                             <div th:object="${badge}">
                                 <option value="">Select a Badge</option>
-                                <option value="gold">Gold(<span th:text="*{goldCount}"></span>)</option>
+                                <option value="gold">Gold(<span th:text="${badge.getGoldCount()}"></span>)</option>
                                 <option value="silver">Silver(<span th:text="*{silverCount}"></span>)</option>
                                 <option value="bronze">Bronze(<span th:text="*{bronzeCount}"></span>)</option>
                             </div>

@@ -1,13 +1,12 @@
 package com.ttn.reap.controller;
 
+import com.ttn.reap.co.RecognizeCO;
 import com.ttn.reap.dto.UserDto;
 import com.ttn.reap.entity.BadgeBalance;
 import com.ttn.reap.entity.BadgeTransaction;
-import com.ttn.reap.co.RecognizeCO;
 import com.ttn.reap.entity.User;
 import com.ttn.reap.enums.Badge;
 import com.ttn.reap.enums.Role;
-import com.ttn.reap.repository.UserRepository;
 import com.ttn.reap.service.*;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.jws.WebParam;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
@@ -28,10 +26,7 @@ import java.util.UUID;
 
 @Controller
 public class UserController {
-    
-    @Autowired
-    UserRepository userRepository;
-    
+
     @Autowired
     UserService userService;
     @Value("${spring.mail.username}")
@@ -42,23 +37,23 @@ public class UserController {
     private EmailService emailService;
     @Autowired
     private BadgeBalanceService badgeBalanceService;
-    
+
     @Autowired
     private BadgeTransactionService badgeTransactionService;
-    
-    
+
+
     @GetMapping("/")
-    String main(HttpSession session, Model model){
-      return sessionCheck(session,model);
+    String main(HttpSession session, Model model) {
+        return sessionCheck(session, model);
     }
-    
+
     @GetMapping("signup")
     ModelAndView register() {
         ModelAndView modelAndView = new ModelAndView("signup");
         modelAndView.addObject("user", new User());
         return modelAndView;
     }
-    
+
     @PostMapping("register")
     String submit(Model model, @ModelAttribute("user") User user, @RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
@@ -70,26 +65,25 @@ public class UserController {
             //check id doesnt exist or duplicate id .......this is kaam chalau code
             model.addAttribute("err", "Only unique email allowed!!!");
         }
-        System.out.println(user);
+        System.out.println("registered!!!" + user);
         return "login";
     }
-    
+
     @GetMapping("register")
-    String checkRegister(){
+    String checkRegister() {
         return "redirect:/";
     }
+
     @GetMapping("login")
     ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView("login");
         modelAndView.addObject("user", new User());
         return modelAndView;
     }
-    
-    
+
     //check for ADMIN and redirect to admin dashboard.....now user dashboard......
     @PostMapping("user")
     String user(@ModelAttribute("user") User user, Model model, HttpSession session) {
-        System.out.print("user_dashboard::" + user.toString());
         User checkuser = userService.checkemailandpassword(user.getEmail(), user.getPassword());
         if (checkuser == null) {
             model.addAttribute("valid", "Enter valid username and password!!!");
@@ -99,7 +93,7 @@ public class UserController {
             return dashboardData(checkuser, model);
         }
     }
-    
+
     private String dashboardData(User checkuser, Model model) {
         BadgeBalance badge = badgeBalanceService.getBadgeById(checkuser.getId());
         int gold = badgeTransactionService.countByRecieverAndBadge(checkuser, Badge.GOLD);
@@ -119,40 +113,39 @@ public class UserController {
         model.addAttribute("recognizeco", new RecognizeCO());
         return "dashboard";
     }
-    
+
     @GetMapping("user")
     String user(HttpSession session, Model model) {
-        return sessionCheck(session,model);
+        return sessionCheck(session, model);
     }
-    
-    String sessionCheck(HttpSession session, Model model){
+
+    String sessionCheck(HttpSession session, Model model) {
         if (session.getAttribute("userId") != null) {
-            User user = userService.findUserId((long)session.getAttribute("userId"));
-            return dashboardData(user,model);
-        }else{
+            User user = userService.findUserId((long) session.getAttribute("userId"));
+            return dashboardData(user, model);
+        } else {
             return "redirect:/login";
         }
     }
-    
+
     private boolean getRoleofUser(User checkuser) {
-        if(checkuser.getRole().equals(Role.USER))
+        if (checkuser.getRole().equals(Role.USER))
             return true;
         else
             return false;
     }
-    
-    
+
     @GetMapping("logout")
     private String logout(HttpSession httpSession) {
         httpSession.invalidate();
-        return "redirect:/signup";
+        return "redirect:/login";
     }
-    
+
     @GetMapping("forgotPassword")
     public String forgotPassword() {
         return "forgotPassword";
     }
-    
+
     @GetMapping("forgotSubmit")
     public String forgotSubmit(@RequestParam String email, HttpServletRequest request, Model model) {
         User user = userService.findUserByEmail(email);
@@ -168,14 +161,14 @@ public class UserController {
         model.addAttribute(new User());
         return "signup";
     }
-    
+
     @GetMapping("/reset")
     public String resetPassByToken(@RequestParam("token") String token, Model model) {
         model.addAttribute("token", token);
         model.addAttribute("user", new User());
         return "resetPassword";
     }
-    
+
     @PostMapping("resetPassword")
     public String resetPassword(@RequestParam Map<String, String> requestParamas, Model model) {
         System.out.println(requestParamas.get("token"));
@@ -186,14 +179,13 @@ public class UserController {
         model.addAttribute("user", new User());
         return "signup";
     }
-    
+
     @GetMapping("data")
     @ResponseBody
     public List<BadgeTransaction> getdata() {
         List<BadgeTransaction> badgeTransactionList = badgeTransactionService.findAllByOrderByDateDesc();
         return badgeTransactionList;
     }
-    
 
     @PostMapping("/redeem")
     public ModelAndView redeem(HttpSession session) {
@@ -205,28 +197,29 @@ public class UserController {
         modelAndView.addObject("badge", badge);
         return modelAndView;
     }
-    
+
     @GetMapping("/sample")
     public ModelAndView modal() {
         ModelAndView modelAndView = new ModelAndView("sample");
         modelAndView.addObject("user", new User());
         return modelAndView;
     }
-    
+
     @PostMapping("/manage")
-    public ModelAndView manageUser( HttpSession session) {
-        System.out.println(session.getAttribute("userId"));
+    public ModelAndView manageUser(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("manageUser");
-//        modelAndView.addObject("user", new User());
+        long id = (Long) session.getAttribute("userId");
+        User user = userService.findUserId(id);
+        modelAndView.addObject("user", user);
         return modelAndView;
     }
-    
+
     @GetMapping("getUserListActive")
     @ResponseBody
     public List<UserDto> getUserListActive(@RequestParam String term, @RequestParam String user_id) {
         return userService.simulateSearchResult(term, Long.parseLong(user_id));
     }
-    
+
     @PostMapping("recognize")
     public String recognizeNewer(@ModelAttribute RecognizeCO recognizeCO) {
         int s = recognizeCO.getReceiver_email().indexOf("(");
@@ -245,5 +238,5 @@ public class UserController {
         badgeTransactionService.saveNewTranscation(sender, receiver, new Date(), recognizeCO.getMessage_val(), badge);
         return "redirect:/user";
     }
-    
+
 }

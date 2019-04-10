@@ -15,8 +15,7 @@ public class Item {
     private String imageSource;
     private int quantity;
 
-    public Item(Long id, String itemName, int itemValue, String imageSource, int quantity) {
-        this.id = id;
+    public Item(String itemName, int itemValue, String imageSource, int quantity) {
         this.itemName = itemName;
         this.itemValue = itemValue;
         this.imageSource = imageSource;

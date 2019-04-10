@@ -1,6 +1,5 @@
 package com.ttn.reap.co;
 
-
 public class RecognizeCO {
     private String sender_email;
     private String badge_val;

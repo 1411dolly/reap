@@ -1,6 +1,7 @@
 package com.ttn.reap.service;
 
 import com.ttn.reap.dto.UserDto;
+
 import com.ttn.reap.enums.Badge;
 import com.ttn.reap.enums.Role;
 import com.ttn.reap.entity.User;
@@ -45,16 +46,17 @@ public class UserService {
         return userRepository.findById(id);
 //        return userRepository.findById(id).orElse(null);
     }
-    public List<UserDto> findAllByActive(Long id){
+
+    public List<UserDto> findAllByActive(Long id) {
         List<UserDto> userDtos = new ArrayList<>();
-        userRepository.findAllByIsActiveTrueAndIdIsNot(id).stream().forEach(e->userDtos.add(new UserDto(e.getName(),e.getEmail())));
+        userRepository.findAllByIsActiveTrueAndIdIsNot(id).stream().forEach(e -> userDtos.add(new UserDto(e.getName(), e.getEmail())));
         return userDtos;
     }
-    
+
     public List<UserDto> simulateSearchResult(String tagName, Long id) {
-        
+
         List<UserDto> result = new ArrayList<>();
-        
+
         // iterate a list and filter by tagName
         for (UserDto uto : findAllByActive(id)) {
             if (uto.getName().toLowerCase().contains(tagName.toLowerCase())) {
@@ -63,6 +65,7 @@ public class UserService {
         }
         return result;
     }
+
     @Transactional
     public void updatePointsRecognize(User receiver, Badge badge){
     User user = userRepository.findUserByEmail(receiver.getEmail()).get();
