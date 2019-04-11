@@ -8,6 +8,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link href="../img/ttn.ico" rel="icon" sizes="20x20" type="image/gif"/>
     <link rel="stylesheet" th:href="@{css/dashStyle.css}"/>
+    <link rel="stylesheet" th:href="@{css/redeem.css}"/>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top navbar-expand-md main-header">
@@ -72,6 +73,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label th:text="*{name}"></label>
+                                    <br/>
                                     <label th:text="*{email}"></label>
                                 </div>
                             </div>
@@ -100,7 +102,7 @@
     <div class="row nopadding lower">
         <div class="col-sm-4">
             <section class="row fit panel">
-                <div class="lefthead "><img class="newer headimg" src="../img/badgewhite.png"/>BADGES AND POINTS</div>
+                <div class="lefthead " style="background-color: #9093c5"><img class="newer headimg" src="../img/badgewhite.png"/>BADGES AND POINTS</div>
                 <div class="mybadges" style="overflow: hidden">
                     <div class="col-sm-8 nopadding" style="float:left;" th:object="${user}">
                         <div class="profile mybadgesimg"><img class="profileimg" th:src="@{${user.getFileName()}}"/>
@@ -131,50 +133,81 @@
                 </div>
             </section>
             <section class="row fit panel">
-                <div class="lefthead "><img class="newer headimg" src="../img/badgewhite.png"/>BADGES AND POINTS</div>
-                <div class="mybadges" style="overflow: hidden">
-                    <div class="col-sm-8 nopadding" style="float:left;" th:object="${user}">
-                        <div class="profile mybadgesimg"><img class="profileimg" th:src="@{${user.getFileName()}}"/>
-                        </div>
-                        <div class="mybadgesUsername" th:text="*{name}"></div>
-                        <div th:object="${badge}">
-                            <!--GOLD BADGE-->
-                            <span class="star">
-                            <img src="../img/badgeOrange.png"/>
-                            <span class="points" th:text="*{goldCount}">0</span>
-                            </span>
-                            <!--SILVER BADGE-->
-                            <span class="star mybadgestar">
-                            <img src="../img/badgeGrey.png"/>
-                            <span class="points" th:text="*{silverCount}">0</span>
-                            </span>
-                            <!--BRONZE BADGE-->
-                            <span class="star mybadgestar">
-                            <img src="../img/badgeBrown.png"/>
-                            <span class="points" th:text="*{bronzeCount}">0</span>
-                            </span>
-                        </div>
-                    </div>
-                    <!--POINTS-->
-                    <div class="col-sm-4 nopadding point_img"><img src="../img/points.png"/></div>
-                    <div class="bottom-left zero">0</div>
-                    <div class="bottom-left pts">pts</div>
+                <div class="lefthead " style="background-color: #9093c5"><img class="newer headimg"/><span class="glyphicon glyphicon-shopping-cart"></span> BAG</div>
+                <div class="row ">
+                    <div class="col-sm-6 fontstyle">Item Details</div>
+                    <div class="col-sm-3 fontstyle">Quantity</div>
+                    <div class="col-sm-3 fontstyle">Subtotal</div>
                 </div>
+                <div class="row ">
+                    <div class="col-sm-2"><img class="itemimg" src="../img/dummy.jpeg"/></div>
+                    <div class="col-sm-4">Item1</div>
+                    <div class="col-sm-2"><select>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option></select></div>
+                    <div class="col-sm-3">Subtotal</div>
+                    <span class="col-sm-2 close">&times;</span>
+                </div>
+                <div class="row ">
+                        <div class="col-sm-6 fontstyle points">Total</div>
+                        <div class="col-sm-6 fontstyle points pointstyle">Points</div>
+                </div>
+                <button class="row redeem">REDEEM POINTS</button>
             </section>
-
-            <div class="view">
-                <button class="redeem">Redeem Points</button>
-            </div>
         </div>
 
 
         <div class="col-sm-8">
-            <div class="topnav">
-                <a class="active" href="#home">All<span>(0)</span></a>
-
+            <div class="lefthead " style="background-color: #9093c5"><img class="newer headimg"/><span class="glyphicon glyphicon-shopping-cart"></span> REAP NOW</div>
+            <div class=" row items">
+                <div class="col-sm-4 item">
+                    <div><img class="imgitems" src="../img/dummy.jpeg"/></div>
+                    <button class="row point">REDEEM POINTS</button>
+                    <div class="itemname">SIPPER</div>
+                </div>
+                <div class="col-sm-4 item">
+                    <div><img class="imgitems" src="../img/dummy.jpeg"/></div>
+                    <button class="row point">REDEEM POINTS</button>
+                    <div class="itemname">SIPPER</div>
+                </div>
+                <div class="col-sm-4 item">
+                    <div><img class="imgitems" src="../img/dummy.jpeg"/></div>
+                    <button class="row point">REDEEM POINTS</button>
+                    <div class="itemname">SIPPER</div>
+                </div>
+                <div class="col-sm-4 item">
+                    <div><img class="imgitems" src="../img/dummy.jpeg"/></div>
+                    <button class="row point">REDEEM POINTS</button>
+                    <div class="itemname">SIPPER</div>
+                </div>
+                <div class="col-sm-4 item">
+                    <div><img class="imgitems" src="../img/dummy.jpeg"/></div>
+                    <button class="row point">REDEEM POINTS</button>
+                    <div class="itemname">SIPPER</div>
+                </div>
+                <div class="col-sm-4 item">
+                    <div><img class="imgitems" src="../img/dummy.jpeg"/></div>
+                    <button class="row point">REDEEM POINTS</button>
+                    <div class="itemname">SIPPER</div>
+                </div>
+                <div class="col-sm-4 item">
+                    <div><img class="imgitems" src="../img/dummy.jpeg"/></div>
+                    <button class="row point">REDEEM POINTS</button>
+                    <div class="itemname">SIPPER</div>
+                </div>
+                <div class="col-sm-4 item">
+                    <div><img class="imgitems" src="../img/dummy.jpeg"/></div>
+                    <button class="row point">REDEEM POINTS</button>
+                    <div class="itemname">SIPPER</div>
+                </div>
+                <div class="col-sm-4 item">
+                    <div><img class="imgitems" src="../img/dummy.jpeg"/></div>
+                    <button class="row point">REDEEM POINTS</button>
+                    <div class="itemname">SIPPER</div>
+                </div>
             </div>
-            <div class="nodata">No data found</div>
-
         </div>
 
 
