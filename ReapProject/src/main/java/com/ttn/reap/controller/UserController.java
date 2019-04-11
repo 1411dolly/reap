@@ -1,6 +1,7 @@
 package com.ttn.reap.controller;
 
 import com.ttn.reap.co.RecognizeCO;
+import com.ttn.reap.dto.BadgeTransactionDto;
 import com.ttn.reap.dto.UserDto;
 import com.ttn.reap.entity.BadgeBalance;
 import com.ttn.reap.entity.BadgeTransaction;
@@ -19,10 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
@@ -96,13 +95,27 @@ public class UserController {
 
     private String dashboardData(User checkuser, Model model) {
         BadgeBalance badge = badgeBalanceService.getBadgeById(checkuser.getId());
-        int gold = badgeTransactionService.countByRecieverAndBadge(checkuser, Badge.GOLD);
-        int silver = badgeTransactionService.countByRecieverAndBadge(checkuser, Badge.SILVER);
-        int bronze = badgeTransactionService.countByRecieverAndBadge(checkuser, Badge.BRONZE);
-        List<BadgeBalance> badgeBalanceList = badgeBalanceService.getbalancecount().subList(0, 3);
-        List<BadgeTransaction> badgeTransactionList = badgeTransactionService.findAllByOrderByDateDesc().subList(0, 3);
+        long gold = badgeTransactionService.countByReceiverAndBadge(checkuser, Badge.GOLD);
+        long silver = badgeTransactionService.countByReceiverAndBadge(checkuser, Badge.SILVER);
+        long bronze = badgeTransactionService.countByReceiverAndBadge(checkuser, Badge.BRONZE);
+        List<BadgeTransaction> badgeTransactionList = badgeTransactionService.findAllByOrderByDateDesc();
+        List<BadgeTransactionDto> badgeTransactionDtos=badgeTransactionService.findMaxBadgeCount().subList(0,3);
+        List<User> userList=badgeTransactionDtos.stream().map(BadgeTransactionDto::getReceiver).collect(Collectors.toList());
+        System.out.println("userlist:::"+userList);
+        int i=0;
+        List<Long> goldList=new ArrayList<>();
+        List<Long> silverList=new ArrayList<>();
+        List<Long> bronzeList=new ArrayList<>();
+        for(i=0;i<3;i++)
+        {
+            long golditem=badgeTransactionService.countByReceiverAndBadge(userList.get(i),Badge.GOLD);
+            long silveritem=badgeTransactionService.countByReceiverAndBadge(userList.get(i),Badge.SILVER);
+            long bronzeitem=badgeTransactionService.countByReceiverAndBadge(userList.get(i),Badge.BRONZE);
+            goldList.add(golditem);
+            silverList.add(silveritem);
+            bronzeList.add(bronzeitem);
+        }
         boolean role = checkuser.isAdmin();
-        model.addAttribute("badgelist", badgeBalanceList);
         model.addAttribute("badgetransactionlist", badgeTransactionList);
         model.addAttribute("user", checkuser);
         model.addAttribute("badge", badge);
@@ -111,7 +124,21 @@ public class UserController {
         model.addAttribute("silver", silver);
         model.addAttribute("bronze", bronze);
         model.addAttribute("recognizeco", new RecognizeCO());
+        model.addAttribute("newer",badgeTransactionDtos);
+        model.addAttribute("goldlist",goldList);
+        model.addAttribute("silverlist",silverList);
+        model.addAttribute("bronzelist",bronzeList);
         return "dashboard";
+    }
+
+
+    @GetMapping("data")
+    @ResponseBody
+    public List<BadgeTransactionDto> data() {
+
+//        List<User> user=badgeTransactionService.findMaxBadgeCount().forEach(e-> e.getReceiver());
+        return badgeTransactionService.findMaxBadgeCount();
+
     }
 
     @GetMapping("user")
@@ -180,24 +207,6 @@ public class UserController {
         return "signup";
     }
 
-    @GetMapping("data")
-    @ResponseBody
-    public List<BadgeTransaction> getdata() {
-        List<BadgeTransaction> badgeTransactionList = badgeTransactionService.findAllByOrderByDateDesc();
-        return badgeTransactionList;
-    }
-
-    @PostMapping("/redeem")
-    public ModelAndView redeem(HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("redeem");
-        long id = (long) session.getAttribute("userId");
-        User user = userService.findUserId(id);
-        BadgeBalance badge = badgeBalanceService.getBadgeById(id);
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("badge", badge);
-        return modelAndView;
-    }
-
     @GetMapping("/sample")
     public ModelAndView modal() {
         ModelAndView modelAndView = new ModelAndView("sample");
@@ -238,5 +247,7 @@ public class UserController {
         badgeTransactionService.saveNewTranscation(sender, receiver, new Date(), recognizeCO.getMessage_val(), badge);
         return "redirect:/user";
     }
+
+
 
 }

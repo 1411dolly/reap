@@ -16,16 +16,16 @@ public class BadgeTransaction {
     private User sender;
 
     @ManyToOne
-    @JoinColumn(name = "reciever_id")
-    private User reciever;
+    @JoinColumn(name = "receiver_id")
+    private User receiver;
     private Date date;
     private String reason;
     @Enumerated(EnumType.STRING)
     private Badge badge;
 
-    public BadgeTransaction(User sender, User reciever, Date date, String reason, Badge badge) {
+    public BadgeTransaction(User sender, User receiver, Date date, String reason, Badge badge) {
         this.sender = sender;
-        this.reciever = reciever;
+        this.receiver = receiver;
         this.date = date;
         this.reason = reason;
         this.badge = badge;
@@ -50,12 +50,12 @@ public class BadgeTransaction {
         this.sender = sender;
     }
 
-    public User getReciever() {
-        return reciever;
+    public User getReceiver() {
+        return receiver;
     }
 
-    public void setReciever(User reciever) {
-        this.reciever = reciever;
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
     }
 
     public Date getDate() {
@@ -87,7 +87,7 @@ public class BadgeTransaction {
         return "BadgeTransaction{" +
                 "id=" + id +
                 ", sender=" + sender +
-                ", reciever=" + reciever +
+                ", receiver=" + receiver +
                 ", date=" + date +
                 ", reason='" + reason + '\'' +
                 ", badge=" + badge +

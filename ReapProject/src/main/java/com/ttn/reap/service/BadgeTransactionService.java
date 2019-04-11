@@ -1,5 +1,6 @@
 package com.ttn.reap.service;
 
+import com.ttn.reap.dto.BadgeTransactionDto;
 import com.ttn.reap.entity.BadgeTransaction;
 import com.ttn.reap.entity.User;
 import com.ttn.reap.enums.Badge;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class BadgeTransactionService {
     BadgeTransactionRepository badgeTransactionRepository;
     @Autowired
     BadgeBalanceService badgeBalanceService;
-    
+
 
     public List<BadgeTransaction> findAllByOrderByDateDesc() {
         return badgeTransactionRepository.findAllByOrderByDateDesc();
@@ -33,24 +33,37 @@ public class BadgeTransactionService {
         return badgeTransactionRepository.findById(id).orElse(null);
     }
 
-    public Integer countByRecieverAndBadge(User user, Badge badge) {
-        return badgeTransactionRepository.countByRecieverAndBadge(user, badge);
+    public Long countByReceiverAndBadge(User user, Badge badge) {
+        return badgeTransactionRepository.countByReceiverAndBadge(user, badge);
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public void saveNewTranscation(User sender, User receiver, Date date, String reason, Badge badge){
-        badgeTransactionRepository.save(new BadgeTransaction(sender,receiver,date,reason,badge));
-        badgeBalanceService.substractBadgeBalance(sender,receiver,badge);}
+    public void saveNewTranscation(User sender, User receiver, Date date, String reason, Badge badge) {
+        badgeTransactionRepository.save(new BadgeTransaction(sender, receiver, date, reason, badge));
+        badgeBalanceService.substractBadgeBalance(sender, receiver, badge);
+    }
 
-    public List<BadgeTransaction> findAllByRecieverOrderByDateDesc(User user) {
-        return badgeTransactionRepository.findAllByRecieverOrderByDateDesc(user);
+    public List<BadgeTransaction> findAllByReceiverOrderByDateDesc(User user) {
+        return badgeTransactionRepository.findAllByReceiverOrderByDateDesc(user);
     }
 
     public List<BadgeTransaction> findAllBySenderOrderByDateDesc(User user) {
         return badgeTransactionRepository.findAllBySenderOrderByDateDesc(user);
     }
 
-    public List<BadgeTransaction> findAllBySenderOrRecieverOrderByDateDesc(User reciever,User sender){
-        return badgeTransactionRepository.findAllBySenderOrRecieverOrderByDateDesc(sender,reciever);
+    public List<BadgeTransaction> findAllBySenderOrReceiverOrderByDateDesc(User receiver, User sender) {
+        return badgeTransactionRepository.findAllBySenderOrReceiverOrderByDateDesc(sender, receiver);
+    }
+
+    public long countByReceiver(User receiver) {
+        return badgeTransactionRepository.countByReceiver(receiver);
+    }
+
+    public long countBySender(User sender) {
+        return badgeTransactionRepository.countBySender(sender);
+    }
+
+    public List<BadgeTransactionDto> findMaxBadgeCount() {
+        return badgeTransactionRepository.findMaxBadgeCount();
     }
 }

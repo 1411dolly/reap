@@ -148,10 +148,10 @@
             <div class="panel-body" th:each="tranlist:${badgetransactionlist}">
                 <div class="col-md-2">
                     <img alt='User Image' class='user-image'
-                         th:src="@{${tranlist.getReciever().getFileName()}}"/>
+                         th:src="@{${tranlist.getReceiver().getFileName()}}"/>
                 </div>
                 <div class="col-md-9">
-                    <span th:text="${tranlist.getReciever().getName()}"></span>
+                    <span th:text="${tranlist.getReceiver().getName()}"></span>
                     has recieved
                     <span th:with="var=${tranlist.getBadge()}">
                         <span th:if="${var == T(com.ttn.reap.enums.Badge).GOLD}"><img
@@ -208,26 +208,26 @@
                 <b>NEWER'S BOARD</b>
             </div>
 
-            <div class="panel-body" th:each="bad : ${badgelist}">
+            <div class="panel-body" th:each="bad,count : ${newer}" >
                 <div class="col-md-3">
-                    <img alt='User Image' class='user-image' th:src="${bad.getUserId().getFileName()}"/>
+                    <img alt='User Image' class='user-image' th:src="${bad.getReceiver().getFileName()}"/>
                 </div>
                 <div class="col-md-9">
                     <div>
-                        <label style="padding-left: 20px" th:text="*{bad.getUserId().getName()}"></label>
+                        <label style="padding-left: 20px" th:text="*{bad.getReceiver().getName()}"></label>
                     </div>
                     <div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" >
                             <img alt="Gold" src="/img/badgeOrange.png"/>
-                            <span th:text="*{bad.getGoldCount()}"></span>
+                            <span th:text="${goldlist.get(count.index)}"></span>
                         </div>
                         <div class="col-md-4">
                             <img alt="silver" src="/img/badgeGrey.png"/>
-                            <span th:text="*{bad.getSilverCount()}"></span>
+                            <span th:text="${silverlist.get(count.index)}"></span>
                         </div>
                         <div class="col-md-4">
                             <img alt="bronze" src="/img/badgeBrown.png"/>
-                            <span th:text="*{bad.getBronzeCount()}"></span>
+                            <span th:text="${bronzelist.get(count.index)}"></span>
                         </div>
                     </div>
                 </div>
