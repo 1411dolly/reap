@@ -4,6 +4,10 @@ public enum Role {
     USER("USER"), SUPERVISOR("SUPERVISOR"), PRACTICE_HEAD("PRACTICE_HEAD");
     String value;
 
+    public String getValue() {
+        return value;
+    }
+
     Role() {
     }
 

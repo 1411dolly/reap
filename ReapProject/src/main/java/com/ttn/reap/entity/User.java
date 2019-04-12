@@ -32,7 +32,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
     private boolean isAdmin = false;
-    private boolean isActive = false;
+    private boolean isActive = true;
     private String fileName;
 
     public User() {
@@ -43,7 +43,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.availPoints = availPoints;
-        this.redeemedPoints = redeemedPoints;
+            this.redeemedPoints = redeemedPoints;
         this.password = PasswordHelper.encrypt(password);
         this.token = token;
         this.role = role;

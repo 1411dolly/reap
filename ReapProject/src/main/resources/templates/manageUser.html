@@ -7,7 +7,6 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="/img/ttn.ico" rel="icon" sizes="20x20" type="image/gif"/>
     <link rel="stylesheet" th:href="@{css/dashStyle.css}"/>
 
@@ -57,7 +56,7 @@
             </li>
             <li class="col-md-2 nav-list-pad">
                 <img alt='User Image' class='user-image' data-target="#myModal" data-toggle="modal"
-                     src="/img/profile-pic.png"/>
+                     th:src="@{${user.getFileName()}}"/>
                 <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog">
 
@@ -68,21 +67,20 @@
                             </div>
                             <div class="modal-body" style="height: 100px">
                                 <div class="col-md-3">
-                                    <img alt='User Image' class='user-image3' src="/img/profile-pic.png"/>
+                                    <img alt='User Image' class='user-image3' th:src="@{${user.getFileName()}}"/>
                                 </div>
                                 <div class="col-md-3">
                                     <label>Newer Name</label>
                                     <label>Email id</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <label th:text="*{firstName}"></label><br/>
+                                    <label th:text="*{name}"></label><br/>
                                     <label th:text="*{email}"></label>
                                 </div>
                             </div>
                             <div class="modal-footer" style="background-color: #f4f4f4">
-                                <form class="col-md-6" id="manageForm" method="post" th:action="@{/manage}"
-                                      th:object="${user}">
-                                    <button id="manage-button" type="submit">
+                                <form class="col-md-6" id="manageForm" method="post" th:action="@{/manage}">
+                                    <button id="manage-button" type="submit" th:if="${role}">
                                         Manage
                                     </button>
                                 </form>
@@ -107,26 +105,30 @@
                 <b>RECOGNIZE NEWER</b>
             </div>
             <div class="panel-body">
-                <form>
+                <form id="recognise_form" method="post" th:action="@{/recognize}" th:object="${recognizeco}">
                     <div class="form-group">
                         <img alt="person" src="/img/newer.png"/>
-                        <input id="searchNewer" placeholder="Select a newer" type="text"/>
-                        <select>
-                            <option value="">Select a Badge</option>
-                            <option value="1">Gold ()</option>
-                            <option value="2">Silver ()</option>
-                            <option value="3">Bronze ()</option>
+                        <input id="hidden_send_email" th:field="*{sender_email}" type="hidden"/>
+                        <input id="searchNewer3" placeholder="Select a newer" th:field="*{receiver_email}" type="text"/>
+                        <select th:field="*{badge_val}">
+                            <div th:object="${badge}">
+                                <option value="">Select a Badge</option>
+                                <option value="gold">Gold(<span th:text="${badge.getGoldCount()}"></span>)</option>
+                                <option value="silver">Silver(<span th:text="*{silverCount}"></span>)</option>
+                                <option value="bronze">Bronze(<span th:text="*{bronzeCount}"></span>)</option>
+                            </div>
                         </select>
                     </div>
                     <div class="form-group">
                         <label><b>Reasons:</b></label>
                         <textarea class="form-control" placeholder="Give recognition reason/message..."
-                                  style="height: 80px"></textarea>
+                                  style="height: 100px" th:field="*{message_val}"></textarea>
                     </div>
-                    <button class="btn btn-default pull-right" type="submit">Recognize</button>
+                    <button class="btn btn-default pull-right" id="recognize_btn" type="submit">Recognize</button>
                 </form>
             </div>
         </div>
+
     </div>
     <div class="col-md-3">
         <div class="panel panel-primary" style="margin-right: 25px ">
@@ -136,11 +138,11 @@
             </div>
             <div class="panel-body" th:object="${user}">
                 <div class="col-md-3">
-                    <img alt='User Image' class='user-image' src='/img/profile-pic.png'/>
+                    <img alt='User Image' class='user-image' th:src="@{${user.getFileName()}}"/>
                 </div>
                 <div class="col-md-9">
                     <div>
-                        <label style="padding-left: 20px" th:text="*{firstName}">Amarjeet Malik{ }</label>
+                        <label style="padding-left: 20px" th:text="*{name}">Amarjeet Malik{ }</label>
                     </div>
                     <div>
                         <div class="col-md-4">
@@ -167,17 +169,17 @@
         <div class="col-md-2">
             <div class="form-group has-feedback has-search main">
                 <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                <input class="form-control" placeholder="Search" style="padding-left: 50px" type="text"/>
+                <input class="form-control" id="searchNewer4" placeholder="Search" style="padding-left: 50px"
+                       type="text"/>
             </div>
         </div>
         <div class="col-md-3">
             <div class="col-md-6">
                 <select>
                     <option value="">Select Role</option>
-                    <option value="1">User</option>
-                    <option value="2">Supervisor</option>
-                    <option value="3">Practise Head</option>
-                    <option value="4">Admin</option>
+                    <option value="1">Admin</option>
+                    <option th:each="r : ${T(com.ttn.reap.enums.Role).values()}"
+                            th:text="${r.getValue()}" th:value="${r.getValue()}"></option>
                 </select>
             </div>
             <div class="col-md-6" style="padding-left: -50px">
@@ -190,7 +192,7 @@
         <div class="col-md-7"></div>
     </div>
     <div class="container-fluid">
-        <table class="table table-bordered table-hover" style="background-color: #FFFFFF;text-align: center">
+        <table class="table table-bordered table-hover" style="background-color: #FFFFFF;text-align: center" id="table1">
             <tr style="text-align: center   ">
                 <th>Name</th>
                 <th>Role</th>
@@ -215,65 +217,35 @@
                     </div>
                 </th>
             </tr>
-            <tr>
-                <td>Amarjeet Malik</td>
+            <tr th:each="u : ${users}">
+                <td th:text="*{u.getName()}"></td>
                 <td>
                     <select>
                         <option value="">Select Role</option>
-                        <option value="1">User</option>
-                        <option value="2">Supervisor</option>
-                        <option value="3">Practise Head</option>
-                        <option value="4">Admin</option>
+                        <option value="1">Admin</option>
+                        <option th:each="r : ${T(com.ttn.reap.enums.Role).values()}"
+                                th:text="${r.getValue()}" th:value="${r.getValue()}"></option>
                     </select>
                 </td>
                 <td>
                     <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" id="activeUsers{1}" type="checkbox"/>
+                        <input class="custom-control-input" id="activeUsers{1}" th:checked="*{u.isActive()}"
+                               type="checkbox"/>
                     </div>
                 </td>
+                <td th:text="*{u.getEmail()}"></td>
                 <td>
-                    ch.amarjeetmalik@gmail.com
+                    <input style="width: 50px" th:value="*{u.getAvailPoints()}" type="text"/>
                 </td>
-                <td>
-                    <input style="width: 50px" type="text" value="50{}"/>
-                </td>
-                <td>0{}</td>
-                <td>
-                    <input style="width: 50px" type="text" value="2{}"/>
-                    <input style="width: 50px" type="text" value="4{}"/>
-                    <input style="width: 50px" type="text" value="6{}"/>
-                </td>
+                <td th:text="*{u.getRedeemedPoints()}"></td>
+                <th:block th:with="bad=${badgeBalanceService.getBadgeById(u.getId())}">
+                    <td>
+                        <input style="width: 50px" th:value="*{bad.getGoldCount()}" type="text"/>
+                        <input style="width: 50px" th:value="*{bad.getSilverCount()}" type="text"/>
+                        <input style="width: 50px" th:value="*{bad.getBronzeCount()}" type="text"/>
+                    </td>
+                </th:block>
             </tr>
-            <tr>
-                <td>Amarjeet Malik</td>
-                <td>
-                    <select>
-                        <option value="">Select Role</option>
-                        <option value="1">User</option>
-                        <option value="2">Supervisor</option>
-                        <option value="3">Practise Head</option>
-                        <option value="4">Admin</option>
-                    </select>
-                </td>
-                <td>
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" id="activeUsers{2}" type="checkbox"/>
-                    </div>
-                </td>
-                <td>
-                    ch.amarjeetmalik@gmail.com
-                </td>
-                <td>
-                    <input style="width: 50px" type="text" value="50{}"/>
-                </td>
-                <td>0{}</td>
-                <td>
-                    <input style="width: 50px" type="text" value="2{}"/>
-                    <input style="width: 50px" type="text" value="4{}"/>
-                    <input style="width: 50px" type="text" value="6{}"/>
-                </td>
-            </tr>
-
         </table>
     </div>
 </section>
@@ -283,6 +255,22 @@
     /*    $(document).ready(function () {
             $('.mdb-select').materialSelect();
         });*/
+</script>
+<script
+        crossorigin="anonymous"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script
+        crossorigin="anonymous"
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+        src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="/js/ajax_js.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    document.getElementById('hidden_send_email').value = /*[[${user.getEmail()}]]*/ 'default';
+
+    /*]]>*/
 </script>
 </body>
 </html>

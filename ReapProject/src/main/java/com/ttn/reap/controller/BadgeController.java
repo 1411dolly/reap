@@ -38,7 +38,8 @@ public class BadgeController {
         List<BadgeTransaction> badgeTransactionListReciever=badgeTransactionService.findAllByRecieverOrderByDateDesc(user);
         List<BadgeTransaction> badgeTransactionListSender=badgeTransactionService.findAllBySenderOrderByDateDesc(user);
         List<BadgeTransaction> badgeTransactionListSenderOrReciever=badgeTransactionService.findAllBySenderOrRecieverOrderByDateDesc(user,user);
-
+        boolean role = user.isAdmin();
+        modelAndView.addObject("role", role);
         if (user != null) {
             modelAndView.addObject("user", user);
             modelAndView.addObject("gold", gold);

@@ -19,10 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class UserController {
@@ -181,7 +178,6 @@ public class UserController {
     }
 
     @GetMapping("data")
-    @ResponseBody
     public List<BadgeTransaction> getdata() {
         List<BadgeTransaction> badgeTransactionList = badgeTransactionService.findAllByOrderByDateDesc();
         return badgeTransactionList;
@@ -195,6 +191,8 @@ public class UserController {
         BadgeBalance badge = badgeBalanceService.getBadgeById(id);
         modelAndView.addObject("user", user);
         modelAndView.addObject("badge", badge);
+        boolean role = user.isAdmin();
+        modelAndView.addObject("role", role);
         return modelAndView;
     }
 
@@ -211,6 +209,19 @@ public class UserController {
         long id = (Long) session.getAttribute("userId");
         User user = userService.findUserId(id);
         modelAndView.addObject("user", user);
+        BadgeBalance badge = badgeBalanceService.getBadgeById(id);
+        modelAndView.addObject("badge",badge);
+        List<User> users = userService.findAll();
+        modelAndView.addObject("users", users);
+        List<Long> userIds = new ArrayList<>(users.size());
+        for (User u : users) {
+            userIds.add(user.getId());
+        }
+        //do something
+        modelAndView.addObject("badgeBalanceService",badgeBalanceService);
+        modelAndView.addObject("recognizeco",new RecognizeCO());
+        boolean role = user.isAdmin();
+        modelAndView.addObject("role", role);
         return modelAndView;
     }
 

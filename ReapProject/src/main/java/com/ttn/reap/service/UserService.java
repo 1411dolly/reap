@@ -44,7 +44,6 @@ public class UserService {
 
     public User findUserId(long id) {
         return userRepository.findById(id);
-//        return userRepository.findById(id).orElse(null);
     }
 
     public List<UserDto> findAllByActive(Long id) {
@@ -70,5 +69,9 @@ public class UserService {
     public void updatePointsRecognize(User receiver, Badge badge){
     User user = userRepository.findUserByEmail(receiver.getEmail()).get();
     user.setAvailPoints(user.getAvailPoints()+badge.getValue());
+    }
+
+    public List<User> findAll(){
+        return userRepository.findAll();
     }
 }

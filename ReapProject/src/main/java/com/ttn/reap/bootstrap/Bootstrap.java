@@ -10,6 +10,7 @@ import com.ttn.reap.repository.BadgeTransactionRepository;
 import com.ttn.reap.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +28,7 @@ public class Bootstrap {
     @Autowired
     BadgeTransactionRepository badgeTransactionRepository;
 
-    @EventListener(ContextRefreshedEvent.class)
+    @EventListener(ContextStartedEvent.class)
     void setup() {
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         Date date1;
@@ -43,12 +44,12 @@ public class Bootstrap {
 
         User user1 = new User("1411dolly@gmail.com", "dolly", "singh", 0, 0, "12345", null, Role.USER, true, true, "/upload/1.jpeg");
         User user2 = new User("amarjeet@gmail.com", "amarjeet", "malik", 0, 0, "12345", null, Role.USER, false, true, "/upload/2.jpeg");
-        User user3 = new User("aditya@gmail.com", "aditya", "singh", 0, 0, "12345", null, Role.USER, false, true, "/upload/3.jpeg");
+        User user3 = new User("aditya@gmail.com", "aditya", "singh", 0, 0, "12345", null, Role.USER, false, false, "/upload/3.jpeg");
         User user4 = new User("dharmendra@gmail.com", "dharmendra", "saini", 0, 0, "12345", null, Role.USER, false, true, "/upload/4.jpeg");
         BadgeBalance badgeBalance1 = new BadgeBalance(user1, 1, 2, 3);
         BadgeBalance badgeBalance2 = new BadgeBalance(user2, 1, 2, 3);
-        BadgeBalance badgeBalance3 = new BadgeBalance(user3, 1, 2, 3);
-        BadgeBalance badgeBalance4 = new BadgeBalance(user4, 1, 2, 3);
+        BadgeBalance badgeBalance3 = new BadgeBalance(user3, 2, 3, 6);
+        BadgeBalance badgeBalance4 = new BadgeBalance(user4, 2, 3, 6);
 
         userRepository.save(user1);
         userRepository.save(user2);
