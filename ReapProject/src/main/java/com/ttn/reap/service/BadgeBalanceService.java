@@ -38,6 +38,7 @@ public class BadgeBalanceService {
     @Transactional
     public void substractBadgeBalance(User sender,User receiver, Badge badge) {
         BadgeBalance badgeBalance = badgeBalanceRepository.findByUserId(sender);
+
         if (badge.name().equalsIgnoreCase("GOLD")) {
             badgeBalance.setGoldCount(badgeBalance.getGoldCount() - 1);
         } else if (badge.name().equalsIgnoreCase("SILVER")) {

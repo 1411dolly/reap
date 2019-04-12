@@ -14,10 +14,13 @@
     height: 40px;
     padding: 8px;
     border-radius: 4px;
+    font-size:12px;
+    font-weight: bold;
 }
 #nav-list-first:hover{
     background-color: #d9177f;
     color: #FFFFFF;
+
 }
 #nav-list-second{
     background-color: #d9177f;
@@ -26,6 +29,8 @@
     padding: 8px;
     border-radius: 4px;
     color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
 }
 #nav-list-third{
     background-color: #FFFFFF;
@@ -34,6 +39,7 @@
     height: 40px;
     padding: 8px;
     border-radius: 4px;
+    font-weight: bold;
 }
 #nav-list-third:hover{
     background-color: #d9177f;
@@ -44,6 +50,7 @@
     height: 40px;
     padding: 8px;
     border-radius: 4px;
+    font-weight: bold;
 }
 #nav-list-fourth:hover{
     background-color: #d9177f;
@@ -126,8 +133,9 @@
         position: fixed;
         right: 0;
         top: 42px;
+        width: 400px;
     }
-}
+ }
 
 #dashboard {
     background-color: #d9177f;
@@ -137,6 +145,8 @@
     color: white;
     padding: 7px;
     margin-top: 10px;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 

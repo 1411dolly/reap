@@ -27,7 +27,7 @@ public class Bootstrap {
     @Autowired
     BadgeTransactionRepository badgeTransactionRepository;
 
-    @EventListener(ContextRefreshedEvent.class)
+   @EventListener(ContextRefreshedEvent.class)
     void setup() {
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         Date date1;

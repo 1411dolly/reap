@@ -181,42 +181,61 @@ public class UserController {
     }
 
     @GetMapping("data")
-    @ResponseBody
-    public List<BadgeTransaction> getdata() {
-        List<BadgeTransaction> badgeTransactionList = badgeTransactionService.findAllByOrderByDateDesc();
+    public List<BadgeTransaction> getdata(HttpSession httpSession) {
+
+           List<BadgeTransaction> badgeTransactionList = badgeTransactionService.findAllByOrderByDateDesc();
         return badgeTransactionList;
     }
 
     @PostMapping("/redeem")
     public ModelAndView redeem(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("redeem");
-        long id = (long) session.getAttribute("userId");
-        User user = userService.findUserId(id);
-        BadgeBalance badge = badgeBalanceService.getBadgeById(id);
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("badge", badge);
+            long id = (long) session.getAttribute("userId");
+            User user = userService.findUserId(id);
+            BadgeBalance badge = badgeBalanceService.getBadgeById(id);
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("badge", badge);
+
         return modelAndView;
     }
 
     @GetMapping("/sample")
-    public ModelAndView modal() {
-        ModelAndView modelAndView = new ModelAndView("sample");
-        modelAndView.addObject("user", new User());
+    public ModelAndView modal(HttpSession httpSession) {
+        User sessionUser=(User)httpSession.getAttribute("sessionUser");
+        ModelAndView modelAndView=new ModelAndView();
+          if(sessionUser==null)
+          {
+              modelAndView.setViewName("login");
+          }
+          else {
+//              ModelAndView modelAndView = new ModelAndView("sample");
+              modelAndView.setViewName("sample");
+              modelAndView.addObject("user", new User());
+          }
         return modelAndView;
     }
 
     @PostMapping("/manage")
     public ModelAndView manageUser(HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("manageUser");
-        long id = (Long) session.getAttribute("userId");
-        User user = userService.findUserId(id);
-        modelAndView.addObject("user", user);
+        User sessionUser=(User)session.getAttribute("sesssionUser");
+        ModelAndView modelAndView=new ModelAndView();
+        if(sessionUser==null){
+            modelAndView.setViewName("login");
+        }
+        else {
+//            ModelAndView modelAndView = new ModelAndView("manageUser");
+            modelAndView.setViewName("manageUser");
+            long id = (Long) session.getAttribute("userId");
+            User user = userService.findUserId(id);
+            modelAndView.addObject("user", user);
+        }
         return modelAndView;
     }
 
     @GetMapping("getUserListActive")
     @ResponseBody
     public List<UserDto> getUserListActive(@RequestParam String term, @RequestParam String user_id) {
+
         return userService.simulateSearchResult(term, Long.parseLong(user_id));
     }
 
