@@ -1,9 +1,6 @@
 package com.ttn.reap.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Item {
@@ -14,6 +11,7 @@ public class Item {
     private int itemValue;
     private String imageSource;
     private int quantity;
+
 
     public Item(String itemName, int itemValue, String imageSource, int quantity) {
         this.itemName = itemName;
