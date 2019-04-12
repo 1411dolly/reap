@@ -23,19 +23,3 @@ $("#searchNewer").autocomplete({
         event.preventDefault();
     }
 });
-
-// var $form = $('#recognise_form');
-// $form.on('submit', function(e) {
-//     e.preventDefault();
-//     $.ajax({
-//         url: $form.attr('action'),
-//         type: 'post',
-//         data: $form.serialize(),
-//         success: function(data)
-//         {
-//             alert("recognized");
-//         }
-//     });
-//
-//     return false;
-// });

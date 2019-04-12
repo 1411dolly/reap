@@ -71,4 +71,10 @@ public class UserService {
     User user = userRepository.findUserByEmail(receiver.getEmail()).get();
     user.setAvailPoints(user.getAvailPoints()+badge.getValue());
     }
+    
+    @Transactional
+    public void updatePointsRevoke(User receiver, Badge badge){
+        User user = userRepository.findUserByEmail(receiver.getEmail()).get();
+        user.setAvailPoints(user.getAvailPoints()-badge.getValue());
+    }
 }

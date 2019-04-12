@@ -5,14 +5,13 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" rel="stylesheet"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
     <link href="/img/ttn.ico" rel="icon" sizes="20x20" type="image/gif"/>
     <link rel="stylesheet" th:href="@{css/dashStyle.css}"/>
 </head>
 
 <body>
-
 <nav class="navbar navbar-default navbar-fixed-top navbar-expand-md main-header">
     <div class="container-fluid">
         <div class="navbar-header col-md-5">
@@ -142,8 +141,8 @@
                     <span class="glyphicon glyphicon-search form-control-feedback"></span>
                     <input class="form-control" placeholder="Search" type="text"/>
                 </div>
-                <img alt="calender" class="pull-right user-image2" src="/img/cal.png" style="margin-left: 10px" />
-                <img alt="csv-download" class="pull-right user-image2" src="/img/download.png" th:if="${role}"/>
+            <img alt="calender" class="pull-right user-image2" id="calendarrange" src="/img/cal.png" name="dates" style="margin-left: 10px" />
+                <a href="/downloadCSV" target="_blank"><img alt="csv-download" class="pull-right user-image2" id="downloadcsvrange" src="/img/download.png" th:if="${role}"/></a>
             </div>
             <div class="panel-body" th:each="tranlist:${badgetransactionlist}">
                 <div class="col-md-2">
@@ -166,7 +165,7 @@
                     <span th:text="${tranlist.getReason()}"></span>
                 </div>
                 <div class="col-md-1">
-                    <img src="/img/delete.png" th:if="${role}"/>
+                    <img class="txnRow" src="/img/delete.png" th:id="${tranlist.getId()}" data-toggle="modal" data-target="#revokeModal" th:if="${role}"/>
                 </div>
             </div>
         </div>
@@ -237,15 +236,47 @@
     </div>
 </section>
 
+<!-- Admin Revoke Modal -->
+<div class="modal fade" id="revokeModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Revoke Recognition</h4>
+            </div>
+            <div class="modal-body">
+                <form action="/revokeTxn" method="post">
+                    <div class="form-group">
+                        <div class="radio">
+                            <label><input type="radio" name="optradio" value="1"/>Selected Incorrect Name</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" name="optradio" value="2"/>Selected Incorrect Badge</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" name="optradio" value="3"/>Inapppropriate Language Used</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" name="optradio" value="4"/>
+                                <input type="text" class="form-control" id="others" name="others" placeholder="Others, Please Specify"/>
+                            </label>
+                        </div>
+                    </div>
+                    <input type="hidden" id="txnRowModal" name="txnId"/>
+                    <button type="submit" class="btn btn-default">Revoke</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script src="/js/dashboardStyle.js"></script>
-<script
-        src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-<script
-        src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-        crossorigin="anonymous"></script>
+<script src="/js/date_picker.js"></script>
 <script src="/js/ajax_js.js"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/
@@ -254,7 +285,11 @@
 
     /*]]>*/
 </script>
-
+<script>
+    $(".txnRow").click(function () {
+        document.getElementById("txnRowModal").value = this.id;
+    });
+</script>
 
 </body>
 </html>
