@@ -197,22 +197,6 @@ public class UserController {
         return "signup";
     }
 
-    @GetMapping("/sample")
-    public ModelAndView modal(HttpSession httpSession) {
-        User sessionUser=(User)httpSession.getAttribute("sessionUser");
-        ModelAndView modelAndView=new ModelAndView();
-          if(sessionUser==null)
-          {
-              modelAndView.setViewName("login");
-          }
-          else {
-//              ModelAndView modelAndView = new ModelAndView("sample");
-              modelAndView.setViewName("sample");
-              modelAndView.addObject("user", new User());
-          }
-        return modelAndView;
-    }
-
     @PostMapping("/manage")
     public ModelAndView manageUser(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("manageUser");
@@ -260,6 +244,4 @@ public class UserController {
         badgeTransactionService.saveNewTranscation(sender, receiver, new Date(), recognizeCO.getMessage_val(), badge);
         return "redirect:/user";
     }
-
-
 }

@@ -18,8 +18,8 @@ $("#searchNewer").autocomplete({
         });
     },
     select: function (event, ui) {
-        this.value = ui.redeem.label;
-        $(this).next("input").val(ui.redeem.value);
+        this.value = ui.item.label;
+        $(this).next("input").val(ui.item.value);
         event.preventDefault();
     }
 });
@@ -65,7 +65,7 @@ $("#searchNewer").autocomplete({
 // });
 
 
-$("#searchNewer3").autocomplete({
+/*$("#searchNewer3").autocomplete({
     source: function (request, response) {
         $.ajax({
             url: "http://localhost:8080/getUserListActive",
@@ -89,7 +89,7 @@ $("#searchNewer3").autocomplete({
         $(this).next("input").val(ui.item.value);
         event.preventDefault();
     }
-});
+});*/
 
 //for admin management
 /*
