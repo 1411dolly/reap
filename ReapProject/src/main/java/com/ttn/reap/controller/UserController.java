@@ -197,21 +197,21 @@ public class UserController {
         return "signup";
     }
 
-    @GetMapping("/sample")
-    public ModelAndView modal(HttpSession httpSession) {
-        User sessionUser=(User)httpSession.getAttribute("sessionUser");
-        ModelAndView modelAndView=new ModelAndView();
-          if(sessionUser==null)
-          {
-              modelAndView.setViewName("login");
-          }
-          else {
-//              ModelAndView modelAndView = new ModelAndView("sample");
-              modelAndView.setViewName("sample");
-              modelAndView.addObject("user", new User());
-          }
-        return modelAndView;
-    }
+//    @GetMapping("/sample")
+//    public ModelAndView modal(HttpSession httpSession) {
+//        User sessionUser=(User)httpSession.getAttribute("sessionUser");
+//        ModelAndView modelAndView=new ModelAndView();
+//          if(sessionUser==null)
+//          {
+//              modelAndView.setViewName("login");
+//          }
+//          else {
+////              ModelAndView modelAndView = new ModelAndView("sample");
+//              modelAndView.setViewName("sample");
+//              modelAndView.addObject("user", new User());
+//          }
+//        return modelAndView;
+//    }
 
     @PostMapping("/manage")
     public ModelAndView manageUser(HttpSession session) {

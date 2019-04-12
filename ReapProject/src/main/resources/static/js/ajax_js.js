@@ -18,8 +18,8 @@ $("#searchNewer").autocomplete({
         });
     },
     select: function (event, ui) {
-        this.value = ui.redeem.label;
-        $(this).next("input").val(ui.redeem.value);
+        this.value = ui.item.label;
+        $(this).next("input").val(ui.item.value);
         event.preventDefault();
     }
 });
@@ -64,6 +64,7 @@ $("#searchNewer").autocomplete({
 //     return false;
 // });
 
+/*
 
 $("#searchNewer3").autocomplete({
     source: function (request, response) {
@@ -90,6 +91,7 @@ $("#searchNewer3").autocomplete({
         event.preventDefault();
     }
 });
+*/
 
 //for admin management
 /*
