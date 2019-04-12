@@ -66,7 +66,7 @@ $("#searchNewer").autocomplete({
 
 /*
 
-$("#searchNewer3").autocomplete({
+/*$("#searchNewer3").autocomplete({
     source: function (request, response) {
         $.ajax({
             url: "http://localhost:8080/getUserListActive",
@@ -90,8 +90,12 @@ $("#searchNewer3").autocomplete({
         $(this).next("input").val(ui.item.value);
         event.preventDefault();
     }
+<<<<<<< HEAD
 });
 */
+=======
+});*/
+>>>>>>> e93a6ba02e33bfed3493140bd64c5492c16984ed
 
 //for admin management
 /*

@@ -19,10 +19,11 @@ public class BadgeTransactionService {
     BadgeTransactionRepository badgeTransactionRepository;
     @Autowired
     BadgeBalanceService badgeBalanceService;
+    @Autowired
+    EmailService emailService;
 
-
-    public List<BadgeTransaction> findAllByOrderByDateDesc() {
-        return badgeTransactionRepository.findAllByOrderByDateDesc();
+    public List<BadgeTransaction> findAllByDateBetweenOrderByDateDesc(Date start,Date end) {
+        return badgeTransactionRepository.findAllByDateBetweenOrderByDateDesc(start,end);
     }
 
     public List<BadgeTransaction> findAllByDateBetween(Date start, Date end) {
@@ -38,9 +39,9 @@ public class BadgeTransactionService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public void saveNewTranscation(User sender, User receiver, Date date, String reason, Badge badge) {
-        badgeTransactionRepository.save(new BadgeTransaction(sender, receiver, date, reason, badge));
-        badgeBalanceService.substractBadgeBalance(sender, receiver, badge);
+    public void saveNewTranscation(User sender, User receiver, Date date, String reason, Badge badge){
+        badgeTransactionRepository.save(new BadgeTransaction(sender,receiver,date,reason,badge));
+        badgeBalanceService.substractBadgeBalance(sender,receiver,badge);
     }
 
     public List<BadgeTransaction> findAllByReceiverOrderByDateDesc(User user) {
@@ -65,5 +66,15 @@ public class BadgeTransactionService {
 
     public List<BadgeTransactionDto> findMaxBadgeCount() {
         return badgeTransactionRepository.findMaxBadgeCount();
+    }
+    
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void revokeNewTranscation(long id,String optradio, String others, String fromMail){
+        BadgeTransaction badgeTransaction = badgeTransactionRepository.findById(id).get();
+        User sender = badgeTransaction.getSender();
+        User receiver = badgeTransaction.getReceiver();
+        Badge badge = badgeTransaction.getBadge();
+        badgeTransactionRepository.delete(id);
+        badgeBalanceService.addBadgeBalance(sender,receiver,badge);
     }
 }

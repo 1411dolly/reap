@@ -20,6 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -36,13 +39,14 @@ public class UserController {
     private EmailService emailService;
     @Autowired
     private BadgeBalanceService badgeBalanceService;
-
     @Autowired
     private BadgeTransactionService badgeTransactionService;
+    @Autowired
+    private DateService dateService;
 
 
     @GetMapping("/")
-    String main(HttpSession session, Model model) {
+    String main(HttpSession session, Model model) throws ParseException {
         return sessionCheck(session, model);
     }
 
@@ -64,7 +68,6 @@ public class UserController {
             //check id doesnt exist or duplicate id .......this is kaam chalau code
             model.addAttribute("err", "Only unique email allowed!!!");
         }
-        System.out.println("registered!!!" + user);
         return "login";
     }
 
@@ -82,26 +85,30 @@ public class UserController {
 
     //check for ADMIN and redirect to admin dashboard.....now user dashboard......
     @PostMapping("user")
-    String user(@ModelAttribute("user") User user, Model model, HttpSession session) {
+    String user(@ModelAttribute("user") User user, Model model, HttpSession session) throws ParseException {
         User checkuser = userService.checkemailandpassword(user.getEmail(), user.getPassword());
         if (checkuser == null) {
             model.addAttribute("valid", "Enter valid username and password!!!");
             return "login";
         } else {
+            String startDate = "1900-01-01";
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             session.setAttribute("userId", checkuser.getId());
-            return dashboardData(checkuser, model);
+            session.setAttribute("startDate", startDate);
+            String end = format.format(new Date());
+            session.setAttribute("endDate", end);
+            return dashboardData(checkuser, model, format.parse(startDate), new Date());
         }
     }
 
-    private String dashboardData(User checkuser, Model model) {
+    private String dashboardData(User checkuser, Model model, Date start, Date end) {
         BadgeBalance badge = badgeBalanceService.getBadgeById(checkuser.getId());
         long gold = badgeTransactionService.countByReceiverAndBadge(checkuser, Badge.GOLD);
         long silver = badgeTransactionService.countByReceiverAndBadge(checkuser, Badge.SILVER);
         long bronze = badgeTransactionService.countByReceiverAndBadge(checkuser, Badge.BRONZE);
-        List<BadgeTransaction> badgeTransactionList = badgeTransactionService.findAllByOrderByDateDesc();
+        List<BadgeTransaction> badgeTransactionList = badgeTransactionService.findAllByDateBetweenOrderByDateDesc(start, end);
         List<BadgeTransactionDto> badgeTransactionDtos = badgeTransactionService.findMaxBadgeCount().subList(0, 3);
         List<User> userList = badgeTransactionDtos.stream().map(BadgeTransactionDto::getReceiver).collect(Collectors.toList());
-        System.out.println("userlist:::" + userList);
         int i = 0;
         List<Long> goldList = new ArrayList<>();
         List<Long> silverList = new ArrayList<>();
@@ -130,16 +137,18 @@ public class UserController {
         return "dashboard";
     }
 
-
     @GetMapping("user")
-    String user(HttpSession session, Model model) {
+    String user(HttpSession session, Model model) throws ParseException {
         return sessionCheck(session, model);
     }
 
-    String sessionCheck(HttpSession session, Model model) {
+    String sessionCheck(HttpSession session, Model model) throws ParseException {
         if (session.getAttribute("userId") != null) {
             User user = userService.findUserId((long) session.getAttribute("userId"));
-            return dashboardData(user, model);
+            String start = (String) session.getAttribute("startDate");
+            String end = (String) session.getAttribute("endDate");
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            return dashboardData(user, model, format.parse(start), dateService.solveDate(end));
         } else {
             return "redirect:/login";
         }
@@ -188,7 +197,6 @@ public class UserController {
 
     @PostMapping("resetPassword")
     public String resetPassword(@RequestParam Map<String, String> requestParamas, Model model) {
-        System.out.println(requestParamas.get("token"));
         User user = userService.findUserByToken(requestParamas.get("token"));
         user.setPassword(requestParamas.get("password"));
         user.setToken(null);
@@ -197,6 +205,7 @@ public class UserController {
         return "signup";
     }
 
+<<<<<<< HEAD
 //    @GetMapping("/sample")
 //    public ModelAndView modal(HttpSession httpSession) {
 //        User sessionUser=(User)httpSession.getAttribute("sessionUser");
@@ -213,6 +222,8 @@ public class UserController {
 //        return modelAndView;
 //    }
 
+=======
+>>>>>>> e93a6ba02e33bfed3493140bd64c5492c16984ed
     @PostMapping("/manage")
     public ModelAndView manageUser(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("manageUser");
@@ -260,6 +271,4 @@ public class UserController {
         badgeTransactionService.saveNewTranscation(sender, receiver, new Date(), recognizeCO.getMessage_val(), badge);
         return "redirect:/user";
     }
-
-
 }

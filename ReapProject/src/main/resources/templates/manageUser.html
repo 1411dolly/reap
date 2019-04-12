@@ -221,7 +221,7 @@
             <tr th:each="u : ${users}">
                 <td th:text="*{u.getName()}"></td>
                 <td>
-                    <select>
+                    <select multiple="multiple">
                         <option value="">Select Role</option>
                         <option value="1">Admin</option>
                         <option th:each="r : ${T(com.ttn.reap.enums.Role).values()}"
