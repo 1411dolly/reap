@@ -49,8 +49,8 @@ public class CSVController {
         for (BadgeTransaction badgeTransaction : transactions) {
             List<String> singleRecord = new ArrayList<>();
             singleRecord.add(String.valueOf(badgeTransaction.getDate()));
-            singleRecord.add(badgeTransaction.getReciever().getName());
-            singleRecord.add(badgeTransaction.getReciever().getEmail());
+            singleRecord.add(badgeTransaction.getReceiver().getName());
+            singleRecord.add(badgeTransaction.getReceiver().getEmail());
             singleRecord.add(badgeTransaction.getSender().getName());
             singleRecord.add(badgeTransaction.getSender().getEmail());
             singleRecord.add(badgeTransaction.getBadge().toString());

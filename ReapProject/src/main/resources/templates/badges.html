@@ -83,9 +83,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer" style="background-color: #f4f4f4">
-                                <form class="col-md-6" id="manageForm" method="post" th:action="@{/manage}"
-                                      th:object="${user}">
-                                    <button id="manage-button" type="submit">
+                                <form class="col-md-6" id="manageForm" method="post" th:action="@{/manage}">
+                                    <button id="manage-button" type="submit" th:if="${role}">
                                         Manage
                                     </button>
                                 </form>
@@ -147,9 +146,9 @@
         </div>
         <div class="col-sm-8">
             <ul class="nav nav-tabs topnav" role="tablist">
-                <li class="active"><a href="#all" role="tab" data-toggle="tab">ALL<span>(0)</span></a></li>
-                <li><a href="#shared" role="tab" data-toggle="tab">BADGES SHARED<span>(0)</span></a></li>
-                <li><a href="#recieved" role="tab" data-toggle="tab">BADGES RECIEVED<span>(0)</span></a></li>
+                <li class="active"><a href="#all" role="tab" data-toggle="tab">ALL<span>(</span><span th:text="${allcount}"></span><span>)</span></a></li>
+                <li><a href="#shared" role="tab" data-toggle="tab">BADGES SHARED<span>(</span><span th:text="${sendercount}"></span><span>)</span></a></li>
+                <li><a href="#recieved" role="tab" data-toggle="tab">BADGES RECIEVED<span>(</span><span th:text="${receivedcount}"></span><span>)</span></a></li>
                 <li><a href="#redeemed" role="tab" data-toggle="tab">POINTS REDEEMED</a></li>
             </ul>
 
@@ -158,10 +157,10 @@
 
                     <div class="panel-body" th:each="tranlist:${badgetransactionlistsender}">
                         <div class="col-md-2">
-                            <img alt='User Image' class='user-image' th:src="@{${tranlist.getReciever().getFileName()}}"/>
+                            <img alt='User Image' class='user-image' th:src="@{${tranlist.getReceiver().getFileName()}}"/>
                         </div>
                         <div class="col-md-9">
-                            <span th:text="${tranlist.getReciever().getName()}"></span>
+                            <span th:text="${tranlist.getReceiver().getName()}"></span>
                             has recieved
                             <span th:with="var=${tranlist.getBadge()}">
                             <span th:if="${var == T(com.ttn.reap.enums.Badge).GOLD}"><img src="/img/badgeOrange.png"/></span>
@@ -178,12 +177,12 @@
 
                 <div class="tab-pane" id="recieved">
 
-                    <div class="panel-body" th:each="tranlist:${badgetransactionlistreciever}">
+                    <div class="panel-body" th:each="tranlist:${badgetransactionlistreceiver}">
                         <div class="col-md-2">
-                            <img alt='User Image' class='user-image' th:src="@{${tranlist.getReciever().getFileName()}}"/>
+                            <img alt='User Image' class='user-image' th:src="@{${tranlist.getReceiver().getFileName()}}"/>
                         </div>
                         <div class="col-md-9">
-                            <span th:text="${tranlist.getReciever().getName()}"></span>
+                            <span th:text="${tranlist.getReceiver().getName()}"></span>
                             has recieved
                             <span th:with="var=${tranlist.getBadge()}">
                             <span th:if="${var == T(com.ttn.reap.enums.Badge).GOLD}"><img src="/img/badgeOrange.png"/></span>
@@ -199,12 +198,12 @@
                 </div>
                 <div class="tab-pane" id="redeemed">redeemed tab</div>
                 <div class="tab-pane active" id="all">
-                    <div class="panel-body" th:each="tranlist:${badgetransactionlistsenderorreciever}">
+                    <div class="panel-body" th:each="tranlist:${badgetransactionlistsenderorreceiver}">
                         <div class="col-md-2">
-                            <img alt='User Image' class='user-image' th:src="@{${tranlist.getReciever().getFileName()}}"/>
+                            <img alt='User Image' class='user-image' th:src="@{${tranlist.getReceiver().getFileName()}}"/>
                         </div>
                         <div class="col-md-9">
-                            <span th:text="${tranlist.getReciever().getName()}"></span>
+                            <span th:text="${tranlist.getReceiver().getName()}"></span>
                             has recieved
                             <span th:with="var=${tranlist.getBadge()}">
                             <span th:if="${var == T(com.ttn.reap.enums.Badge).GOLD}"><img src="/img/badgeOrange.png"/></span>
@@ -224,5 +223,6 @@
 </div>
 
 <script src="/js/badges.js"></script>
+<script src="/js/dashboardStyle.js"></script>
 </body>
 </html>

@@ -2,14 +2,16 @@ package com.ttn.reap.bootstrap;
 
 import com.ttn.reap.entity.BadgeBalance;
 import com.ttn.reap.entity.BadgeTransaction;
+import com.ttn.reap.entity.Item;
 import com.ttn.reap.entity.User;
 import com.ttn.reap.enums.Badge;
 import com.ttn.reap.enums.Role;
 import com.ttn.reap.repository.BadgeBalanceRepository;
 import com.ttn.reap.repository.BadgeTransactionRepository;
+import com.ttn.reap.repository.ItemRepository;
 import com.ttn.reap.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +29,10 @@ public class Bootstrap {
     @Autowired
     BadgeTransactionRepository badgeTransactionRepository;
 
-   @EventListener(ContextRefreshedEvent.class)
+    @Autowired
+    ItemRepository itemRepository;
+
+    @EventListener(ContextStartedEvent.class)
     void setup() {
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         Date date1;
@@ -43,12 +48,12 @@ public class Bootstrap {
 
         User user1 = new User("1411dolly@gmail.com", "dolly", "singh", 0, 0, "12345", null, Role.USER, true, true, "/upload/1.jpeg");
         User user2 = new User("amarjeet@gmail.com", "amarjeet", "malik", 0, 0, "12345", null, Role.USER, false, true, "/upload/2.jpeg");
-        User user3 = new User("aditya@gmail.com", "aditya", "singh", 0, 0, "12345", null, Role.USER, false, true, "/upload/3.jpeg");
+        User user3 = new User("aditya@gmail.com", "aditya", "singh", 0, 0, "12345", null, Role.USER, false, false, "/upload/3.jpeg");
         User user4 = new User("dharmendra@gmail.com", "dharmendra", "saini", 0, 0, "12345", null, Role.USER, false, true, "/upload/4.jpeg");
         BadgeBalance badgeBalance1 = new BadgeBalance(user1, 1, 2, 3);
         BadgeBalance badgeBalance2 = new BadgeBalance(user2, 1, 2, 3);
-        BadgeBalance badgeBalance3 = new BadgeBalance(user3, 1, 2, 3);
-        BadgeBalance badgeBalance4 = new BadgeBalance(user4, 1, 2, 3);
+        BadgeBalance badgeBalance3 = new BadgeBalance(user3, 2, 3, 6);
+        BadgeBalance badgeBalance4 = new BadgeBalance(user4, 2, 3, 6);
 
         userRepository.save(user1);
         userRepository.save(user2);
@@ -91,6 +96,27 @@ public class Bootstrap {
             badgeTransactionRepository.save(badgeTransaction8);
             badgeTransactionRepository.save(badgeTransaction9);
             badgeTransactionRepository.save(badgeTransaction10);
+
+            Item item1 = new Item("SIPPER", 10, "/items/sipper.jpeg", 4);
+            Item item2 = new Item("BAG", 20, "/items/back_bag.jpeg", 4);
+            Item item3 = new Item("DIARY", 30, "/items/boardroom_diary.jpeg", 4);
+            Item item4 = new Item("VISITING CARD HOLDER", 40, "/items/visiting_card_holder.jpeg", 4);
+            Item item5 = new Item("WIRELESS MOUSE", 50, "/items/wireless_mouse.jpeg", 4);
+            Item item6 = new Item("COFFEE CUP", 60, "/items/coffee_cup.jpeg", 4);
+            Item item7 = new Item("KEYCHAIN", 70, "/items/keychain.jpg", 4);
+            Item item8 = new Item("MOUSE PAD", 80, "/items/mouse_pad.jpg", 4);
+            Item item9 = new Item("NOTE CARD", 90, "/items/note_card.jpg", 4);
+            Item item10 = new Item("TTN TSHIRT", 100, "/items/ttn_tshirt.jpeg", 4);
+            itemRepository.save(item1);
+            itemRepository.save(item2);
+            itemRepository.save(item3);
+            itemRepository.save(item4);
+            itemRepository.save(item5);
+            itemRepository.save(item6);
+            itemRepository.save(item7);
+            itemRepository.save(item8);
+            itemRepository.save(item9);
+            itemRepository.save(item10);
         } catch (ParseException e) {
             e.printStackTrace();
         }
