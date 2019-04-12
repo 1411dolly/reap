@@ -1,6 +1,7 @@
 package com.ttn.reap.controller;
 
 import com.ttn.reap.co.RecognizeCO;
+import com.ttn.reap.dto.BadgeTransactionDto;
 import com.ttn.reap.dto.UserDto;
 import com.ttn.reap.entity.BadgeBalance;
 import com.ttn.reap.entity.BadgeTransaction;
@@ -23,10 +24,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
-
+    
     @Autowired
     UserService userService;
     @Value("${spring.mail.username}")
@@ -41,20 +43,20 @@ public class UserController {
     private BadgeTransactionService badgeTransactionService;
     @Autowired
     private DateService dateService;
-
-
+    
+    
     @GetMapping("/")
     String main(HttpSession session, Model model) throws ParseException {
         return sessionCheck(session, model);
     }
-
+    
     @GetMapping("signup")
     ModelAndView register() {
         ModelAndView modelAndView = new ModelAndView("signup");
         modelAndView.addObject("user", new User());
         return modelAndView;
     }
-
+    
     @PostMapping("register")
     String submit(Model model, @ModelAttribute("user") User user, @RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
@@ -69,19 +71,19 @@ public class UserController {
         System.out.println("registered!!!" + user);
         return "login";
     }
-
+    
     @GetMapping("register")
     String checkRegister() {
         return "redirect:/";
     }
-
+    
     @GetMapping("login")
     ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView("login");
         modelAndView.addObject("user", new User());
         return modelAndView;
     }
-
+    
     //check for ADMIN and redirect to admin dashboard.....now user dashboard......
     @PostMapping("user")
     String user(@ModelAttribute("user") User user, Model model, HttpSession session) throws ParseException {
@@ -90,25 +92,38 @@ public class UserController {
             model.addAttribute("valid", "Enter valid username and password!!!");
             return "login";
         } else {
-            String startDate="1900-01-01";
+            String startDate = "1900-01-01";
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             session.setAttribute("userId", checkuser.getId());
-            session.setAttribute("startDate",startDate);
-            String end=format.format(new Date());
-            session.setAttribute("endDate",end);
-            return dashboardData(checkuser, model, format.parse(startDate),new Date());
+            session.setAttribute("startDate", startDate);
+            String end = format.format(new Date());
+            session.setAttribute("endDate", end);
+            return dashboardData(checkuser, model, format.parse(startDate), new Date());
         }
     }
-
+    
     private String dashboardData(User checkuser, Model model, Date start, Date end) {
         BadgeBalance badge = badgeBalanceService.getBadgeById(checkuser.getId());
-        int gold = badgeTransactionService.countByRecieverAndBadge(checkuser, Badge.GOLD);
-        int silver = badgeTransactionService.countByRecieverAndBadge(checkuser, Badge.SILVER);
-        int bronze = badgeTransactionService.countByRecieverAndBadge(checkuser, Badge.BRONZE);
-        List<BadgeBalance> badgeBalanceList = badgeBalanceService.getbalancecount().subList(0, 3);
-        List<BadgeTransaction> badgeTransactionList = badgeTransactionService.findAllByDateBetweenOrderByDateDesc(start,end);
+        long gold = badgeTransactionService.countByReceiverAndBadge(checkuser, Badge.GOLD);
+        long silver = badgeTransactionService.countByReceiverAndBadge(checkuser, Badge.SILVER);
+        long bronze = badgeTransactionService.countByReceiverAndBadge(checkuser, Badge.BRONZE);
+        List<BadgeTransaction> badgeTransactionList = badgeTransactionService.findAllByDateBetweenOrderByDateDesc(start, end);
+        List<BadgeTransactionDto> badgeTransactionDtos = badgeTransactionService.findMaxBadgeCount().subList(0, 3);
+        List<User> userList = badgeTransactionDtos.stream().map(BadgeTransactionDto::getReceiver).collect(Collectors.toList());
+        System.out.println("userlist:::" + userList);
+        int i = 0;
+        List<Long> goldList = new ArrayList<>();
+        List<Long> silverList = new ArrayList<>();
+        List<Long> bronzeList = new ArrayList<>();
+        for (i = 0; i < 3; i++) {
+            long golditem = badgeTransactionService.countByReceiverAndBadge(userList.get(i), Badge.GOLD);
+            long silveritem = badgeTransactionService.countByReceiverAndBadge(userList.get(i), Badge.SILVER);
+            long bronzeitem = badgeTransactionService.countByReceiverAndBadge(userList.get(i), Badge.BRONZE);
+            goldList.add(golditem);
+            silverList.add(silveritem);
+            bronzeList.add(bronzeitem);
+        }
         boolean role = checkuser.isAdmin();
-        model.addAttribute("badgelist", badgeBalanceList);
         model.addAttribute("badgetransactionlist", badgeTransactionList);
         model.addAttribute("user", checkuser);
         model.addAttribute("badge", badge);
@@ -117,44 +132,49 @@ public class UserController {
         model.addAttribute("silver", silver);
         model.addAttribute("bronze", bronze);
         model.addAttribute("recognizeco", new RecognizeCO());
+        model.addAttribute("newer", badgeTransactionDtos);
+        model.addAttribute("goldlist", goldList);
+        model.addAttribute("silverlist", silverList);
+        model.addAttribute("bronzelist", bronzeList);
         return "dashboard";
     }
-
+    
+    
     @GetMapping("user")
     String user(HttpSession session, Model model) throws ParseException {
         return sessionCheck(session, model);
     }
-
+    
     String sessionCheck(HttpSession session, Model model) throws ParseException {
         if (session.getAttribute("userId") != null) {
             User user = userService.findUserId((long) session.getAttribute("userId"));
             String start = (String) session.getAttribute("startDate");
             String end = (String) session.getAttribute("endDate");
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            return dashboardData(user, model, format.parse(start),dateService.solveDate(end));
+            return dashboardData(user, model, format.parse(start), dateService.solveDate(end));
         } else {
             return "redirect:/login";
         }
     }
-
+    
     private boolean getRoleofUser(User checkuser) {
         if (checkuser.getRole().equals(Role.USER))
             return true;
         else
             return false;
     }
-
+    
     @GetMapping("logout")
     private String logout(HttpSession httpSession) {
         httpSession.invalidate();
         return "redirect:/login";
     }
-
+    
     @GetMapping("forgotPassword")
     public String forgotPassword() {
         return "forgotPassword";
     }
-
+    
     @GetMapping("forgotSubmit")
     public String forgotSubmit(@RequestParam String email, HttpServletRequest request, Model model) {
         User user = userService.findUserByEmail(email);
@@ -170,14 +190,14 @@ public class UserController {
         model.addAttribute(new User());
         return "signup";
     }
-
+    
     @GetMapping("/reset")
     public String resetPassByToken(@RequestParam("token") String token, Model model) {
         model.addAttribute("token", token);
         model.addAttribute("user", new User());
         return "resetPassword";
     }
-
+    
     @PostMapping("resetPassword")
     public String resetPassword(@RequestParam Map<String, String> requestParamas, Model model) {
         System.out.println(requestParamas.get("token"));
@@ -188,50 +208,36 @@ public class UserController {
         model.addAttribute("user", new User());
         return "signup";
     }
-
-    @GetMapping("data")
-    @ResponseBody
-    public List<BadgeTransaction> getdata() throws ParseException {
-        String startDate="1900-01-01";
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String end=format.format(new Date());
-        List<BadgeTransaction> badgeTransactionList = badgeTransactionService.findAllByDateBetweenOrderByDateDesc(format.parse(startDate),format.parse(end));
-        return badgeTransactionList;
-    }
-
-    @PostMapping("/redeem")
-    public ModelAndView redeem(HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("redeem");
-        long id = (long) session.getAttribute("userId");
-        User user = userService.findUserId(id);
-        BadgeBalance badge = badgeBalanceService.getBadgeById(id);
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("badge", badge);
-        return modelAndView;
-    }
-
-    @GetMapping("/sample")
-    public ModelAndView modal() {
-        ModelAndView modelAndView = new ModelAndView("sample");
-        modelAndView.addObject("user", new User());
-        return modelAndView;
-    }
-
+    
     @PostMapping("/manage")
     public ModelAndView manageUser(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("manageUser");
         long id = (Long) session.getAttribute("userId");
         User user = userService.findUserId(id);
         modelAndView.addObject("user", user);
+        BadgeBalance badge = badgeBalanceService.getBadgeById(id);
+        modelAndView.addObject("badge", badge);
+        List<User> users = userService.findAll();
+        modelAndView.addObject("users", users);
+        List<Long> userIds = new ArrayList<>(users.size());
+        for (User u : users) {
+            userIds.add(user.getId());
+        }
+        //do something
+        modelAndView.addObject("badgeBalanceService", badgeBalanceService);
+        modelAndView.addObject("recognizeco", new RecognizeCO());
+        boolean role = user.isAdmin();
+        modelAndView.addObject("role", role);
         return modelAndView;
     }
-
+    
     @GetMapping("getUserListActive")
     @ResponseBody
     public List<UserDto> getUserListActive(@RequestParam String term, @RequestParam String user_id) {
+        
         return userService.simulateSearchResult(term, Long.parseLong(user_id));
     }
-
+    
     @PostMapping("recognize")
     public String recognizeNewer(@ModelAttribute RecognizeCO recognizeCO) {
         int s = recognizeCO.getReceiver_email().indexOf("(");
@@ -250,5 +256,6 @@ public class UserController {
         badgeTransactionService.saveNewTranscation(sender, receiver, new Date(), recognizeCO.getMessage_val(), badge);
         return "redirect:/user";
     }
-
+    
+    
 }

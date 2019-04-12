@@ -16,47 +16,46 @@ import java.util.List;
 
 @Service
 public class UserService {
-
+    
     @Autowired
     UserRepository userRepository;
-
+    
     @Autowired
     BadgeBalanceService badgeBalanceService;
-
+    
     @Transactional(propagation = Propagation.REQUIRED)
     public void save(User user) {
         user.setRole(Role.USER);
         userRepository.save(user);
         badgeBalanceService.setBadgeCount(user);
     }
-
+    
     public User checkemailandpassword(String email, String password) {
         return userRepository.findByEmailAndPassword(email, password);
     }
-
+    
     public User findUserByEmail(String email) {
         return userRepository.findUserByEmail(email).orElse(null);
     }
-
+    
     public User findUserByToken(String token) {
         return userRepository.findUserByToken(token).orElse(null);
     }
-
+    
     public User findUserId(long id) {
         return userRepository.findById(id);
-//        return userRepository.findById(id).orElse(null);
     }
-
+    
     public List<UserDto> findAllByActive(Long id) {
         List<UserDto> userDtos = new ArrayList<>();
         userRepository.findAllByIsActiveTrueAndIdIsNot(id).stream().forEach(e -> userDtos.add(new UserDto(e.getName(), e.getEmail())));
         return userDtos;
     }
-
+    
     public List<UserDto> simulateSearchResult(String tagName, Long id) {
-
+        
         List<UserDto> result = new ArrayList<>();
-
+        
         // iterate a list and filter by tagName
         for (UserDto uto : findAllByActive(id)) {
             if (uto.getName().toLowerCase().contains(tagName.toLowerCase())) {
@@ -65,16 +64,20 @@ public class UserService {
         }
         return result;
     }
-
+    
     @Transactional
-    public void updatePointsRecognize(User receiver, Badge badge){
-    User user = userRepository.findUserByEmail(receiver.getEmail()).get();
-    user.setAvailPoints(user.getAvailPoints()+badge.getValue());
+    public void updatePointsRecognize(User receiver, Badge badge) {
+        User user = userRepository.findUserByEmail(receiver.getEmail()).get();
+        user.setAvailPoints(user.getAvailPoints() + badge.getValue());
     }
     
     @Transactional
-    public void updatePointsRevoke(User receiver, Badge badge){
+    public void updatePointsRevoke(User receiver, Badge badge) {
         User user = userRepository.findUserByEmail(receiver.getEmail()).get();
-        user.setAvailPoints(user.getAvailPoints()-badge.getValue());
+        user.setAvailPoints(user.getAvailPoints() - badge.getValue());
+    }
+    
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 }

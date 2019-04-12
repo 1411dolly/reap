@@ -45,7 +45,7 @@ public class EmailService {
             reason = "Inapppropriate Language Used";
         else
             reason = others;
-        message = message + reason + "\nTransaction Details: \nSender Name: " + badgeTransaction.getSender().getName() + "\nReceiver Name: " + badgeTransaction.getReciever().getName() + "\n Badge: " + badgeTransaction.getBadge().toString() + "\nReason: " + badgeTransaction.getReason() +"\nDate: "+badgeTransaction.getDate();
+        message = message + reason + "\nTransaction Details: \nSender Name: " + badgeTransaction.getSender().getName() + "\nReceiver Name: " + badgeTransaction.getReceiver().getName() + "\n Badge: " + badgeTransaction.getBadge().toString() + "\nReason: " + badgeTransaction.getReason() +"\nDate: "+badgeTransaction.getDate();
         String subject = "Reap Recognition Transaction Revoked";
         mailSender(fromMail,badgeTransaction.getSender(),subject,message);
     }

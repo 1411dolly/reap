@@ -13,31 +13,33 @@ import java.util.List;
 
 @Service
 public class BadgeBalanceService {
+
     @Autowired
     BadgeBalanceRepository badgeBalanceRepository;
-    
+
     @Autowired
     UserService userService;
-    
+
     @Transactional(propagation = Propagation.REQUIRED)
     public BadgeBalance setBadgeCount(User user) {
         BadgeBalance badgeBalance = new BadgeBalance(user, 3, 2, 1);
         badgeBalanceRepository.save(badgeBalance);
         return badgeBalance;
     }
-    
+
     public BadgeBalance getBadgeById(long id) {
         return badgeBalanceRepository.getById(id);
     }
-    
+
     public List<BadgeBalance> getbalancecount() {
         List<BadgeBalance> badgeBalanceList = badgeBalanceRepository.findAllByOrderByGoldCountDescSilverCountDescBronzeCountDesc();
         return badgeBalanceList;
     }
-    
+
     @Transactional
-    public void substractBadgeBalance(User sender,User receiver, Badge badge) {
+    public void substractBadgeBalance(User sender, User receiver, Badge badge) {
         BadgeBalance badgeBalance = badgeBalanceRepository.findByUserId(sender);
+
         if (badge.name().equalsIgnoreCase("GOLD")) {
             badgeBalance.setGoldCount(badgeBalance.getGoldCount() - 1);
         } else if (badge.name().equalsIgnoreCase("SILVER")) {
@@ -45,7 +47,7 @@ public class BadgeBalanceService {
         } else {
             badgeBalance.setBronzeCount(badgeBalance.getBronzeCount() - 1);
         }
-        userService.updatePointsRecognize(receiver,badge);
+        userService.updatePointsRecognize(receiver, badge);
     }
     
     @Transactional
