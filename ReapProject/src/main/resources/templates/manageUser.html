@@ -111,9 +111,9 @@
                         <input id="hidden_send_email" th:field="*{sender_email}" type="hidden"/>
                         <input id="searchNewer3" placeholder="Select a newer" th:field="*{receiver_email}" type="text"/>
                         <select th:field="*{badge_val}">
-                            <div th:object="${badge}">
+                            <div th:object="${badgeBalance}">
                                 <option value="">Select a Badge</option>
-                                <option value="gold">Gold(<span th:text="${badge.getGoldCount()}"></span>)</option>
+                                <option value="gold">Gold(<span th:text="*{goldCount}"></span>)</option>
                                 <option value="silver">Silver(<span th:text="*{silverCount}"></span>)</option>
                                 <option value="bronze">Bronze(<span th:text="*{bronzeCount}"></span>)</option>
                             </div>
@@ -147,15 +147,15 @@
                     <div>
                         <div class="col-md-4">
                             <img alt="Gold" src="/img/badgeOrange.png"/>
-                            <span>0</span>
+                            <span th:text="${gold}"></span>
                         </div>
                         <div class="col-md-4">
                             <img alt="silver" src="/img/badgeGrey.png"/>
-                            <span>0</span>
+                            <span th:text="${silver}"></span>
                         </div>
                         <div class="col-md-4">
                             <img alt="bronze" src="/img/badgeBrown.png"/>
-                            <span>0</span>
+                            <span th:text="${bronze}"></span>
                         </div>
                     </div>
                 </div>
@@ -175,8 +175,8 @@
         </div>
         <div class="col-md-3">
             <div class="col-md-6">
-                <select>
-                    <option value="">Select Role</option>
+                <select multiple="multiple">
+                    <option disabled="disabled" selected="selected">Select Role</option>
                     <option value="1">Admin</option>
                     <option th:each="r : ${T(com.ttn.reap.enums.Role).values()}"
                             th:text="${r.getValue()}" th:value="${r.getValue()}"></option>
@@ -218,13 +218,14 @@
                     </div>
                 </th>
             </tr>
-            <tr th:each="u : ${users}">
+            <tr th:each="u,count : ${users}">
                 <td th:text="*{u.getName()}"></td>
                 <td>
                     <select multiple="multiple">
-                        <option value="">Select Role</option>
-                        <option value="1">Admin</option>
+                        <option disabled="disabled">Select Role</option>
+                        <option th:selected="*{u.isAdmin()}" th:text="Admin"></option>
                         <option th:each="r : ${T(com.ttn.reap.enums.Role).values()}"
+                                th:selected="${r.getValue() == u.getRole().getValue()}"
                                 th:text="${r.getValue()}" th:value="${r.getValue()}"></option>
                     </select>
                 </td>
@@ -239,11 +240,11 @@
                     <input style="width: 50px" th:value="*{u.getAvailPoints()}" type="text"/>
                 </td>
                 <td th:text="*{u.getRedeemedPoints()}"></td>
-                <th:block th:with="bad=${badgeBalanceService.getBadgeById(u.getId())}">
+                <th:block th:with="badgeBalance=${(badgeBalances.get(count.index))}">
                     <td>
-                        <input style="width: 50px" th:value="*{bad.getGoldCount()}" type="text"/>
-                        <input style="width: 50px" th:value="*{bad.getSilverCount()}" type="text"/>
-                        <input style="width: 50px" th:value="*{bad.getBronzeCount()}" type="text"/>
+                        <input style="width: 50px" th:value="${badgeBalance.getGoldCount()}" type="text"/>
+                        <input style="width: 50px" th:value="${badgeBalance.getSilverCount()}" type="text"/>
+                        <input style="width: 50px" th:value="${badgeBalance.getBronzeCount()}" type="text"/>
                     </td>
                 </th:block>
             </tr>

@@ -1,7 +1,5 @@
 package com.ttn.reap.controller;
 
-import com.ttn.reap.entity.BadgeTransaction;
-import com.ttn.reap.entity.User;
 import com.ttn.reap.service.BadgeBalanceService;
 import com.ttn.reap.service.BadgeTransactionService;
 import com.ttn.reap.service.EmailService;
@@ -24,11 +22,11 @@ public class AdminRevokeController {
     EmailService emailService;
     @Value("${spring.mail.username}")
     String fromMail;
-    
+
     @PostMapping("/revokeTxn")
     public String revokeTransaction(@RequestParam String optradio, @RequestParam String others, @RequestParam String txnId) {
-        emailService.revokeMailSend(fromMail,Long.parseLong(txnId),optradio,others);
-        badgeTransactionService.revokeNewTranscation(Long.parseLong(txnId),optradio,others,fromMail);
+        emailService.revokeMailSend(fromMail, Long.parseLong(txnId), optradio, others);
+        badgeTransactionService.revokeNewTranscation(Long.parseLong(txnId), optradio, others, fromMail);
         return "redirect:/user";
     }
 }

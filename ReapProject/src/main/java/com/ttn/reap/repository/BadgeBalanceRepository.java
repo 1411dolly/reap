@@ -14,9 +14,7 @@ public interface BadgeBalanceRepository extends JpaRepository<BadgeBalance, Long
     List<BadgeBalance> findAllByOrderByGoldCountDescSilverCountDescBronzeCountDesc();
 
    /* @Query("select badge.bronzeCount,badge.goldCount,badge.silverCount,badge.userId from BadgeBalance badge order by gold_count desc ,silver_count desc,bronze_count desc")
-    List<Object[]> getallbycount();
-
-    List<BadgeBalance> */
+    List<Object[]> getallbycount();*/
 
     BadgeBalance findByUserId(User user);
 }
