@@ -80,7 +80,7 @@
                             </div>
                             <div class="modal-footer" style="background-color: #f4f4f4">
                                 <form class="col-md-6" id="manageForm" method="post" th:action="@{/manage}">
-                                    <button id="manage-button" type="submit" th:if="${role}">
+                                    <button id="manage-button" th:if="${role}" type="submit">
                                         Manage
                                     </button>
                                 </form>
@@ -192,7 +192,8 @@
         <div class="col-md-7"></div>
     </div>
     <div class="container-fluid">
-        <table class="table table-bordered table-hover" style="background-color: #FFFFFF;text-align: center" id="table1">
+        <table class="table table-bordered table-hover" id="table1"
+               style="background-color: #FFFFFF;text-align: center">
             <tr style="text-align: center   ">
                 <th>Name</th>
                 <th>Role</th>

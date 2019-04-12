@@ -1,9 +1,11 @@
 package com.ttn.reap.repository;
 
+import com.ttn.reap.dto.BadgeTransactionDto;
 import com.ttn.reap.entity.BadgeTransaction;
 import com.ttn.reap.entity.User;
 import com.ttn.reap.enums.Badge;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -21,12 +23,19 @@ public interface BadgeTransactionRepository extends JpaRepository<BadgeTransacti
 
     List<BadgeTransaction> findAllByOrderByDateDesc();
 
-    Integer countByRecieverAndBadge(@Param("reciever") User reciever, @Param("badge") Badge badge);
+    Long countByReceiverAndBadge(@Param("receiver") User receiver, @Param("badge") Badge badge);
 
-    List<BadgeTransaction> findAllByRecieverOrderByDateDesc(@Param("reciever") User reciever);
+    List<BadgeTransaction> findAllByReceiverOrderByDateDesc(@Param("receiver") User receiver);
 
-    List<BadgeTransaction> findAllBySenderOrderByDateDesc(@Param("sender") User reciever);
+    List<BadgeTransaction> findAllBySenderOrderByDateDesc(@Param("sender") User receiver);
 
-    List<BadgeTransaction> findAllBySenderOrRecieverOrderByDateDesc(@Param("sender") User sender, @Param("reciever") User reciever);
+    List<BadgeTransaction> findAllBySenderOrReceiverOrderByDateDesc(@Param("sender") User sender, @Param("receiver") User receiver);
 
+    Long countByReceiver(@Param("receiver") User user);
+
+    Long countBySender(@Param("sender") User user);
+
+
+    @Query("select new com.ttn.reap.dto.BadgeTransactionDto(b.receiver,count(b.badge)) from BadgeTransaction b group by b.receiver order by count(b.badge) desc")
+    List<BadgeTransactionDto> findMaxBadgeCount();
 }
