@@ -18,11 +18,35 @@ $("#searchNewer").autocomplete({
         });
     },
     select: function (event, ui) {
-        this.value = ui.redeem.label;
-        $(this).next("input").val(ui.redeem.value);
+        this.value = ui.item.label;
+        $(this).next("input").val(ui.item.value);
         event.preventDefault();
     }
 });
+
+// $(document).ready(function () {
+//     $(".col-md-6").click(function (e) {
+//         e.preventDefault();
+//         $.ajax({
+//             type: 'GET',
+//             url: '/logout',
+//             success: function (data) {
+//                 window.location.reload();
+//             },
+//             error: function () {
+//                 console.log("Logout failed")
+//             }
+//         })
+//     })
+// })
+
+
+
+
+
+
+
+
 
 // var $form = $('#recognise_form');
 // $form.on('submit', function(e) {
@@ -40,8 +64,9 @@ $("#searchNewer").autocomplete({
 //     return false;
 // });
 
+/*
 
-$("#searchNewer3").autocomplete({
+/*$("#searchNewer3").autocomplete({
     source: function (request, response) {
         $.ajax({
             url: "http://localhost:8080/getUserListActive",
@@ -65,7 +90,7 @@ $("#searchNewer3").autocomplete({
         $(this).next("input").val(ui.item.value);
         event.preventDefault();
     }
-});
+});*/
 
 //for admin management
 /*

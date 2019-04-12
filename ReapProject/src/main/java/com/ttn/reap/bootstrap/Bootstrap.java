@@ -47,10 +47,10 @@ public class Bootstrap {
         Date date9;
         Date date10;
 
-        User user1 = new User("dolly@gmail.com", "gurvinder", "singh", 50, 0, "12345", null, Role.USER, true, true, "/upload/1.jpeg");
+        User user1 = new User("1411dolly@gmail.com", "dolly", "singh", 0, 0, "12345", null, Role.USER, false, true, "/upload/1.jpeg");
         User user2 = new User("amarjeet@gmail.com", "amarjeet", "malik", 0, 0, "12345", null, Role.USER, false, true, "/upload/2.jpeg");
         User user3 = new User("aditya@gmail.com", "aditya", "singh", 0, 0, "12345", null, Role.USER, false, false, "/upload/3.jpeg");
-        User user4 = new User("dharmendra@gmail.com", "dharmendra", "saini", 0, 0, "12345", null, Role.USER, false, true, "/upload/4.jpeg");
+        User user4 = new User("dharmendra@gmail.com", "dharmendra", "saini", 0, 0, "12345", null, Role.USER, true, true, "/upload/4.jpeg");
         BadgeBalance badgeBalance1 = new BadgeBalance(user1, 1, 2, 3);
         BadgeBalance badgeBalance2 = new BadgeBalance(user2, 1, 2, 3);
         BadgeBalance badgeBalance3 = new BadgeBalance(user3, 2, 3, 6);
@@ -69,12 +69,12 @@ public class Bootstrap {
             date2 = format.parse("2018/02/09");
             date3 = format.parse("2017/03/08");
             date4 = format.parse("2016/04/07");
-            date5 = format.parse("2019/05/06");
-            date6 = format.parse("2019/06/05");
-            date7 = format.parse("2019/07/04");
+            date5 = format.parse("2019/04/06");
+            date6 = format.parse("2019/04/05");
+            date7 = format.parse("2019/04/04");
             date8 = format.parse("2015/08/03");
-            date9 = format.parse("2019/09/02");
-            date10 = format.parse("2019/10/01");
+            date9 = format.parse("2019/04/02");
+            date10 = format.parse("2019/01/01");
 
             BadgeTransaction badgeTransaction1 = new BadgeTransaction(user1, user2, date1, "reason1", Badge.GOLD);
             BadgeTransaction badgeTransaction2 = new BadgeTransaction(user2, user3, date2, "reason2", Badge.SILVER);
