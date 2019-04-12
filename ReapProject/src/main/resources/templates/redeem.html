@@ -81,9 +81,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer" style="background-color: #f4f4f4">
-                                <form class="col-md-6" id="manageForm" method="post" th:action="@{/manage}"
-                                      th:object="${user}">
-                                    <button id="manage-button" type="submit">
+                                <form class="col-md-6" id="manageForm" method="post" th:action="@{/manage}">
+                                    <button id="manage-button" type="submit" th:if="${role}">
                                         Manage
                                     </button>
                                 </form>

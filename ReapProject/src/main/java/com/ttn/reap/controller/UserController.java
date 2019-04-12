@@ -99,18 +99,17 @@ public class UserController {
         long silver = badgeTransactionService.countByReceiverAndBadge(checkuser, Badge.SILVER);
         long bronze = badgeTransactionService.countByReceiverAndBadge(checkuser, Badge.BRONZE);
         List<BadgeTransaction> badgeTransactionList = badgeTransactionService.findAllByOrderByDateDesc();
-        List<BadgeTransactionDto> badgeTransactionDtos=badgeTransactionService.findMaxBadgeCount().subList(0,3);
-        List<User> userList=badgeTransactionDtos.stream().map(BadgeTransactionDto::getReceiver).collect(Collectors.toList());
-        System.out.println("userlist:::"+userList);
-        int i=0;
-        List<Long> goldList=new ArrayList<>();
-        List<Long> silverList=new ArrayList<>();
-        List<Long> bronzeList=new ArrayList<>();
-        for(i=0;i<3;i++)
-        {
-            long golditem=badgeTransactionService.countByReceiverAndBadge(userList.get(i),Badge.GOLD);
-            long silveritem=badgeTransactionService.countByReceiverAndBadge(userList.get(i),Badge.SILVER);
-            long bronzeitem=badgeTransactionService.countByReceiverAndBadge(userList.get(i),Badge.BRONZE);
+        List<BadgeTransactionDto> badgeTransactionDtos = badgeTransactionService.findMaxBadgeCount().subList(0, 3);
+        List<User> userList = badgeTransactionDtos.stream().map(BadgeTransactionDto::getReceiver).collect(Collectors.toList());
+        System.out.println("userlist:::" + userList);
+        int i = 0;
+        List<Long> goldList = new ArrayList<>();
+        List<Long> silverList = new ArrayList<>();
+        List<Long> bronzeList = new ArrayList<>();
+        for (i = 0; i < 3; i++) {
+            long golditem = badgeTransactionService.countByReceiverAndBadge(userList.get(i), Badge.GOLD);
+            long silveritem = badgeTransactionService.countByReceiverAndBadge(userList.get(i), Badge.SILVER);
+            long bronzeitem = badgeTransactionService.countByReceiverAndBadge(userList.get(i), Badge.BRONZE);
             goldList.add(golditem);
             silverList.add(silveritem);
             bronzeList.add(bronzeitem);
@@ -124,13 +123,12 @@ public class UserController {
         model.addAttribute("silver", silver);
         model.addAttribute("bronze", bronze);
         model.addAttribute("recognizeco", new RecognizeCO());
-        model.addAttribute("newer",badgeTransactionDtos);
-        model.addAttribute("goldlist",goldList);
-        model.addAttribute("silverlist",silverList);
-        model.addAttribute("bronzelist",bronzeList);
+        model.addAttribute("newer", badgeTransactionDtos);
+        model.addAttribute("goldlist", goldList);
+        model.addAttribute("silverlist", silverList);
+        model.addAttribute("bronzelist", bronzeList);
         return "dashboard";
     }
-
 
 
     @GetMapping("user")
@@ -212,6 +210,19 @@ public class UserController {
         long id = (Long) session.getAttribute("userId");
         User user = userService.findUserId(id);
         modelAndView.addObject("user", user);
+        BadgeBalance badge = badgeBalanceService.getBadgeById(id);
+        modelAndView.addObject("badge", badge);
+        List<User> users = userService.findAll();
+        modelAndView.addObject("users", users);
+        List<Long> userIds = new ArrayList<>(users.size());
+        for (User u : users) {
+            userIds.add(user.getId());
+        }
+        //do something
+        modelAndView.addObject("badgeBalanceService", badgeBalanceService);
+        modelAndView.addObject("recognizeco", new RecognizeCO());
+        boolean role = user.isAdmin();
+        modelAndView.addObject("role", role);
         return modelAndView;
     }
 
@@ -239,7 +250,6 @@ public class UserController {
         badgeTransactionService.saveNewTranscation(sender, receiver, new Date(), recognizeCO.getMessage_val(), badge);
         return "redirect:/user";
     }
-
 
 
 }

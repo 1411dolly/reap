@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
-import java.util.List;
 
 @Controller
 public class RedeemController {
@@ -48,7 +46,7 @@ public class RedeemController {
     @RequestMapping(value = "itemsipper", method = RequestMethod.GET)
     @ResponseBody
     public Item fetchsipperAjax(Model model) {
-        Item itemsipper=new Item("SIPPER",10,"/items/sipper.jpeg",4);
+        Item itemsipper = new Item("SIPPER", 10, "/items/sipper.jpeg", 4);
         model.addAttribute("itemsipper", itemsipper);
         System.out.println("itemsipper aja");
         return itemsipper;

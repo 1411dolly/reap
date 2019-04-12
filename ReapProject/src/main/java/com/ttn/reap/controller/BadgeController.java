@@ -1,6 +1,5 @@
 package com.ttn.reap.controller;
 
-import com.ttn.reap.dto.BadgeTransactionDto;
 import com.ttn.reap.entity.BadgeTransaction;
 import com.ttn.reap.entity.User;
 import com.ttn.reap.enums.Badge;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -40,19 +38,20 @@ public class BadgeController {
     @PostMapping("/badges")
     public ModelAndView badges(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("badges");
-        long id = (long) session.getAttribute("userId");
-        User user = userService.findUserId(id);
-        long gold = badgeTransactionService.countByReceiverAndBadge(user, Badge.GOLD);
-        long silver = badgeTransactionService.countByReceiverAndBadge(user, Badge.SILVER);
-        long bronze = badgeTransactionService.countByReceiverAndBadge(user, Badge.BRONZE);
-        List<BadgeTransaction> badgeTransactionListReceiver = badgeTransactionService.findAllByReceiverOrderByDateDesc(user);
-        System.out.println(badgeTransactionListReceiver);
-        List<BadgeTransaction> badgeTransactionListSender = badgeTransactionService.findAllBySenderOrderByDateDesc(user);
-        List<BadgeTransaction> badgeTransactionListSenderOrReceiver = badgeTransactionService.findAllBySenderOrReceiverOrderByDateDesc(user, user);
-        long receivedCount = badgeTransactionService.countByReceiver(user);
-        long sendCount = badgeTransactionService.countBySender(user);
-        long allCount = receivedCount + sendCount;
-        if (user != null) {
+        if (session.getAttribute("userId") != null) {
+            long id = (long) session.getAttribute("userId");
+            User user = userService.findUserId(id);
+            boolean role = user.isAdmin();
+            long gold = badgeTransactionService.countByReceiverAndBadge(user, Badge.GOLD);
+            long silver = badgeTransactionService.countByReceiverAndBadge(user, Badge.SILVER);
+            long bronze = badgeTransactionService.countByReceiverAndBadge(user, Badge.BRONZE);
+            List<BadgeTransaction> badgeTransactionListReceiver = badgeTransactionService.findAllByReceiverOrderByDateDesc(user);
+            List<BadgeTransaction> badgeTransactionListSender = badgeTransactionService.findAllBySenderOrderByDateDesc(user);
+            List<BadgeTransaction> badgeTransactionListSenderOrReceiver = badgeTransactionService.findAllBySenderOrReceiverOrderByDateDesc(user, user);
+            long receivedCount = badgeTransactionService.countByReceiver(user);
+            long sendCount = badgeTransactionService.countBySender(user);
+            long allCount = receivedCount + sendCount;
+            modelAndView.addObject("role", role);
             modelAndView.addObject("user", user);
             modelAndView.addObject("gold", gold);
             modelAndView.addObject("silver", silver);
@@ -69,6 +68,4 @@ public class BadgeController {
         }
         return modelAndView;
     }
-
-
 }
