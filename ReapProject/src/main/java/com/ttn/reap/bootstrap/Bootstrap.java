@@ -49,13 +49,8 @@ public class Bootstrap {
 
         User user1 = new User("1411dolly@gmail.com", "dolly", "singh", 0, 0, "12345", null, Role.USER, false, true, "/upload/1.jpeg");
         User user2 = new User("amarjeet@gmail.com", "amarjeet", "malik", 0, 0, "12345", null, Role.USER, false, true, "/upload/2.jpeg");
-<<<<<<< HEAD
-        User user3 = new User("aditya@gmail.com", "aditya", "singh", 0, 0, "12345", null, Role.USER, true, false, "/upload/3.jpeg");
-        User user4 = new User("dharmendra@gmail.com", "dharmendra", "saini", 0, 0, "12345", null, Role.USER, false, true, "/upload/4.jpeg");
-=======
         User user3 = new User("aditya@gmail.com", "aditya", "singh", 0, 0, "12345", null, Role.USER, false, false, "/upload/3.jpeg");
         User user4 = new User("dharmendra@gmail.com", "dharmendra", "saini", 0, 0, "12345", null, Role.USER, true, true, "/upload/4.jpeg");
->>>>>>> e93a6ba02e33bfed3493140bd64c5492c16984ed
         BadgeBalance badgeBalance1 = new BadgeBalance(user1, 1, 2, 3);
         BadgeBalance badgeBalance2 = new BadgeBalance(user2, 1, 2, 3);
         BadgeBalance badgeBalance3 = new BadgeBalance(user3, 2, 3, 6);

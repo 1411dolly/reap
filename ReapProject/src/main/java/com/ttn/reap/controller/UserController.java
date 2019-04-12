@@ -205,25 +205,6 @@ public class UserController {
         return "signup";
     }
 
-<<<<<<< HEAD
-//    @GetMapping("/sample")
-//    public ModelAndView modal(HttpSession httpSession) {
-//        User sessionUser=(User)httpSession.getAttribute("sessionUser");
-//        ModelAndView modelAndView=new ModelAndView();
-//          if(sessionUser==null)
-//          {
-//              modelAndView.setViewName("login");
-//          }
-//          else {
-////              ModelAndView modelAndView = new ModelAndView("sample");
-//              modelAndView.setViewName("sample");
-//              modelAndView.addObject("user", new User());
-//          }
-//        return modelAndView;
-//    }
-
-=======
->>>>>>> e93a6ba02e33bfed3493140bd64c5492c16984ed
     @PostMapping("/manage")
     public ModelAndView manageUser(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("manageUser");

@@ -90,12 +90,7 @@ $("#searchNewer").autocomplete({
         $(this).next("input").val(ui.item.value);
         event.preventDefault();
     }
-<<<<<<< HEAD
-});
-*/
-=======
 });*/
->>>>>>> e93a6ba02e33bfed3493140bd64c5492c16984ed
 
 //for admin management
 /*
