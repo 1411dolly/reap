@@ -11,6 +11,7 @@ import com.ttn.reap.repository.BadgeTransactionRepository;
 import com.ttn.reap.repository.ItemRepository;
 import com.ttn.reap.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -32,7 +33,7 @@ public class Bootstrap {
     @Autowired
     ItemRepository itemRepository;
 
-    @EventListener(ContextStartedEvent.class)
+    @EventListener(ContextRefreshedEvent.class)
     void setup() {
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         Date date1;
@@ -46,7 +47,7 @@ public class Bootstrap {
         Date date9;
         Date date10;
 
-        User user1 = new User("1411dolly@gmail.com", "dolly", "singh", 0, 0, "12345", null, Role.USER, true, true, "/upload/1.jpeg");
+        User user1 = new User("dolly@gmail.com", "gurvinder", "singh", 50, 0, "12345", null, Role.USER, true, true, "/upload/1.jpeg");
         User user2 = new User("amarjeet@gmail.com", "amarjeet", "malik", 0, 0, "12345", null, Role.USER, false, true, "/upload/2.jpeg");
         User user3 = new User("aditya@gmail.com", "aditya", "singh", 0, 0, "12345", null, Role.USER, false, false, "/upload/3.jpeg");
         User user4 = new User("dharmendra@gmail.com", "dharmendra", "saini", 0, 0, "12345", null, Role.USER, false, true, "/upload/4.jpeg");
