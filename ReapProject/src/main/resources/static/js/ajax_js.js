@@ -24,21 +24,21 @@ $("#searchNewer").autocomplete({
     }
 });
 
-$(document).ready(function () {
-    $(".col-md-6").click(function (e) {
-        e.preventDefault();
-        $.ajax({
-            type: 'GET',
-            url: '/logout',
-            success: function (data) {
-                window.location.reload();
-            },
-            error: function () {
-                console.log("Logout failed")
-            }
-        })
-    })
-})
+// $(document).ready(function () {
+//     $(".col-md-6").click(function (e) {
+//         e.preventDefault();
+//         $.ajax({
+//             type: 'GET',
+//             url: '/logout',
+//             success: function (data) {
+//                 window.location.reload();
+//             },
+//             error: function () {
+//                 console.log("Logout failed")
+//             }
+//         })
+//     })
+// })
 
 
 

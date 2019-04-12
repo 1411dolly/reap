@@ -11,6 +11,7 @@ import com.ttn.reap.repository.BadgeTransactionRepository;
 import com.ttn.reap.repository.ItemRepository;
 import com.ttn.reap.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
