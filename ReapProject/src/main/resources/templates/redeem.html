@@ -9,6 +9,9 @@
     <link href="../img/ttn.ico" rel="icon" sizes="20x20" type="image/gif"/>
     <link rel="stylesheet" th:href="@{css/dashStyle.css}"/>
     <link rel="stylesheet" th:href="@{css/redeem.css}"/>
+<!--    <link rel="stylesheet" th:href="@{js/redeem.js}"/>-->
+    <script th:src="@{'/js/redeem.js'}"></script>
+
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top navbar-expand-md main-header">
@@ -136,77 +139,56 @@
                 <div class="lefthead " style="background-color: #9093c5"><img class="newer headimg"/><span class="glyphicon glyphicon-shopping-cart"></span> BAG</div>
                 <div class="row ">
                     <div class="col-sm-6 fontstyle">Item Details</div>
-                    <div class="col-sm-3 fontstyle">Quantity</div>
-                    <div class="col-sm-3 fontstyle">Subtotal</div>
+                    <div class="col-sm-6 fontstyle">Subtotal</div>
                 </div>
-                <div class="row ">
-                    <div class="col-sm-2"><img class="itemimg" src="../img/dummy.jpeg"/></div>
-                    <div class="col-sm-4">Item1</div>
-                    <div class="col-sm-2"><select>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option></select></div>
-                    <div class="col-sm-3">Subtotal</div>
-                    <span class="col-sm-2 close">&times;</span>
+                <div class="populate">
+
                 </div>
                 <div class="row ">
                         <div class="col-sm-6 fontstyle points">Total</div>
-                        <div class="col-sm-6 fontstyle points pointstyle">Points</div>
+                        <div class="col-sm-6 fontstyle points pointstyle"><span>0</span>Points</div>
                 </div>
                 <button class="row redeem">REDEEM POINTS</button>
             </section>
         </div>
 
 
+<!--        Item item1=new Item("SIPPER",10,"/items/sipper.jpeg",4);-->
+<!--        Item item2=new Item("BAG",20,"/items/back_bag.jpeg",4);-->
+<!--        Item item3=new Item("DIARY",30,"/items/boardroom_diary.jpeg",4);-->
+<!--        Item item4=new Item("VISITING VARD HOLDER",40,"/items/visiting_card_holder.jpeg",4);-->
+<!--        Item item5=new Item("WIRELESS MOUSE",50,"/items/wireless_mouse.jpeg",4);-->
+<!--        Item item6=new Item("COFFEE CUP",60,"/items/coffee_cup.jpeg",4);-->
+<!--        Item item7=new Item("KEYCHAIN",70,"/items/keychain.jpg",4);-->
+<!--        Item item8=new Item("MOUSE PAD",80,"/items/mouse_pad.jpg",4);-->
+<!--        Item item9=new Item("NOTE CARD",90,"/items/note_card.jpg",4);-->
+<!--        Item item10=new Item("TTN TSHIRT",100,"/items/ttn_tshirt.jpeg",4);-->
+
+
         <div class="col-sm-8">
             <div class="lefthead " style="background-color: #9093c5"><img class="newer headimg"/><span class="glyphicon glyphicon-shopping-cart"></span> REAP NOW</div>
             <div class=" row items">
                 <div class="col-sm-4 item">
-                    <div><img class="imgitems" src="../img/dummy.jpeg"/></div>
-                    <button class="row point">REDEEM POINTS</button>
+                    <div><img class="imgitems" src="../items/sipper.jpeg" /></div>
+                    <button class="row point sipperbutton">10 POINTS </button>
                     <div class="itemname">SIPPER</div>
                 </div>
                 <div class="col-sm-4 item">
-                    <div><img class="imgitems" src="../img/dummy.jpeg"/></div>
-                    <button class="row point">REDEEM POINTS</button>
-                    <div class="itemname">SIPPER</div>
+                    <div><img class="imgitems" src="../items/back_bag.jpeg" /></div>
+                    <button class="row point" >20 POINTS </button>
+                    <div class="itemname">BAG</div>
                 </div>
                 <div class="col-sm-4 item">
-                    <div><img class="imgitems" src="../img/dummy.jpeg"/></div>
-                    <button class="row point">REDEEM POINTS</button>
-                    <div class="itemname">SIPPER</div>
+                    <div><img class="imgitems" src="../items/boardroom_diary.jpeg" /></div>
+                    <button class="row point" >30 POINTS </button>
+                    <div class="itemname">DIARY</div>
                 </div>
                 <div class="col-sm-4 item">
-                    <div><img class="imgitems" src="../img/dummy.jpeg"/></div>
-                    <button class="row point">REDEEM POINTS</button>
-                    <div class="itemname">SIPPER</div>
+                    <div><img class="imgitems" src="../items/visiting_card_holder.jpeg" /></div>
+                    <button class="row point" >40 POINTS </button>
+                    <div class="itemname">VISITING CARD HOLDER</div>
                 </div>
-                <div class="col-sm-4 item">
-                    <div><img class="imgitems" src="../img/dummy.jpeg"/></div>
-                    <button class="row point">REDEEM POINTS</button>
-                    <div class="itemname">SIPPER</div>
-                </div>
-                <div class="col-sm-4 item">
-                    <div><img class="imgitems" src="../img/dummy.jpeg"/></div>
-                    <button class="row point">REDEEM POINTS</button>
-                    <div class="itemname">SIPPER</div>
-                </div>
-                <div class="col-sm-4 item">
-                    <div><img class="imgitems" src="../img/dummy.jpeg"/></div>
-                    <button class="row point">REDEEM POINTS</button>
-                    <div class="itemname">SIPPER</div>
-                </div>
-                <div class="col-sm-4 item">
-                    <div><img class="imgitems" src="../img/dummy.jpeg"/></div>
-                    <button class="row point">REDEEM POINTS</button>
-                    <div class="itemname">SIPPER</div>
-                </div>
-                <div class="col-sm-4 item">
-                    <div><img class="imgitems" src="../img/dummy.jpeg"/></div>
-                    <button class="row point">REDEEM POINTS</button>
-                    <div class="itemname">SIPPER</div>
-                </div>
+
             </div>
         </div>
 

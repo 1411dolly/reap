@@ -132,14 +132,6 @@ public class UserController {
     }
 
 
-    @GetMapping("data")
-    @ResponseBody
-    public List<BadgeTransactionDto> data() {
-
-//        List<User> user=badgeTransactionService.findMaxBadgeCount().forEach(e-> e.getReceiver());
-        return badgeTransactionService.findMaxBadgeCount();
-
-    }
 
     @GetMapping("user")
     String user(HttpSession session, Model model) {

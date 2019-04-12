@@ -18,8 +18,8 @@ $("#searchNewer").autocomplete({
         });
     },
     select: function (event, ui) {
-        this.value = ui.item.label;
-        $(this).next("input").val(ui.item.value);
+        this.value = ui.redeem.label;
+        $(this).next("input").val(ui.redeem.value);
         event.preventDefault();
     }
 });

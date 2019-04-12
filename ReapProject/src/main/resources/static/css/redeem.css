@@ -48,12 +48,11 @@
 .item{
     float: left;
     border: #E8E8E8	 1px double;
-    /*margin: 5px;*/
 }
 .point{
     background-color: #34a6a2;
     text-align: center;
-    margin-left: 63px;
+    margin-left: 85px;
     border: white;
     padding: 5px;
 }
@@ -62,4 +61,9 @@
 }
 .itemname{
     text-align: center;
+}
+.listredeem{
+}
+.totalpoints{
+    display: none;
 }
