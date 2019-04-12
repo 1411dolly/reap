@@ -49,4 +49,17 @@ public class BadgeBalanceService {
         }
         userService.updatePointsRecognize(receiver, badge);
     }
+    
+    @Transactional
+    public void addBadgeBalance(User sender,User receiver, Badge badge) {
+        BadgeBalance badgeBalance = badgeBalanceRepository.findByUserId(sender);
+        if (badge.name().equalsIgnoreCase("GOLD")) {
+            badgeBalance.setGoldCount(badgeBalance.getGoldCount() + 1);
+        } else if (badge.name().equalsIgnoreCase("SILVER")) {
+            badgeBalance.setSilverCount(badgeBalance.getSilverCount() + 1);
+        } else {
+            badgeBalance.setBronzeCount(badgeBalance.getBronzeCount() + 1);
+        }
+        userService.updatePointsRevoke(receiver,badge);
+    }
 }
