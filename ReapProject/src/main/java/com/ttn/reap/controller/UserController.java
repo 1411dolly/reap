@@ -198,9 +198,18 @@ public class UserController {
     }
 
     @GetMapping("/sample")
-    public ModelAndView modal() {
-        ModelAndView modelAndView = new ModelAndView("sample");
-        modelAndView.addObject("user", new User());
+    public ModelAndView modal(HttpSession httpSession) {
+        User sessionUser=(User)httpSession.getAttribute("sessionUser");
+        ModelAndView modelAndView=new ModelAndView();
+          if(sessionUser==null)
+          {
+              modelAndView.setViewName("login");
+          }
+          else {
+//              ModelAndView modelAndView = new ModelAndView("sample");
+              modelAndView.setViewName("sample");
+              modelAndView.addObject("user", new User());
+          }
         return modelAndView;
     }
 
@@ -229,6 +238,7 @@ public class UserController {
     @GetMapping("getUserListActive")
     @ResponseBody
     public List<UserDto> getUserListActive(@RequestParam String term, @RequestParam String user_id) {
+
         return userService.simulateSearchResult(term, Long.parseLong(user_id));
     }
 
