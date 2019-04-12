@@ -105,37 +105,30 @@
     <div class="row nopadding lower">
         <div class="col-sm-4">
             <section class="row fit panel">
-                <!-- BADGE AND POINTS HEADER-->
                 <div class="lefthead "><img class="newer headimg" src="../img/badgewhite.png"/>BADGES AND POINTS</div>
                 <div class="mybadges" style="overflow: hidden">
                     <div class="col-sm-8 nopadding" style="float:left;" th:object="${user}">
-                        <!--BADGE PROFILE PIC-->
                         <div class="profile mybadgesimg"><img class="profileimg" th:src="@{${user.getFileName()}}"/>
                         </div>
-                        <!--BADGE USERNAME-->
                         <div class="mybadgesUsername" th:text="*{name}"></div>
                         <div>
-                            <!--GOLD BADGE-->
                             <span class="star">
                             <img src="../img/badgeOrange.png"/>
-                            <span class="points" th:text="${gold}">0</span>
+                            <span class="points" th:text="${gold}"></span>
                             </span>
-                            <!--SILVER BADGE-->
                             <span class="star mybadgestar">
                             <img src="../img/badgeGrey.png"/>
-                            <span class="points" th:text="${silver}">0</span>
+                            <span class="points" th:text="${silver}"></span>
                             </span>
-                            <!--BRONZE BADGE-->
                             <span class="star mybadgestar">
                             <img src="../img/badgeBrown.png"/>
-                            <span class="points" th:text="${bronze}">0</span>
+                            <span class="points" th:text="${bronze}"></span>
                             </span>
                         </div>
                     </div>
-                    <!--POINTS-->
                     <div class="col-sm-4 nopadding point_img"><img src="../img/points.png"/></div>
-                    <div class="bottom-left zero" th:text="${user.availPoints}">0</div>
-                    <div class="bottom-left pts">pts</div>
+                    <div class="bottom-left zero" th:text="${user.availPoints}"></div>
+                    <div class="bottom-left pts" style="left: 350px;font-size: medium">pts</div>
                 </div>
             </section>
             <form method="post" th:action="@{/redeem}" th:object="${user}">
@@ -154,7 +147,6 @@
 
             <div class="nodata tab-content">
                 <div class="tab-pane" id="shared">
-
                     <div class="panel-body" th:each="tranlist:${badgetransactionlistsender}">
                         <div class="col-md-2">
                             <img alt='User Image' class='user-image' th:src="@{${tranlist.getReceiver().getFileName()}}"/>
@@ -176,7 +168,6 @@
 
 
                 <div class="tab-pane" id="recieved">
-
                     <div class="panel-body" th:each="tranlist:${badgetransactionlistreceiver}">
                         <div class="col-md-2">
                             <img alt='User Image' class='user-image' th:src="@{${tranlist.getReceiver().getFileName()}}"/>
@@ -194,9 +185,10 @@
                             <span th:text="${tranlist.getReason()}"></span>
                         </div>
                     </div>
-
                 </div>
-                <div class="tab-pane" id="redeemed">redeemed tab</div>
+                <div class="tab-pane" id="redeemed">
+                    Points redeemed = <span th:text="${user.getRedeemedPoints()}"></span>   pts
+                </div>
                 <div class="tab-pane active" id="all">
                     <div class="panel-body" th:each="tranlist:${badgetransactionlistsenderorreceiver}">
                         <div class="col-md-2">

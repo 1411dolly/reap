@@ -111,27 +111,23 @@
                         </div>
                         <div class="mybadgesUsername" th:text="*{name}"></div>
                         <div th:object="${badge}">
-                            <!--GOLD BADGE-->
                             <span class="star">
                             <img src="../img/badgeOrange.png"/>
                             <span class="points" th:text="*{goldCount}">0</span>
                             </span>
-                            <!--SILVER BADGE-->
                             <span class="star mybadgestar">
                             <img src="../img/badgeGrey.png"/>
                             <span class="points" th:text="*{silverCount}">0</span>
                             </span>
-                            <!--BRONZE BADGE-->
                             <span class="star mybadgestar">
                             <img src="../img/badgeBrown.png"/>
                             <span class="points" th:text="*{bronzeCount}">0</span>
                             </span>
                         </div>
                     </div>
-                    <!--POINTS-->
                     <div class="col-sm-4 nopadding point_img"><img src="../img/points.png"/></div>
                     <div class="bottom-left zero" th:text="${user.availPoints}" id="userpointstotal">0</div>
-                    <div class="bottom-left pts">pts</div>
+                    <div class="bottom-left pts" style="left: 350px;font-size: medium">pts</div>
                 </div>
             </section>
             <section class="row fit panel">
