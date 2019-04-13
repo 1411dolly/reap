@@ -15,3 +15,15 @@ $(function() {
         });
     });
 });
+
+$('#userBadgeSelect').click(function () {
+    if(parseInt(document.getElementById('ugoldcount').value) === 0) {
+        document.getElementById("userBadgeSelect").options[1].disabled = true;
+    }
+    if(parseInt(document.getElementById('usilvercount').value) === 0){
+        document.getElementById("userBadgeSelect").options[2].disabled = true;
+    }
+    if(parseInt(document.getElementById('ubronzecount').value) === 0){
+        document.getElementById("userBadgeSelect").options[3].disabled = true;
+    }
+});
