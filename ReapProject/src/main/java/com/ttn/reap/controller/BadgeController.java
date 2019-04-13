@@ -38,34 +38,29 @@ public class BadgeController {
     @PostMapping("/badges")
     public ModelAndView badges(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("badges");
-        if (session.getAttribute("userId") != null) {
-            long id = (long) session.getAttribute("userId");
-            User user = userService.findUserId(id);
-            boolean role = user.isAdmin();
-            long gold = badgeTransactionService.countByReceiverAndBadge(user, Badge.GOLD);
-            long silver = badgeTransactionService.countByReceiverAndBadge(user, Badge.SILVER);
-            long bronze = badgeTransactionService.countByReceiverAndBadge(user, Badge.BRONZE);
-            List<BadgeTransaction> badgeTransactionListReceiver = badgeTransactionService.findAllByReceiverOrderByDateDesc(user);
-            List<BadgeTransaction> badgeTransactionListSender = badgeTransactionService.findAllBySenderOrderByDateDesc(user);
-            List<BadgeTransaction> badgeTransactionListSenderOrReceiver = badgeTransactionService.findAllBySenderOrReceiverOrderByDateDesc(user, user);
-            long receivedCount = badgeTransactionService.countByReceiver(user);
-            long sendCount = badgeTransactionService.countBySender(user);
-            long allCount = receivedCount + sendCount;
-            modelAndView.addObject("role", role);
-            modelAndView.addObject("user", user);
-            modelAndView.addObject("gold", gold);
-            modelAndView.addObject("silver", silver);
-            modelAndView.addObject("bronze", bronze);
-            modelAndView.addObject("badgetransactionlistreceiver", badgeTransactionListReceiver);
-            modelAndView.addObject("badgetransactionlistsender", badgeTransactionListSender);
-            modelAndView.addObject("badgetransactionlistsenderorreceiver", badgeTransactionListSenderOrReceiver);
-            modelAndView.addObject("receivedcount", receivedCount);
-            modelAndView.addObject("sendercount", sendCount);
-            modelAndView.addObject("allcount", allCount);
-        } else {
-            //do something if user is null
-            System.out.println("user is null in badge mapping");
-        }
+        long id = (long) session.getAttribute("userId");
+        User user = userService.findUserId(id);
+        boolean role = user.isAdmin();
+        long gold = badgeTransactionService.countByReceiverAndBadge(user, Badge.GOLD);
+        long silver = badgeTransactionService.countByReceiverAndBadge(user, Badge.SILVER);
+        long bronze = badgeTransactionService.countByReceiverAndBadge(user, Badge.BRONZE);
+        List<BadgeTransaction> badgeTransactionListReceiver = badgeTransactionService.findAllByReceiverOrderByDateDesc(user);
+        List<BadgeTransaction> badgeTransactionListSender = badgeTransactionService.findAllBySenderOrderByDateDesc(user);
+        List<BadgeTransaction> badgeTransactionListSenderOrReceiver = badgeTransactionService.findAllBySenderOrReceiverOrderByDateDesc(user, user);
+        long receivedCount = badgeTransactionService.countByReceiver(user);
+        long sendCount = badgeTransactionService.countBySender(user);
+        long allCount = receivedCount + sendCount;
+        modelAndView.addObject("role", role);
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("gold", gold);
+        modelAndView.addObject("silver", silver);
+        modelAndView.addObject("bronze", bronze);
+        modelAndView.addObject("badgetransactionlistreceiver", badgeTransactionListReceiver);
+        modelAndView.addObject("badgetransactionlistsender", badgeTransactionListSender);
+        modelAndView.addObject("badgetransactionlistsenderorreceiver", badgeTransactionListSenderOrReceiver);
+        modelAndView.addObject("receivedcount", receivedCount);
+        modelAndView.addObject("sendercount", sendCount);
+        modelAndView.addObject("allcount", allCount);
         return modelAndView;
     }
 }

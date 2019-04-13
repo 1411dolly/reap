@@ -4,13 +4,11 @@ import com.ttn.reap.co.RecognizeCO;
 import com.ttn.reap.entity.BadgeBalance;
 import com.ttn.reap.entity.User;
 import com.ttn.reap.enums.Badge;
-import com.ttn.reap.enums.Role;
 import com.ttn.reap.service.BadgeBalanceService;
 import com.ttn.reap.service.BadgeTransactionService;
 import com.ttn.reap.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +30,10 @@ public class AdminController {
 
     @GetMapping("/manage")
     public ModelAndView manageUsers(HttpSession session) {
+        if (session.getAttribute("userId") == null) {
+            ModelAndView modelAndView = new ModelAndView("login");
+            return modelAndView;
+        }
         ModelAndView modelAndView = new ModelAndView("manageUser");
         long id = (Long) session.getAttribute("userId");
         User user = userService.findUserId(id);
@@ -60,16 +62,16 @@ public class AdminController {
     @PostMapping("/updateUserRole")
     @ResponseBody
     public String updateUserRole(@RequestParam("role") String role, @RequestParam("userId") String userId) {
-        userService.updateUserRole(role,userId);
+        userService.updateUserRole(role, userId);
         return "redirect:/manage";
     }
 
-    @PostMapping("/updateAdminRole")
+/*    @PostMapping("/updateAdminRole")
     @ResponseBody
     public String updateAdminRole(@RequestParam("isAdmin") String isAdmin, @RequestParam("userId") String userId) {
-        userService.updateAdminRole(isAdmin,userId);
+        userService.updateAdm   inRole(isAdmin,userId);
         return "redirect:/manage";
-    }
+    }*/
 
     @GetMapping("updateUserActive")
     @ResponseBody
@@ -85,18 +87,20 @@ public class AdminController {
 
     @GetMapping("updateGoldCount")
     @ResponseBody
-    public User updateGoldCount(@RequestParam("goldCount") Integer goldCount, @RequestParam("badgeBalance") BadgeBalance badgeBalance,@RequestParam("userId") Long userId) {
-        return userService.updateGoldCount(goldCount, badgeBalance,userId);
+    public User updateGoldCount(@RequestParam("goldCount") Integer goldCount, @RequestParam("badgeBalance") BadgeBalance badgeBalance, @RequestParam("userId") Long userId) {
+        return userService.updateGoldCount(goldCount, badgeBalance, userId);
     }
+
     @GetMapping("updateSilverCount")
     @ResponseBody
-    public User updateSilverCount(@RequestParam("silverCount") Integer silverCount, @RequestParam("badgeBalance") BadgeBalance badgeBalance,@RequestParam("userId") Long userId) {
-        return userService.updateSilverCount(silverCount, badgeBalance,userId);
+    public User updateSilverCount(@RequestParam("silverCount") Integer silverCount, @RequestParam("badgeBalance") BadgeBalance badgeBalance, @RequestParam("userId") Long userId) {
+        return userService.updateSilverCount(silverCount, badgeBalance, userId);
     }
+
     @GetMapping("updateBronzeCount")
     @ResponseBody
-    public User updateBronzeCount(@RequestParam("bronzeCount") Integer bronzeCount, @RequestParam("badgeBalance") BadgeBalance badgeBalance,@RequestParam("userId") Long userId) {
-        return userService.updateBronzeCount(bronzeCount, badgeBalance,userId);
+    public User updateBronzeCount(@RequestParam("bronzeCount") Integer bronzeCount, @RequestParam("badgeBalance") BadgeBalance badgeBalance, @RequestParam("userId") Long userId) {
+        return userService.updateBronzeCount(bronzeCount, badgeBalance, userId);
     }
 
 }

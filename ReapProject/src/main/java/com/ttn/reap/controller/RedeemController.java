@@ -8,7 +8,6 @@ import com.ttn.reap.service.ItemService;
 import com.ttn.reap.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,11 +26,13 @@ public class RedeemController {
 
     @GetMapping("/redeem")
     public ModelAndView badge(HttpSession session) {
+
         if (session.getAttribute("userId") == null) {
             ModelAndView modelAndView = new ModelAndView("login");
-            modelAndView.addObject("item", new Item());
             return modelAndView;
-        } else return redeem(new Item(), session);
+        } else {
+            return redeem(new Item(), session);
+        }
     }
 
     @PostMapping("/redeem")
@@ -41,6 +42,8 @@ public class RedeemController {
         long id = (long) session.getAttribute("userId");
         User user = userService.findUserId(id);
         BadgeBalance badge = badgeBalanceService.getBadgeById(id);
+        boolean role = user.isAdmin();
+        modelAndView.addObject("role", role);
         modelAndView.addObject("user", user);
         modelAndView.addObject("badge", badge);
         modelAndView.addObject("redeem", itemList);
@@ -52,6 +55,4 @@ public class RedeemController {
     public Item fetchsipperAjax(@RequestParam String itemId) {
         return itemService.findById(Long.parseLong(itemId));
     }
-
-
 }
