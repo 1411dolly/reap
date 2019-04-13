@@ -4,8 +4,8 @@ $("#searchNewer").autocomplete({
             url: "http://localhost:8080/getUserListActive",
             type: "GET",
             data: {
-                term : request.term,
-                user_id : $("#user-id").val()
+                term: request.term,
+                user_id: $("#user-id").val()
             },
             success: function (data) {
                 response($.map(data, function (el) {
@@ -40,83 +40,40 @@ $("#searchNewer").autocomplete({
 //     })
 // })
 
-
-
-
-
-
-
-
-
-// var $form = $('#recognise_form');
-// $form.on('submit', function(e) {
-//     e.preventDefault();
-//     $.ajax({
-//         url: $form.attr('action'),
-//         type: 'post',
-//         data: $form.serialize(),
-//         success: function(data)
-//         {
-//             alert("recognized");
-//         }
-//     });
-//
-//     return false;
-// });
-
-/*
-
-/*$("#searchNewer3").autocomplete({
-    source: function (request, response) {
-        $.ajax({
-            url: "http://localhost:8080/getUserListActive",
-            type: "GET",
-            data: {
-                term : request.term,
-                user_id : $("#user-id").val()
-            },
-            success: function (data) {
-                response($.map(data, function (el) {
-                    return {
-                        label: el.nameEmail,
-                        value: el.email
-                    };
-                }));
-            }
-        });
-    },
-    select: function (event, ui) {
-        this.value = ui.item.label;
-        $(this).next("input").val(ui.item.value);
-        event.preventDefault();
-    }
-});*/
-
-//for admin management
-/*
-$("#searchNewer4").autocomplete({
-    source: function (request, response) {
-        $.ajax({
-            url: "http://localhost:8080/getUserListActive",
-            type: "GET",
-            data: {
-                term : request.term,
-                user_id : $("#user-id").val()
-            },
-            success: function (data) {
-                response($.map(data, function (el) {
-                    return {
-                        label: el.nameEmail,
-                        value: el.email
-                    };
-                }));
-            }
-        });
-    },
-    select: function (event, ui) {
-        this.value = ui.item.label;
-        $(this).next("input").val(ui.item.value);
-        event.preventDefault();
-    }
+$(".table-dropdown-role").change(function(){
+    var x = this.value;
+    var y = $(this).parent().parent().attr('id');
+    $.ajax({
+        url: "/updateUserRole",
+        type: "POST",
+        data:{
+            role : x,
+            userId : y
+        },
+        success: function (data) {
+            location.reload();
+        }
+    });
 });
-*/
+
+$(".isAdmin-checkbox").change(function(){
+    var x;
+    var y = $(this).parent().parent().parent().attr('id');
+    if ($(this).is(":checked"))
+    {
+     x="true";
+    }else{
+        x="false";
+    }
+    $.ajax({
+        url: "/updateAdminRole",
+        type: "POST",
+        data:{
+            isAdmin : x,
+            userId : y
+        },
+        success: function (data) {
+            location.reload();
+        }
+    });
+});

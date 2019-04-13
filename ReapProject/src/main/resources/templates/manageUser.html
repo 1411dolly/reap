@@ -13,89 +13,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default navbar-fixed-top navbar-expand-md main-header">
-    <div class="container-fluid">
-        <div class="navbar-header col-md-5">
-            <a class="navbar-brand col-md-3" href="/">
-                <img alt="logo" src="/img/reap.png" style="width: 125px"/>
-            </a>
-            <img alt="reap" class="col-md-9" src="/img/RewardEAP.png"
-                 style="margin-top: 10px;margin-left: 10px; height: 40px"/>
-        </div>
-        <ul class="nav navbar-nav col-md-7">
-            <li class="col-md-3">
-                <a href="http://newersworld.tothenew.com" id="nav-list-first">
-                    Back to Newers World
-                </a>
-            </li>
-            <li class="col-md-2 nav-list-pad">
-                <form method="get" th:action="@{/user}">
-                    <button id="dashboard" type="submit">
-                        <img class="pic" src="/img/dashboard.png"/>
-                        Dashboard
-                    </button>
-                </form>
-            </li>
-            <li class="col-md-2 nav-list-pad">
-                <form method="post" th:action="@{/badges}" th:object="${user}">
-                    <button id="nav-list-third" type="submit">
-                        <img alt="badges" id="badges" src="/img/badges1.png"/>
-                        Badges
-                    </button>
-                </form>
-            </li>
-            <li class="col-md-2 nav-list-pad">
-                <a id="nav-list-fourth">
-                    <img alt="certificate" id="certificate" src="/img/certificate1.png"
-                         style="width: 21px;height: 23px;margin-left: -2%"/>
-                    Certificate
-                </a>
-            </li>
-            <li class="col-md-1 nav-list-pad">
-                <img alt="notification-bell" id="nav-list-fifth" src="/img/notification-bell.png"/>
-            </li>
-            <li class="col-md-2 nav-list-pad">
-                <img alt='User Image' class='user-image' data-target="#myModal" data-toggle="modal"
-                     th:src="@{${user.getFileName()}}"/>
-                <div class="modal fade" id="myModal" role="dialog">
-                    <div class="modal-dialog">
-
-                        <!-- Modal content-->
-                        <div class="modal-content" th:object="${user}">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Your Profile</h4>
-                            </div>
-                            <div class="modal-body" style="height: 100px">
-                                <div class="col-md-3">
-                                    <img alt='User Image' class='user-image3' th:src="@{${user.getFileName()}}"/>
-                                </div>
-                                <div class="col-md-3">
-                                    <label>Newer Name</label>
-                                    <label>Email id</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <label th:text="*{name}"></label><br/>
-                                    <label th:text="*{email}"></label>
-                                </div>
-                            </div>
-                            <div class="modal-footer" style="background-color: #f4f4f4">
-                                <form class="col-md-6" id="manageForm" method="post" th:action="@{/manage}">
-                                    <button id="manage-button" th:if="${role}" type="submit">
-                                        Manage
-                                    </button>
-                                </form>
-                                <a class="col-md-6" href="login" style="text-align: center;text-decoration: none">
-                                    <img alt="logout" src="/img/logout.png"/>
-                                    Logout
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-</nav>
+<div th:include="commonTemplate::nav"></div>
 
 <section class="container-fluid back-color" style="margin-top:70px;padding-top: 15px">
     <div class="col-md-9" style="padding-left: 0; ">
@@ -218,16 +136,19 @@
                     </div>
                 </th>
             </tr>
-            <tr th:each="u,count : ${users}">
+            <tr th:each="u,count : ${users}" th:id="${u.getId()}">
                 <td th:text="*{u.getName()}"></td>
                 <td>
-                    <select multiple="multiple">
+                    <select class="col-md-6 table-dropdown-role">
                         <option disabled="disabled">Select Role</option>
-                        <option th:selected="*{u.isAdmin()}" th:text="Admin"></option>
                         <option th:each="r : ${T(com.ttn.reap.enums.Role).values()}"
                                 th:selected="${r.getValue() == u.getRole().getValue()}"
                                 th:text="${r.getValue()}" th:value="${r.getValue()}"></option>
                     </select>
+                    <div class="custom-control custom-checkbox col-md-6">
+                        <input class="custom-control-input isAdmin-checkbox" th:checked="*{u.isAdmin()}" type="checkbox"/>
+                        <label class="custom-control-label">isAdmin</label>
+                    </div>
                 </td>
                 <td>
                     <div class="custom-control custom-checkbox">
@@ -252,20 +173,9 @@
     </div>
 </section>
 
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="/js/dashboardStyle.js"></script>
-<script>
-    /*    $(document).ready(function () {
-            $('.mdb-select').materialSelect();
-        });*/
-</script>
-<script
-        crossorigin="anonymous"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script
-        crossorigin="anonymous"
-        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-        src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="/js/ajax_js.js"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/

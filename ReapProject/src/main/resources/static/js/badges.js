@@ -1,6 +1,8 @@
-$(document).ready(function(){
-
-    $.ajax({url:"jfnvfnv",success:function(tabdata){
+$(document).ready(function () {
+    $.ajax({
+        url: "jfnvfnv",
+        success: function (tabdata) {
             $("#jquerytab").append(tabdata);
-        }});
+        }
+    });
 });

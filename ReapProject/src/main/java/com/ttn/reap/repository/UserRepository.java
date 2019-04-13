@@ -1,6 +1,7 @@
 package com.ttn.reap.repository;
 
 import com.ttn.reap.entity.User;
+import com.ttn.reap.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +21,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findAllByIsActiveTrueAndIdIsNot(Long id);
 
-    List<User> findAll();
+    List<User> findAllByIdIsNot(Long id);
 
 }

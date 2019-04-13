@@ -205,37 +205,9 @@ public class UserController {
         return "signup";
     }
 
-    @PostMapping("/manage")
-    public ModelAndView manageUser(HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("manageUser");
-        long id = (Long) session.getAttribute("userId");
-        User user = userService.findUserId(id);
-        modelAndView.addObject("user", user);
-        BadgeBalance badgeBalance=badgeBalanceService.getBadgeByUserId(user);
-        boolean role = user.isAdmin();
-        List<User> users = userService.findAll();
-        modelAndView.addObject("users", users);
-        List<BadgeBalance> badgeBalances = new ArrayList<>();
-        for (User u : users) {
-            badgeBalances.add(badgeBalanceService.getBadgeByUserId(u));
-        }
-        long gold=badgeTransactionService.countByReceiverAndBadge(user,Badge.GOLD);
-        long silver=badgeTransactionService.countByReceiverAndBadge(user,Badge.SILVER);
-        long bronze=badgeTransactionService.countByReceiverAndBadge(user,Badge.BRONZE);
-        modelAndView.addObject("gold",gold);
-        modelAndView.addObject("silver",silver);
-        modelAndView.addObject("bronze",bronze);
-        modelAndView.addObject("badgeBalance",badgeBalance);
-        modelAndView.addObject("badgeBalances", badgeBalances);
-        modelAndView.addObject("recognizeco", new RecognizeCO());
-        modelAndView.addObject("role", role);
-        return modelAndView;
-    }
-
     @GetMapping("getUserListActive")
     @ResponseBody
     public List<UserDto> getUserListActive(@RequestParam String term, @RequestParam String user_id) {
-
         return userService.simulateSearchResult(term, Long.parseLong(user_id));
     }
 
