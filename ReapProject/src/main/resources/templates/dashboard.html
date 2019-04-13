@@ -23,10 +23,10 @@
                         <img alt="person" src="/img/newer.png"/>
                         <input id="hidden_send_email" th:field="*{sender_email}" type="hidden"/>
                         <input id="searchNewer" placeholder="Select a newer" th:field="*{receiver_email}" type="text"/>
-                        <select th:field="*{badge_val}">
+                        <select th:field="*{badge_val}" id="userBadgeSelect">
                             <div th:object="${badge}">
-                                <option value="">Select a Badge</option>
-                                <option value="gold">Gold(<span th:text="${badge.getGoldCount()}"></span>)</option>
+                                <option hidden="hidden">Select a Badge</option>
+                                <option value="gold">Gold(<span th:text="*{goldCount}"></span>)</option>
                                 <option value="silver">Silver(<span th:text="*{silverCount}"></span>)</option>
                                 <option value="bronze">Bronze(<span th:text="*{bronzeCount}"></span>)</option>
                             </div>
@@ -182,6 +182,9 @@
         </div>
     </div>
 </div>
+<input type="hidden" id="ugoldcount"/>
+<input type="hidden" id="usilvercount"/>
+<input type="hidden" id="ubronzecount"/>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -195,7 +198,9 @@
     /*<![CDATA[*/
 
     document.getElementById('hidden_send_email').value = /*[[${user.getEmail()}]]*/ 'default';
-
+    document.getElementById('ugoldcount').value = /*[[${badge.getGoldCount()}]]*/ 'default';
+    document.getElementById('usilvercount').value = /*[[${badge.getSilverCount()}]]*/ 'default';
+    document.getElementById('ubronzecount').value = /*[[${badge.getBronzeCount()}]]*/ 'default';
     /*]]>*/
 </script>
 <script>

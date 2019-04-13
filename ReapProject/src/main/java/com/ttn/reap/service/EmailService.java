@@ -30,9 +30,7 @@ public class EmailService {
         sendEmail(mailMessage);
     }
     
-    @Async
-    public void
-    revokeMailSend(String fromMail, long id,String optradio,String others){
+    public void revokeMailSend(String fromMail, long id,String optradio,String others){
         BadgeTransaction badgeTransaction = badgeTransactionService.findBadgeTransactionId(id);
         String message = "Your reap recognition transaction has been revoked by admin. Because of the following reasons: \n";
         String reason;
@@ -48,6 +46,7 @@ public class EmailService {
         message = message + reason + "\nTransaction Details: \nSender Name: " + badgeTransaction.getSender().getName() + "\nReceiver Name: " + badgeTransaction.getReceiver().getName() + "\n Badge: " + badgeTransaction.getBadge().toString() + "\nReason: " + badgeTransaction.getReason() +"\nDate: "+badgeTransaction.getDate();
         String subject = "Reap Recognition Transaction Revoked";
         mailSender(fromMail,badgeTransaction.getSender(),subject,message);
+        mailSender(fromMail,badgeTransaction.getReceiver(),subject,message);
     }
 }
 

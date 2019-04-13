@@ -59,16 +59,16 @@ public class UserController {
 
     @PostMapping("register")
     String submit(Model model, @ModelAttribute("user") User user, @RequestParam("file") MultipartFile file) {
-        String fileName = fileStorageService.storeFile(file);
-        user.setFileName("/upload/" + fileName);
-        try {
+        User user1 = userService.findUserByEmail(user.getEmail());
+        if (user1 != null) {
+            model.addAttribute("err", "Email already registered");
+            return "signup";
+        } else {
+            String fileName = fileStorageService.storeFile(file);
+            user.setFileName("/upload/" + fileName);
             userService.save(user);
-        } catch (Exception e) {
-//            eroor page lagao
-            //check id doesnt exist or duplicate id .......this is kaam chalau code
-            model.addAttribute("err", "Only unique email allowed!!!");
+            return "login";
         }
-        return "login";
     }
 
     @GetMapping("register")
@@ -77,9 +77,18 @@ public class UserController {
     }
 
     @GetMapping("login")
-    ModelAndView login() {
-        ModelAndView modelAndView = new ModelAndView("login");
-        modelAndView.addObject("user", new User());
+    ModelAndView login(HttpSession session) {
+        User user1 = (User) session.getAttribute("user1");
+        System.out.println(user1);
+        ModelAndView modelAndView = new ModelAndView();
+        if (user1 == null) {
+            modelAndView.setViewName("login");
+            modelAndView.addObject("user", new User());
+        } else {
+            modelAndView.setViewName("dashboard");
+        }
+//        ModelAndView modelAndView = new ModelAndView("login");
+//        modelAndView.addObject("user", new User());
         return modelAndView;
     }
 
@@ -89,6 +98,9 @@ public class UserController {
         User checkuser = userService.checkemailandpassword(user.getEmail(), user.getPassword());
         if (checkuser == null) {
             model.addAttribute("valid", "Enter valid username and password!!!");
+            return "login";
+        } else if (checkuser.isActive() == false) {
+            model.addAttribute("valid", "Account Inactive, Contact Admin.....!!!");
             return "login";
         } else {
             String startDate = "1900-01-01";
@@ -168,24 +180,29 @@ public class UserController {
     }
 
     @GetMapping("forgotPassword")
-    public String forgotPassword() {
+    public String forgotPassword(Model model) {
         return "forgotPassword";
     }
 
-    @GetMapping("forgotSubmit")
+    @PostMapping("forgotSubmit")
     public String forgotSubmit(@RequestParam String email, HttpServletRequest request, Model model) {
         User user = userService.findUserByEmail(email);
-        user.setToken(UUID.randomUUID().toString());
-        userService.save(user);
-        String appUrl = request.getScheme() + "://" + request.getServerName();
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom(fromMail);
-        mailMessage.setTo(user.getEmail());
-        mailMessage.setSubject("Forgot Password Link");
-        mailMessage.setText("To reset your password, click the link below: \n" + appUrl + ":8080/reset?token=" + user.getToken());
-        emailService.sendEmail(mailMessage);
-        model.addAttribute(new User());
-        return "signup";
+        if (user == null) {
+            model.addAttribute("error", "Email id not registered!!!");
+            return "forgotPassword";
+        } else {
+            user.setToken(UUID.randomUUID().toString());
+            userService.save(user);
+            String appUrl = request.getScheme() + "://" + request.getServerName();
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setFrom(fromMail);
+            mailMessage.setTo(user.getEmail());
+            mailMessage.setSubject("Forgot Password Link");
+            mailMessage.setText("To reset your password, click the link below: \n" + appUrl + ":8080/reset?token=" + user.getToken());
+            emailService.sendEmail(mailMessage);
+            model.addAttribute(new User());
+            return "redirect:/login";
+        }
     }
 
     @GetMapping("/reset")
