@@ -228,18 +228,23 @@ public class UserController {
         long id = (Long) session.getAttribute("userId");
         User user = userService.findUserId(id);
         modelAndView.addObject("user", user);
-        BadgeBalance badge = badgeBalanceService.getBadgeById(id);
-        modelAndView.addObject("badge", badge);
+        BadgeBalance badgeBalance=badgeBalanceService.getBadgeByUserId(user);
+        boolean role = user.isAdmin();
         List<User> users = userService.findAll();
         modelAndView.addObject("users", users);
-        List<Long> userIds = new ArrayList<>(users.size());
+        List<BadgeBalance> badgeBalances = new ArrayList<>();
         for (User u : users) {
-            userIds.add(user.getId());
+            badgeBalances.add(badgeBalanceService.getBadgeByUserId(u));
         }
-        //do something
-        modelAndView.addObject("badgeBalanceService", badgeBalanceService);
+        long gold=badgeTransactionService.countByReceiverAndBadge(user,Badge.GOLD);
+        long silver=badgeTransactionService.countByReceiverAndBadge(user,Badge.SILVER);
+        long bronze=badgeTransactionService.countByReceiverAndBadge(user,Badge.BRONZE);
+        modelAndView.addObject("gold",gold);
+        modelAndView.addObject("silver",silver);
+        modelAndView.addObject("bronze",bronze);
+        modelAndView.addObject("badgeBalance",badgeBalance);
+        modelAndView.addObject("badgeBalances", badgeBalances);
         modelAndView.addObject("recognizeco", new RecognizeCO());
-        boolean role = user.isAdmin();
         modelAndView.addObject("role", role);
         return modelAndView;
     }

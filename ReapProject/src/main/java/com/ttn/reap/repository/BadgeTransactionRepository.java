@@ -34,8 +34,7 @@ public interface BadgeTransactionRepository extends JpaRepository<BadgeTransacti
     Long countByReceiver(@Param("receiver") User user);
     
     Long countBySender(@Param("sender") User user);
-    
-    
+
     @Query("select new com.ttn.reap.dto.BadgeTransactionDto(b.receiver,count(b.badge)) from BadgeTransaction b group by b.receiver order by count(b.badge) desc")
     List<BadgeTransactionDto> findMaxBadgeCount();
 }

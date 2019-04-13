@@ -22,12 +22,15 @@ public class BadgeBalanceService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public BadgeBalance setBadgeCount(User user) {
-        BadgeBalance badgeBalance = new BadgeBalance(user, 3, 2, 1);
+        BadgeBalance badgeBalance = new BadgeBalance(user, 1, 2, 3);
         badgeBalanceRepository.save(badgeBalance);
         return badgeBalance;
     }
 
-    public BadgeBalance getBadgeById(long id) {
+    public BadgeBalance getBadgeByUserId(User user) {
+        return badgeBalanceRepository.findByUserId(user);
+    }
+    public BadgeBalance getBadgeById(Long id) {
         return badgeBalanceRepository.getById(id);
     }
 

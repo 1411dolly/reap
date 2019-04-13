@@ -111,28 +111,24 @@
                         </div>
                         <div class="mybadgesUsername" th:text="*{name}"></div>
                         <div th:object="${badge}">
-                            <!--GOLD BADGE-->
                             <span class="star">
                             <img src="../img/badgeOrange.png"/>
                             <span class="points" th:text="*{goldCount}">0</span>
                             </span>
-                            <!--SILVER BADGE-->
                             <span class="star mybadgestar">
                             <img src="../img/badgeGrey.png"/>
                             <span class="points" th:text="*{silverCount}">0</span>
                             </span>
-                            <!--BRONZE BADGE-->
                             <span class="star mybadgestar">
                             <img src="../img/badgeBrown.png"/>
                             <span class="points" th:text="*{bronzeCount}">0</span>
                             </span>
                         </div>
                     </div>
-                    <!--POINTS-->
                     <div class="col-sm-4 nopadding point_img"><img src="../img/points.png"/></div>
-                    <div class="bottom-left zero">0</div>
-                    <div class="bottom-left pts">pts</div>
-                </div>y
+                    <div class="bottom-left zero" th:text="${user.availPoints}" id="userpointstotal">0</div>
+                    <div class="bottom-left pts" style="left: 350px;font-size: medium">pts</div>
+                </div>
             </section>
             <section class="row fit panel">
                 <div class="lefthead " style="background-color: #9093c5"><img class="newer headimg"/><span class="glyphicon glyphicon-shopping-cart"></span> BAG</div>
@@ -145,56 +141,24 @@
                 </div>
                 <div class="row ">
                         <div class="col-sm-6 fontstyle points">Total</div>
-                        <div class="col-sm-6 fontstyle points pointstyle"><span>0</span>Points</div>
+                        <div class="col-sm-6 fontstyle points pointstyle"><span class="subtotal">0</span>Points</div>
                 </div>
                 <button class="row redeem">REDEEM POINTS</button>
             </section>
         </div>
 
-
-<!--        Item item1=new Item("SIPPER",10,"/items/sipper.jpeg",4);-->
-<!--        Item item2=new Item("BAG",20,"/items/back_bag.jpeg",4);-->
-<!--        Item item3=new Item("DIARY",30,"/items/boardroom_diary.jpeg",4);-->
-<!--        Item item4=new Item("VISITING VARD HOLDER",40,"/items/visiting_card_holder.jpeg",4);-->
-<!--        Item item5=new Item("WIRELESS MOUSE",50,"/items/wireless_mouse.jpeg",4);-->
-<!--        Item item6=new Item("COFFEE CUP",60,"/items/coffee_cup.jpeg",4);-->
-<!--        Item item7=new Item("KEYCHAIN",70,"/items/keychain.jpg",4);-->
-<!--        Item item8=new Item("MOUSE PAD",80,"/items/mouse_pad.jpg",4);-->
-<!--        Item item9=new Item("NOTE CARD",90,"/items/note_card.jpg",4);-->
-<!--        Item item10=new Item("TTN TSHIRT",100,"/items/ttn_tshirt.jpeg",4);-->
-
-
         <div class="col-sm-8">
             <div class="lefthead " style="background-color: #9093c5"><img class="newer headimg"/><span class="glyphicon glyphicon-shopping-cart"></span> REAP NOW</div>
             <div class=" row items">
-                <div class="col-sm-4 item">
-                    <div><img class="imgitems" src="../items/sipper.jpeg" /></div>
-                    <button class="row point sipperbutton">10 POINTS </button>
-                    <div class="itemname">SIPPER</div>
+                <div class="col-sm-4 item" th:each="items:${redeem}">
+                    <div><img class="imgitems" th:src="@{${items.getImageSource()}}" /></div>
+                    <button class="row point sipperbutton" th:id="${items.getId()}" th:text="${items.getItemValue()+'POINTS'}">10</button>
+                    <div class="itemname" th:text="${items.getItemName()}">SIPPER</div>
                 </div>
-                <div class="col-sm-4 item">
-                    <div><img class="imgitems" src="../items/back_bag.jpeg" /></div>
-                    <button class="row point" >20 POINTS </button>
-                    <div class="itemname">BAG</div>
-                </div>
-                <div class="col-sm-4 item">
-                    <div><img class="imgitems" src="../items/boardroom_diary.jpeg" /></div>
-                    <button class="row point" >30 POINTS </button>
-                    <div class="itemname">DIARY</div>
-                </div>
-                <div class="col-sm-4 item">
-                    <div><img class="imgitems" src="../items/visiting_card_holder.jpeg" /></div>
-                    <button class="row point" >40 POINTS </button>
-                    <div class="itemname">VISITING CARD HOLDER</div>
-                </div>
-
             </div>
         </div>
 
-
     </div>
-
-
 </div>
 
 <script src="/js/dashboardStyle.js"></script>

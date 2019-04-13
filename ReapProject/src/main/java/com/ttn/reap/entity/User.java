@@ -43,7 +43,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.availPoints = availPoints;
-            this.redeemedPoints = redeemedPoints;
+        this.redeemedPoints = redeemedPoints;
         this.password = PasswordHelper.encrypt(password);
         this.token = token;
         this.role = role;
