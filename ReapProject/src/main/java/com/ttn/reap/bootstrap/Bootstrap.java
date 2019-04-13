@@ -33,7 +33,7 @@ public class Bootstrap {
     @Autowired
     ItemRepository itemRepository;
 
-    @EventListener(ContextStartedEvent.class)
+    @EventListener(ContextRefreshedEvent.class)
     void setup() {
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         Date date1;
