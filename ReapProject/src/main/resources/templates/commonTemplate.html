@@ -71,17 +71,17 @@
                                 </div>
                                 <div class="modal-body" style="height: 100px">
                                     <div class="col-md-3">
-                                        <img alt='User Image' class='user-image'
+                                        <img alt='User Image' class='user-image3'
                                              th:src="@{${user.getFileName()}}"/>
                                     </div>
-                                    <div class="col-md-3">
-                                        <label>Newer Name</label>
-                                        <label>Email id</label>
+                                    <div class="col-md-4">
+                                        <label>Newer Name:</label>
+                                        <label>Email id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label th:text="*{name}"></label>
+                                    <div class="col-md-5">
+                                        <label th:text="*{name}" style="margin-left: -20px"></label>
                                         <br/>
-                                        <label th:text="*{email}"></label>
+                                        <label th:text="*{email}" style="margin-left: -20px"></label>
                                     </div>
                                 </div>
                                 <div class="modal-footer" style="background-color: #f4f4f4">
@@ -103,6 +103,38 @@
         </div>
     </nav>
 
+</div>
+
+<div th:fragment="recognizeNewer">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <img alt="star" src="/img/badges2.png"/>
+            <b>RECOGNIZE NEWER</b>
+        </div>
+        <div class="panel-body">
+            <form id="recognise_form" method="post" th:action="@{/recognize}" th:object="${recognizeco}">
+                <div class="form-group">
+                    <img alt="person" src="/img/newer.png"/>
+                    <input id="hidden_send_email" th:field="*{sender_email}" type="hidden"/>
+                    <input id="searchNewer" placeholder="Select a newer" th:field="*{receiver_email}" type="text"/>
+                    <select th:field="*{badge_val}" id="userBadgeSelect">
+                        <div th:object="${badge}">
+                            <option hidden="hidden">Select a Badge</option>
+                            <option value="gold">Gold(<span th:text="*{goldCount}"></span>)</option>
+                            <option value="silver">Silver(<span th:text="*{silverCount}"></span>)</option>
+                            <option value="bronze">Bronze(<span th:text="*{bronzeCount}"></span>)</option>
+                        </div>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label><b>Reasons:</b></label>
+                    <textarea class="form-control" placeholder="Give recognition reason/message..."
+                              style="height: 100px" th:field="*{message_val}"></textarea>
+                </div>
+                <button class="btn btn-default pull-right" id="recognize_btn" type="submit">Recognize</button>
+            </form>
+        </div>
+    </div>
 </div>
 
 </body>

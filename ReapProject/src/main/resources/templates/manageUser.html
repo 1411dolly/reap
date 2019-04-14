@@ -17,36 +17,7 @@
 
 <section class="container-fluid back-color" style="margin-top:70px;padding-top: 15px">
     <div class="col-md-9" style="padding-left: 0; ">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <img alt="star" src="/img/badges2.png"/>
-                <b>RECOGNIZE NEWER</b>
-            </div>
-            <div class="panel-body">
-                <form id="recognise_form" method="post" th:action="@{/recognize}" th:object="${recognizeco}">
-                    <div class="form-group">
-                        <img alt="person" src="/img/newer.png"/>
-                        <input id="hidden_send_email" th:field="*{sender_email}" type="hidden"/>
-                        <input id="searchNewer3" placeholder="Select a newer" th:field="*{receiver_email}" type="text"/>
-                        <select th:field="*{badge_val}">
-                            <div th:object="${badgeBalance}">
-                                <option value="">Select a Badge</option>
-                                <option value="gold">Gold(<span th:text="*{goldCount}"></span>)</option>
-                                <option value="silver">Silver(<span th:text="*{silverCount}"></span>)</option>
-                                <option value="bronze">Bronze(<span th:text="*{bronzeCount}"></span>)</option>
-                            </div>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label><b>Reasons:</b></label>
-                        <textarea class="form-control" placeholder="Give recognition reason/message..."
-                                  style="height: 100px" th:field="*{message_val}"></textarea>
-                    </div>
-                    <button class="btn btn-default pull-right" id="recognize_btn" type="submit">Recognize</button>
-                </form>
-            </div>
-        </div>
-
+        <div th:include="commonTemplate::recognizeNewer"></div>
     </div>
     <div class="col-md-3">
         <div class="panel panel-primary" style="margin-right: 25px ">
@@ -60,20 +31,20 @@
                 </div>
                 <div class="col-md-9">
                     <div>
-                        <label style="padding-left: 20px" th:text="*{name}">Amarjeet Malik{ }</label>
+                        <label style="padding-left: 10px" th:text="*{name}">Amarjeet Malik{ }</label>
                     </div>
                     <div>
                         <div class="col-md-4">
                             <img alt="Gold" src="/img/badgeOrange.png"/>
-                            <span th:text="${gold}"></span>
+                            <span style="padding-left: 5px" th:text="${gold}"></span>
                         </div>
                         <div class="col-md-4">
                             <img alt="silver" src="/img/badgeGrey.png"/>
-                            <span th:text="${silver}"></span>
+                            <span style="padding-left: 5px" th:text="${silver}"></span>
                         </div>
                         <div class="col-md-4">
                             <img alt="bronze" src="/img/badgeBrown.png"/>
-                            <span th:text="${bronze}"></span>
+                            <span style="padding-left: 5px" th:text="${bronze}"></span>
                         </div>
                     </div>
                 </div>
@@ -215,15 +186,21 @@
     </div>
 </section>
 
+<input type="hidden" id="ugoldcount"/>
+<input type="hidden" id="usilvercount"/>
+<input type="hidden" id="ubronzecount"/>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script src="/js/dashboardStyle.js"></script>
 <script src="/js/ajax_js.js"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/
 
     document.getElementById('hidden_send_email').value = /*[[${user.getEmail()}]]*/ 'default';
-
+    document.getElementById('ugoldcount').value = /*[[${badge.getGoldCount()}]]*/ 'default';
+    document.getElementById('usilvercount').value = /*[[${badge.getSilverCount()}]]*/ 'default';
+    document.getElementById('ubronzecount').value = /*[[${badge.getBronzeCount()}]]*/ 'default';
     /*]]>*/
 </script>
 </body>

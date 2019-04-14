@@ -22,9 +22,9 @@
     <div class="row nopadding lower">
         <div class="col-sm-4">
             <section class="row fit panel">
-                <div class="lefthead " style="background-color: #9093c5"><img class="newer headimg"
-                                                                              src="../img/badgewhite.png"/>BADGES AND
-                    POINTS
+                <div class="lefthead " style="background-color: #9093c5">
+                    <img class="newer headimg" src="../img/badgewhite.png"/>
+                    BADGES AND POINTS
                 </div>
                 <div class="mybadges" style="overflow: hidden">
                     <div class="col-sm-8 nopadding" style="float:left;" th:object="${user}">
@@ -34,21 +34,21 @@
                         <div th:object="${badge}">
                             <span class="star">
                             <img src="../img/badgeOrange.png"/>
-                            <span class="points" th:text="*{goldCount}">0</span>
+                            <span class="points" th:text="*{goldCount}"></span>
                             </span>
                             <span class="star mybadgestar">
                             <img src="../img/badgeGrey.png"/>
-                            <span class="points" th:text="*{silverCount}">0</span>
+                            <span class="points" th:text="*{silverCount}"></span>
                             </span>
                             <span class="star mybadgestar">
                             <img src="../img/badgeBrown.png"/>
-                            <span class="points" th:text="*{bronzeCount}">0</span>
+                            <span class="points" th:text="*{bronzeCount}"></span>
                             </span>
                         </div>
                     </div>
                     <div class="col-sm-4 nopadding point_img"><img src="../img/points.png"/></div>
-                    <div class="bottom-left zero" th:text="${user.availPoints}" id="userpointstotal">0</div>
-                    <div class="bottom-left pts" style="left: 350px;font-size: medium">pts</div>
+                    <div class="bottom-left zero" id="userpointstotal" th:text="${user.availPoints}">0</div>
+                    <div class="bottom-left pts" style="left: 355px;font-size: medium">pts</div>
                 </div>
             </section>
             <section class="row fit panel">

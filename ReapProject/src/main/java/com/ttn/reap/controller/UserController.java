@@ -79,7 +79,7 @@ public class UserController {
     @GetMapping("login")
     ModelAndView login(HttpSession session) {
         User user1 = (User) session.getAttribute("user1");
-        System.out.println(user1);
+        System.out.println("user1::"+user1);
         ModelAndView modelAndView = new ModelAndView();
         if (user1 == null) {
             modelAndView.setViewName("login");
@@ -87,8 +87,6 @@ public class UserController {
         } else {
             modelAndView.setViewName("dashboard");
         }
-//        ModelAndView modelAndView = new ModelAndView("login");
-//        modelAndView.addObject("user", new User());
         return modelAndView;
     }
 
@@ -219,7 +217,7 @@ public class UserController {
         user.setToken(null);
         userService.save(user);
         model.addAttribute("user", new User());
-        return "signup";
+        return "login";
     }
 
     @GetMapping("getUserListActive")

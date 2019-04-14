@@ -1,6 +1,9 @@
 package com.ttn.reap.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
@@ -11,14 +14,11 @@ public class Item {
     private String itemName;
     private int itemValue;
     private String imageSource;
-//    private int quantity;
-
 
     public Item(String itemName, int itemValue, String imageSource) {
         this.itemName = itemName;
         this.itemValue = itemValue;
         this.imageSource = imageSource;
-//        this.quantity = quantity;
     }
 
     public Item() {
@@ -56,14 +56,6 @@ public class Item {
         this.imageSource = imageSource;
     }
 
-//    public int getQuantity() {
-//        return quantity;
-//    }
-//
-//    public void setQuantity(int quantity) {
-//        this.quantity = quantity;
-//    }
-
     @Override
     public String toString() {
         return "Item{" +
@@ -71,7 +63,6 @@ public class Item {
                 ", itemName='" + itemName + '\'' +
                 ", itemValue=" + itemValue +
                 ", imageSource='" + imageSource + '\'' +
-//                ", quantity=" + quantity +
                 '}';
     }
 

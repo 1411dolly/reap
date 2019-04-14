@@ -49,6 +49,8 @@ public class AdminController {
         long gold = badgeTransactionService.countByReceiverAndBadge(user, Badge.GOLD);
         long silver = badgeTransactionService.countByReceiverAndBadge(user, Badge.SILVER);
         long bronze = badgeTransactionService.countByReceiverAndBadge(user, Badge.BRONZE);
+        BadgeBalance badge = badgeBalanceService.getBadgeById(user.getId());
+        modelAndView.addObject("badge",badge);
         modelAndView.addObject("gold", gold);
         modelAndView.addObject("silver", silver);
         modelAndView.addObject("bronze", bronze);
