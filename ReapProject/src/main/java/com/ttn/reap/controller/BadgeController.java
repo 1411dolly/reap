@@ -1,16 +1,20 @@
 package com.ttn.reap.controller;
 
 import com.ttn.reap.entity.BadgeTransaction;
+import com.ttn.reap.entity.PurchaseHistory;
 import com.ttn.reap.entity.User;
 import com.ttn.reap.enums.Badge;
 import com.ttn.reap.repository.BadgeTransactionRepository;
 import com.ttn.reap.service.BadgeBalanceService;
 import com.ttn.reap.service.BadgeTransactionService;
+import com.ttn.reap.service.PurchaseHistoryService;
 import com.ttn.reap.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -26,7 +30,8 @@ public class BadgeController {
     private BadgeBalanceService badgeBalanceService;
     @Autowired
     private BadgeTransactionService badgeTransactionService;
-
+    @Autowired
+    private PurchaseHistoryService purchaseHistoryService;
     @GetMapping("/badges")
     public ModelAndView badge(HttpSession session) {
         if (session.getAttribute("userId") == null) {
@@ -47,6 +52,7 @@ public class BadgeController {
         List<BadgeTransaction> badgeTransactionListReceiver = badgeTransactionService.findAllByReceiverOrderByDateDesc(user);
         List<BadgeTransaction> badgeTransactionListSender = badgeTransactionService.findAllBySenderOrderByDateDesc(user);
         List<BadgeTransaction> badgeTransactionListSenderOrReceiver = badgeTransactionService.findAllBySenderOrReceiverOrderByDateDesc(user, user);
+        List<PurchaseHistory> purchaseHistoryList=purchaseHistoryService.findByUserIdOrderByPurchaseTimestampDesc(user);
         long receivedCount = badgeTransactionService.countByReceiver(user);
         long sendCount = badgeTransactionService.countBySender(user);
         long allCount = receivedCount + sendCount;
@@ -61,6 +67,15 @@ public class BadgeController {
         modelAndView.addObject("receivedcount", receivedCount);
         modelAndView.addObject("sendercount", sendCount);
         modelAndView.addObject("allcount", allCount);
+        modelAndView.addObject("purchasehistory",purchaseHistoryList);
         return modelAndView;
+    }
+
+    @GetMapping("data")
+    @ResponseBody
+    public List<PurchaseHistory> data()
+    {
+        User user=userService.findUserId(1);
+        return purchaseHistoryService.findByUserIdOrderByPurchaseTimestampDesc(user);
     }
 }

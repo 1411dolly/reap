@@ -86,17 +86,20 @@ public class RedeemController {
     public String redeemPoint(HttpSession session) {
         long id = (long) session.getAttribute("userId");
         User user = userService.findUserId(id);
-        long totalpoint=0;
+        long totalpoint = 0;
         for (Item item : bag) {
             PurchaseHistory purchaseHistory = new PurchaseHistory(user, item, new Date());
             purchaseHistoryService.save(purchaseHistory);
-            totalpoint+=item.getItemValue();
-            System.out.println(item.getItemValue());
+            totalpoint += item.getItemValue();
         }
-        long deductedpoint=user.getAvailPoints()-totalpoint;
+        System.out.println("totalpoints::" + totalpoint);
+        long deductedpoint = user.getAvailPoints() - totalpoint;
+//        System.out.println("deducted poins::"+deductedpoint);
         user.setAvailPoints(deductedpoint);
-        long redeemedPoint=user.getRedeemedPoints();
-        redeemedPoint+=totalpoint;
+        long redeemedPoint = user.getRedeemedPoints();
+//        System.out.println("redeemed point::"+redeemedPoint);
+        redeemedPoint += totalpoint;
+//        System.out.println("now redeemed point::"+redeemedPoint);
         user.setRedeemedPoints(redeemedPoint);
         userService.save(user);
         bag.clear();

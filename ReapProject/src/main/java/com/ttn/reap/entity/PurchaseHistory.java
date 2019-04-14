@@ -24,6 +24,9 @@ public class PurchaseHistory {
 //        this.purchaseQuantity = purchaseQuantity;
     }
 
+    public PurchaseHistory() {
+    }
+
     public Long getId() {
         return id;
     }
