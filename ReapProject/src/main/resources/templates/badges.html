@@ -109,7 +109,7 @@
                         <div class="col-md-2">
                             <img alt='User Image' class='user-image' th:src="@{${purchase.getItemId().getImageSource()}}"/>
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-10">
                             <span th:text="${purchase.getItemId().itemName}"></span>
                             was bought by
                             <span th:text="${purchase.getUserId().getName()}"></span>

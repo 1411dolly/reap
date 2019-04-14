@@ -14,7 +14,7 @@ public class Item {
 //    private int quantity;
 
 
-    public Item(String itemName, int itemValue, String imageSource, int quantity) {
+    public Item(String itemName, int itemValue, String imageSource) {
         this.itemName = itemName;
         this.itemValue = itemValue;
         this.imageSource = imageSource;

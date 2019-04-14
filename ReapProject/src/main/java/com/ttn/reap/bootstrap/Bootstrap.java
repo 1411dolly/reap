@@ -43,15 +43,14 @@
         Date date9;
         Date date10;
 
-        User user1 = new User("1411dolly@gmail.com", "dolly", "singh", 150, 50, "12345", null, Role.USER, false, true, "/upload/1.jpeg");
-        User user2 = new User("amarjeet@gmail.com", "amarjeet", "malik", 0, 0, "12345", null, Role.USER, false, true, "/upload/2.jpeg");
-        User user3 = new User("aditya.kumar1@tothenew.com", "aditya", "singh", 0, 0, "12345", null, Role.USER, false, false, "/upload/3.jpeg");
-        User user4 = new User("dharmendra@gmail.com", "dharmendra", "saini", 0, 0, "12345", null, Role.USER, true, true, "/upload/4.jpeg");
+        User user1 = new User("1411dolly@gmail.com", "dolly", "singh", 150, 50, "12345", null, Role.USER, true, true, "/upload/1.jpeg");
+        User user2 = new User("amarjeet@gmail.com", "amarjeet", "malik", 70, 40, "12345", null, Role.USER, false, true, "/upload/2.jpeg");
+        User user3 = new User("aditya@gmail.com", "aditya", "singh", 90, 30, "12345", null, Role.USER, false, true, "/upload/3.jpeg");
+        User user4 = new User("dharmendra@gmail.com", "dharmendra", "saini", 100, 70, "12345", null, Role.USER, true, true, "/upload/4.jpeg");
         BadgeBalance badgeBalance1 = new BadgeBalance(user1, 1, 2, 3);
         BadgeBalance badgeBalance2 = new BadgeBalance(user2, 1, 2, 3);
         BadgeBalance badgeBalance3 = new BadgeBalance(user3, 2, 3, 6);
         BadgeBalance badgeBalance4 = new BadgeBalance(user4, 2, 3, 6);
-
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
@@ -94,16 +93,16 @@
             badgeTransactionRepository.save(badgeTransaction9);
             badgeTransactionRepository.save(badgeTransaction10);
 
-            Item item1 = new Item("SIPPER", 10, "/items/sipper.jpeg", 4);
-            Item item2 = new Item("BAG", 20, "/items/back_bag.jpeg", 4);
-            Item item3 = new Item("DIARY", 30, "/items/boardroom_diary.jpeg", 4);
-            Item item4 = new Item("VISITING CARD HOLDER", 40, "/items/visiting_card_holder.jpeg", 4);
-            Item item5 = new Item("WIRELESS MOUSE", 50, "/items/wireless_mouse.jpeg", 4);
-            Item item6 = new Item("COFFEE CUP", 60, "/items/coffee_cup.jpeg", 4);
-            Item item7 = new Item("KEYCHAIN", 70, "/items/keychain.jpg", 4);
-            Item item8 = new Item("MOUSE PAD", 80, "/items/mouse_pad.jpg", 4);
-            Item item9 = new Item("NOTE CARD", 90, "/items/note_card.jpg", 4);
-            Item item10 = new Item("TTN TSHIRT", 100, "/items/ttn_tshirt.jpeg", 4);
+            Item item1 = new Item("SIPPER", 10, "/items/sipper.jpeg");
+            Item item2 = new Item("BAG", 20, "/items/back_bag.jpeg");
+            Item item3 = new Item("DIARY", 30, "/items/boardroom_diary.jpeg");
+            Item item4 = new Item("VISITING CARD HOLDER", 40, "/items/visiting_card_holder.jpeg");
+            Item item5 = new Item("WIRELESS MOUSE", 50, "/items/wireless_mouse.jpeg");
+            Item item6 = new Item("COFFEE CUP", 60, "/items/coffee_cup.jpeg");
+            Item item7 = new Item("KEYCHAIN", 70, "/items/keychain.jpg");
+            Item item8 = new Item("MOUSE PAD", 80, "/items/mouse_pad.jpg");
+            Item item9 = new Item("NOTE CARD", 90, "/items/note_card.jpg");
+            Item item10 = new Item("TTN TSHIRT", 100, "/items/ttn_tshirt.jpeg");
             itemRepository.save(item1);
             itemRepository.save(item2);
             itemRepository.save(item3);
