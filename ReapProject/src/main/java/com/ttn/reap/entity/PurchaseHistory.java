@@ -15,13 +15,13 @@ public class PurchaseHistory {
     @ManyToOne
     private Item itemId;
     private Date purchaseTimestamp;
-    private int purchaseQuantity;
+//    private int purchaseQuantity;
 
-    public PurchaseHistory(User userId, Item itemId, Date purchaseTimestamp, int purchaseQuantity) {
+    public PurchaseHistory(User userId, Item itemId, Date purchaseTimestamp) {
         this.userId = userId;
         this.itemId = itemId;
         this.purchaseTimestamp = purchaseTimestamp;
-        this.purchaseQuantity = purchaseQuantity;
+//        this.purchaseQuantity = purchaseQuantity;
     }
 
     public Long getId() {
@@ -57,13 +57,13 @@ public class PurchaseHistory {
     }
 
 
-    public int getPurchaseQuantity() {
-        return purchaseQuantity;
-    }
-
-    public void setPurchaseQuantity(int purchaseQuantity) {
-        this.purchaseQuantity = purchaseQuantity;
-    }
+//    public int getPurchaseQuantity() {
+//        return purchaseQuantity;
+//    }
+//
+//    public void setPurchaseQuantity(int purchaseQuantity) {
+//        this.purchaseQuantity = purchaseQuantity;
+//    }
 
     @Override
     public String toString() {
@@ -72,7 +72,7 @@ public class PurchaseHistory {
                 ", userId=" + userId +
                 ", itemId=" + itemId +
                 ", purchaseTimestamp=" + purchaseTimestamp +
-                ", purchaseQuantity=" + purchaseQuantity +
+//                ", purchaseQuantity=" + purchaseQuantity +
                 '}';
     }
 }
