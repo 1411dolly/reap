@@ -1,38 +1,34 @@
-package com.ttn.reap.bootstrap;
+    package com.ttn.reap.bootstrap;
 
-import com.ttn.reap.entity.BadgeBalance;
-import com.ttn.reap.entity.BadgeTransaction;
-import com.ttn.reap.entity.Item;
-import com.ttn.reap.entity.User;
-import com.ttn.reap.enums.Badge;
-import com.ttn.reap.enums.Role;
-import com.ttn.reap.repository.BadgeBalanceRepository;
-import com.ttn.reap.repository.BadgeTransactionRepository;
-import com.ttn.reap.repository.ItemRepository;
-import com.ttn.reap.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.ContextStartedEvent;
-import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Component;
+    import com.ttn.reap.entity.*;
+    import com.ttn.reap.enums.Badge;
+    import com.ttn.reap.enums.Role;
+    import com.ttn.reap.repository.*;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.context.event.ContextRefreshedEvent;
+    import org.springframework.context.event.ContextStartedEvent;
+    import org.springframework.context.event.EventListener;
+    import org.springframework.stereotype.Component;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+    import java.text.DateFormat;
+    import java.text.ParseException;
+    import java.text.SimpleDateFormat;
+    import java.util.Date;
 
-@Component
-public class Bootstrap {
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    BadgeBalanceRepository badgeBalanceRepository;
-    @Autowired
-    BadgeTransactionRepository badgeTransactionRepository;
+    @Component
+    public class Bootstrap {
+        @Autowired
+        UserRepository userRepository;
+        @Autowired
+        BadgeBalanceRepository badgeBalanceRepository;
+        @Autowired
+        BadgeTransactionRepository badgeTransactionRepository;
 
-    @Autowired
-    ItemRepository itemRepository;
+        @Autowired
+        ItemRepository itemRepository;
 
+        @Autowired
+        PurchaseHistoryRepository purchaseHistoryRepository;
     @EventListener(ContextRefreshedEvent.class)
     void setup() {
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
@@ -47,7 +43,7 @@ public class Bootstrap {
         Date date9;
         Date date10;
 
-        User user1 = new User("1411dolly@gmail.com", "dolly", "singh", 50, 0, "12345", null, Role.USER, false, true, "/upload/1.jpeg");
+        User user1 = new User("1411dolly@gmail.com", "dolly", "singh", 150, 50, "12345", null, Role.USER, false, true, "/upload/1.jpeg");
         User user2 = new User("amarjeet@gmail.com", "amarjeet", "malik", 0, 0, "12345", null, Role.USER, false, true, "/upload/2.jpeg");
         User user3 = new User("aditya.kumar1@tothenew.com", "aditya", "singh", 0, 0, "12345", null, Role.USER, false, false, "/upload/3.jpeg");
         User user4 = new User("dharmendra@gmail.com", "dharmendra", "saini", 0, 0, "12345", null, Role.USER, true, true, "/upload/4.jpeg");
@@ -118,6 +114,29 @@ public class Bootstrap {
             itemRepository.save(item8);
             itemRepository.save(item9);
             itemRepository.save(item10);
+
+
+            PurchaseHistory purchaseHistory1=new PurchaseHistory(user1,item10,date1);
+            PurchaseHistory purchaseHistory2=new PurchaseHistory(user2,item9,date2);
+            PurchaseHistory purchaseHistory3=new PurchaseHistory(user3,item8,date3);
+            PurchaseHistory purchaseHistory4=new PurchaseHistory(user4,item7,date4);
+            PurchaseHistory purchaseHistory5=new PurchaseHistory(user1,item6,date5);
+            PurchaseHistory purchaseHistory6=new PurchaseHistory(user1,item5,date6);
+            PurchaseHistory purchaseHistory7=new PurchaseHistory(user2,item4,date7);
+            PurchaseHistory purchaseHistory8=new PurchaseHistory(user1,item3,date8);
+            PurchaseHistory purchaseHistory9=new PurchaseHistory(user1,item2,date9);
+            PurchaseHistory purchaseHistory10=new PurchaseHistory(user1,item1,date10);
+
+            purchaseHistoryRepository.save(purchaseHistory1);
+            purchaseHistoryRepository.save(purchaseHistory2);
+            purchaseHistoryRepository.save(purchaseHistory3);
+            purchaseHistoryRepository.save(purchaseHistory4);
+            purchaseHistoryRepository.save(purchaseHistory5);
+            purchaseHistoryRepository.save(purchaseHistory6);
+            purchaseHistoryRepository.save(purchaseHistory7);
+            purchaseHistoryRepository.save(purchaseHistory8);
+            purchaseHistoryRepository.save(purchaseHistory9);
+            purchaseHistoryRepository.save(purchaseHistory10);
         } catch (ParseException e) {
             e.printStackTrace();
         }

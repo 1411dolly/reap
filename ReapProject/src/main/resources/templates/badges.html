@@ -104,7 +104,21 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="redeemed">
-                    Points redeemed = <span th:text="${user.getRedeemedPoints()}"></span>   pts
+<!--                    Points redeemed = <span th:text="${user.getRedeemedPoints()}"></span>   pts-->
+                    <div class="panel-body" th:each="purchase:${purchasehistory}">
+                        <div class="col-md-2">
+                            <img alt='User Image' class='user-image' th:src="@{${purchase.getItemId().getImageSource()}}"/>
+                        </div>
+                        <div class="col-md-9">
+                            <span th:text="${purchase.getItemId().itemName}"></span>
+                            was bought by
+                            <span th:text="${purchase.getUserId().getName()}"></span>
+                            of
+                            <span th:text="${purchase.getItemId().getItemValue()}"></span>
+                            points on
+                            <span th:text="${purchase.getPurchaseTimestamp()}"></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="tab-pane active" id="all">
                     <div class="panel-body" th:each="tranlist:${badgetransactionlistsenderorreceiver}">
