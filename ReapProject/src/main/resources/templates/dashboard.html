@@ -3,7 +3,7 @@
 <head>
     <title>Dashboard</title>
     <head th:include="commonTemplate::head"></head>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
 </head>
 
 <body>
@@ -54,8 +54,11 @@
                     <span class="glyphicon glyphicon-search form-control-feedback"></span>
                     <input class="form-control" placeholder="Search" type="text"/>
                 </div>
-            <img alt="calender" class="pull-right user-image2" id="calendarrange" src="/img/cal.png" name="dates" style="margin-left: 10px" />
-                <a href="/downloadCSV" target="_blank"><img alt="csv-download" class="pull-right user-image2" id="downloadcsvrange" src="/img/download.png" th:if="${role}"/></a>
+                <img alt="calender" class="pull-right user-image2" id="calendarrange" src="/img/cal.png" name="dates"
+                     style="margin-left: 10px"/>
+                <a href="/downloadCSV" target="_blank"><img alt="csv-download" class="pull-right user-image2"
+                                                            id="downloadcsvrange" src="/img/download.png"
+                                                            th:if="${role}"/></a>
             </div>
             <div class="panel-body" th:each="tranlist:${badgetransactionlist}">
                 <div class="col-md-2">
@@ -78,7 +81,8 @@
                     <span th:text="${tranlist.getReason()}"></span>
                 </div>
                 <div class="col-md-1">
-                    <img class="txnRow" src="/img/delete.png" th:id="${tranlist.getId()}" data-toggle="modal" data-target="#revokeModal" th:if="${role}"/>
+                    <img class="txnRow" src="/img/delete.png" th:id="${tranlist.getId()}" data-toggle="modal"
+                         data-target="#revokeModal" th:if="${role}"/>
                 </div>
             </div>
         </div>
@@ -120,16 +124,16 @@
                 <b>NEWER'S BOARD</b>
             </div>
 
-            <div class="panel-body" th:each="bad,count : ${newer}" >
+            <div class="panel-body" th:each="bad,count : ${newer}">
                 <div class="col-md-3">
                     <img alt='User Image' class='user-image' th:src="${bad.getReceiver().getFileName()}"/>
                 </div>
                 <div class="col-md-9">
                     <div>
-                        <label style="padding-left: 20px" th:text="*{bad.getReceiver().getName()}" ></label>
+                        <label style="padding-left: 20px" th:text="*{bad.getReceiver().getName()}"></label>
                     </div>
                     <div>
-                        <div class="col-md-4" >
+                        <div class="col-md-4">
                             <img alt="Gold" src="/img/badgeOrange.png"/>
                             <span th:text="${goldlist.get(count.index)}"></span>
                         </div>
@@ -171,7 +175,8 @@
                         </div>
                         <div class="radio">
                             <label><input type="radio" name="optradio" value="4"/>
-                                <input type="text" class="form-control" id="others" name="others" placeholder="Others, Please Specify"/>
+                                <input type="text" class="form-control" id="others" name="others"
+                                       placeholder="Others, Please Specify"/>
                             </label>
                         </div>
                     </div>
@@ -190,7 +195,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
 <script src="/js/dashboardStyle.js"></script>
 <script src="/js/date_picker.js"></script>
 <script src="/js/ajax_js.js"></script>

@@ -3,26 +3,13 @@
 <head>
     <meta charset="UTF-8"/>
     <title>common</title>
-    <head th:fragment="head">
-        <meta content="width=device-width, initial-scale=1" name="viewport"/>
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" rel="stylesheet"/>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-        <!--<link href="css/bootstrap.min.css" rel="stylesheet"/>-->
-        <!--<script src="js/jquery.min.js"></script>-->
-        <!--<script src="js/bootstrap.min.js"></script>-->
-        <link href="/img/ttn.ico" rel="icon" sizes="20x20" type="image/gif"/>
-        <link rel="stylesheet" th:href="@{css/dashStyle.css}"/>
-    </head>
 </head>
 <body>
 <div th:fragment="nav">
     <nav class="navbar navbar-default navbar-fixed-top navbar-expand-md main-header">
         <div class="container-fluid">
             <div class="navbar-header col-md-5">
-                <a class="navbar-brand col-md-3" href="/">
-                    <img alt="logo" src="/img/reap.png" style="width: 125px"/>
-                </a>
+                <a class="navbar-brand col-md-3" href="/"><img alt="logo" src="/img/reap.png" style="width: 125px"/></a>
                 <img alt="reap" class="col-md-9" src="/img/RewardEAP.png"
                      style="margin-top: 10px;margin-left: 10px; height: 40px"/>
             </div>
@@ -30,8 +17,7 @@
                 <li class="col-md-3">
                     <a href="http://newersworld.tothenew.com" id="nav-list-first">
                         Back to Newers World
-                    </a>
-                </li>
+                    </a></li>
                 <li class="col-md-2 nav-list-pad">
                     <form method="get" th:action="@{/user}">
                         <button class="dashboard" type="submit">
@@ -104,6 +90,16 @@
     </nav>
 
 </div>
-
+<div th:fragment="head">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <!--        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" rel="stylesheet"/>-->
+    <!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+    <!--        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>-->
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link href="/img/ttn.ico" rel="icon" sizes="20x20" type="image/gif"/>
+    <link rel="stylesheet" th:href="@{css/dashStyle.css}"/>
+</div>
 </body>
 </html>

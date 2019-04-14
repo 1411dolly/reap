@@ -78,17 +78,14 @@ public class UserController {
 
     @GetMapping("login")
     ModelAndView login(HttpSession session) {
-        User user1 = (User) session.getAttribute("user1");
-        System.out.println(user1);
         ModelAndView modelAndView = new ModelAndView();
-        if (user1 == null) {
-            modelAndView.setViewName("login");
+        if(session.getAttribute("userId")==null)
+        {   modelAndView.setViewName("login");
             modelAndView.addObject("user", new User());
-        } else {
-            modelAndView.setViewName("dashboard");
         }
-//        ModelAndView modelAndView = new ModelAndView("login");
-//        modelAndView.addObject("user", new User());
+        else {
+            modelAndView.setViewName("redirect:/user");
+        }
         return modelAndView;
     }
 
