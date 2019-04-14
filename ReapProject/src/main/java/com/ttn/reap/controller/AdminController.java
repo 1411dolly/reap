@@ -61,46 +61,43 @@ public class AdminController {
 
     @PostMapping("/updateUserRole")
     @ResponseBody
-    public String updateUserRole(@RequestParam("role") String role, @RequestParam("userId") String userId) {
+    public void updateUserRole(@RequestParam("role") String role, @RequestParam("userId") String userId) {
         userService.updateUserRole(role, userId);
-        return "redirect:/manage";
     }
 
-/*    @PostMapping("/updateAdminRole")
+    @PostMapping("/updateAdminRole")
     @ResponseBody
-    public String updateAdminRole(@RequestParam("isAdmin") String isAdmin, @RequestParam("userId") String userId) {
-        userService.updateAdm   inRole(isAdmin,userId);
-        return "redirect:/manage";
-    }*/
-
-    @GetMapping("updateUserActive")
-    @ResponseBody
-    public User updateUserActive(@RequestParam("isActive") Boolean isActive, @RequestParam("userId") Long userId) {
-        return userService.updateUserActive(isActive, userId);
+    public void updateAdminRole(@RequestParam("isAdmin") String isAdmin, @RequestParam("userId") String userId) {
+        userService.updateAdminRole(isAdmin,userId);
     }
 
-    @GetMapping("updateAvailPoints")
+    @PostMapping("/updateUserActive")
     @ResponseBody
-    public User updateAvailPoints(@RequestParam("availPoints") Integer availPoints, @RequestParam("userId") Long userId) {
-        return userService.updateAvailPoints(availPoints, userId);
+    public void updateUserActive(@RequestParam("isActive") String isActive, @RequestParam("userId") String userId) {
+        userService.updateUserActive(isActive, userId);
     }
 
-    @GetMapping("updateGoldCount")
+    @PostMapping("updateAvailPoints")
     @ResponseBody
-    public User updateGoldCount(@RequestParam("goldCount") Integer goldCount, @RequestParam("badgeBalance") BadgeBalance badgeBalance, @RequestParam("userId") Long userId) {
-        return userService.updateGoldCount(goldCount, badgeBalance, userId);
+    public void updateAvailPoints(@RequestParam("availPoints") String availPoints, @RequestParam("userId") String userId) {
+        userService.updateAvailPoints(availPoints, userId);
     }
 
-    @GetMapping("updateSilverCount")
+    @PostMapping("updateGoldCount")
     @ResponseBody
-    public User updateSilverCount(@RequestParam("silverCount") Integer silverCount, @RequestParam("badgeBalance") BadgeBalance badgeBalance, @RequestParam("userId") Long userId) {
-        return userService.updateSilverCount(silverCount, badgeBalance, userId);
+    public void updateGoldCount(@RequestParam("goldCount") String goldCount, @RequestParam("userId") String userId) {
+        userService.updateGoldCount(goldCount, userId);
     }
 
-    @GetMapping("updateBronzeCount")
+    @PostMapping("updateSilverCount")
     @ResponseBody
-    public User updateBronzeCount(@RequestParam("bronzeCount") Integer bronzeCount, @RequestParam("badgeBalance") BadgeBalance badgeBalance, @RequestParam("userId") Long userId) {
-        return userService.updateBronzeCount(bronzeCount, badgeBalance, userId);
+    public void updateSilverCount(@RequestParam("silverCount") String silverCount, @RequestParam("userId") String userId) {
+        userService.updateSilverCount(silverCount, userId);
     }
 
+    @PostMapping("updateBronzeCount")
+    @ResponseBody
+    public void updateBronzeCount(@RequestParam("bronzeCount") String bronzeCount, @RequestParam("userId") String userId) {
+        userService.updateBronzeCount(bronzeCount, userId);
+    }
 }
