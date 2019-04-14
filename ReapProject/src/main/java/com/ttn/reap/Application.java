@@ -7,9 +7,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
 
-import java.util.LinkedList;
-import java.util.List;
-
 @EnableConfigurationProperties({
         FileStorageProperties.class
 })
