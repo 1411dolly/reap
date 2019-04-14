@@ -2,9 +2,11 @@ package com.ttn.reap.controller;
 
 import com.ttn.reap.entity.BadgeBalance;
 import com.ttn.reap.entity.Item;
+import com.ttn.reap.entity.PurchaseHistory;
 import com.ttn.reap.entity.User;
 import com.ttn.reap.service.BadgeBalanceService;
 import com.ttn.reap.service.ItemService;
+import com.ttn.reap.service.PurchaseHistoryService;
 import com.ttn.reap.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class RedeemController {
@@ -23,6 +25,10 @@ public class RedeemController {
     BadgeBalanceService badgeBalanceService;
     @Autowired
     ItemService itemService;
+    @Autowired
+    PurchaseHistoryService purchaseHistoryService;
+
+    List<Item> bag = new ArrayList<Item>();
 
     @GetMapping("/redeem")
     public ModelAndView badge(HttpSession session) {
@@ -50,9 +56,51 @@ public class RedeemController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "items", method = RequestMethod.GET)
+    @GetMapping("additems")
     @ResponseBody
-    public Item fetchsipperAjax(@RequestParam String itemId) {
-        return itemService.findById(Long.parseLong(itemId));
+    public Item additem(@RequestParam String itemId) {
+        Item item = itemService.findById(Long.parseLong(itemId));
+        bag.add(item);
+        System.out.println("added::" + bag);
+        return item;
     }
+
+    @GetMapping("deleteitems")
+    @ResponseBody
+    public Item deleteitem(@RequestParam String itemId) {
+        Item item = itemService.findById(Long.parseLong(itemId));
+        System.out.println("item to be removed" + item);
+        System.out.println("bag" + bag);
+        for (Iterator<Item> it = bag.iterator(); it.hasNext(); ) {
+            Item nextCard = it.next();
+            if (nextCard.equals(item)) {
+                it.remove();
+                System.out.println("removed " + item);
+            }
+        }
+        return item;
+    }
+
+
+    @GetMapping("/redeemPoints")
+    public String redeemPoint(HttpSession session) {
+        long id = (long) session.getAttribute("userId");
+        User user = userService.findUserId(id);
+        long totalpoint=0;
+        for (Item item : bag) {
+            PurchaseHistory purchaseHistory = new PurchaseHistory(user, item, new Date());
+            purchaseHistoryService.save(purchaseHistory);
+            totalpoint+=item.getItemValue();
+            System.out.println(item.getItemValue());
+        }
+        long deductedpoint=user.getAvailPoints()-totalpoint;
+        user.setAvailPoints(deductedpoint);
+        long redeemedPoint=user.getRedeemedPoints();
+        redeemedPoint+=totalpoint;
+        user.setRedeemedPoints(redeemedPoint);
+        userService.save(user);
+        bag.clear();
+        return "redirect:/redeem";
+    }
+
 }

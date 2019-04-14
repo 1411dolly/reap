@@ -24,8 +24,8 @@ public class User {
 
     @Transient
     private String name;
-    private int availPoints;
-    private int redeemedPoints;
+    private long availPoints;
+    private long redeemedPoints;
     private String password;
     private String token;
 
@@ -38,7 +38,7 @@ public class User {
     public User() {
     }
 
-    public User(String email, String firstName, String lastName, int availPoints, int redeemedPoints, String password, String token, Role role, boolean isAdmin, boolean isActive, String fileName) {
+    public User(String email, String firstName, String lastName, long availPoints, long redeemedPoints, String password, String token, Role role, boolean isAdmin, boolean isActive, String fileName) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -63,19 +63,19 @@ public class User {
         this.name = name;
     }
 
-    public int getAvailPoints() {
+    public long getAvailPoints() {
         return availPoints;
     }
 
-    public void setAvailPoints(int availPoints) {
+    public void setAvailPoints(long availPoints) {
         this.availPoints = availPoints;
     }
 
-    public int getRedeemedPoints() {
+    public long getRedeemedPoints() {
         return redeemedPoints;
     }
 
-    public void setRedeemedPoints(int redeemedPoints) {
+    public void setRedeemedPoints(long redeemedPoints) {
         this.redeemedPoints = redeemedPoints;
     }
 

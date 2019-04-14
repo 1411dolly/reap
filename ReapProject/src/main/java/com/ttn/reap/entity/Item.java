@@ -1,6 +1,7 @@
 package com.ttn.reap.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Item {
@@ -10,14 +11,14 @@ public class Item {
     private String itemName;
     private int itemValue;
     private String imageSource;
-    private int quantity;
+//    private int quantity;
 
 
     public Item(String itemName, int itemValue, String imageSource, int quantity) {
         this.itemName = itemName;
         this.itemValue = itemValue;
         this.imageSource = imageSource;
-        this.quantity = quantity;
+//        this.quantity = quantity;
     }
 
     public Item() {
@@ -55,13 +56,13 @@ public class Item {
         this.imageSource = imageSource;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
+//    public int getQuantity() {
+//        return quantity;
+//    }
+//
+//    public void setQuantity(int quantity) {
+//        this.quantity = quantity;
+//    }
 
     @Override
     public String toString() {
@@ -70,7 +71,23 @@ public class Item {
                 ", itemName='" + itemName + '\'' +
                 ", itemValue=" + itemValue +
                 ", imageSource='" + imageSource + '\'' +
-                ", quantity=" + quantity +
+//                ", quantity=" + quantity +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Item)) return false;
+        Item item = (Item) o;
+        return getItemValue() == item.getItemValue() &&
+                Objects.equals(getId(), item.getId()) &&
+                Objects.equals(getItemName(), item.getItemName()) &&
+                Objects.equals(getImageSource(), item.getImageSource());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getItemName(), getItemValue(), getImageSource());
     }
 }
