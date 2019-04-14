@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
-<head th:include="commonTemplate::head">
+<head>
     <title>manageUser</title>
     <meta charset="utf-8"/>
+    <head th:include="commonTemplate::head"></head>
     <link rel="stylesheet" th:href="@{css/dashStyle.css}"/>
 </head>
 <body>
@@ -102,87 +103,53 @@
                     </div>
                 </th>
             </tr>
-            <tr th:each="u,count : ${users}" th:id="${u.getId()}">
-                <td th:text="*{u.getName()}"></td>
+            <tr th:each="badgeBal : ${badgeBalances}" th:id="${badgeBal.getUserId().getId()}">
+                <td th:text="*{badgeBal.getUserId().getName()}"></td>
                 <td>
                     <select class="table-dropdown-role">
                         <option disabled="disabled">Select Role</option>
                         <option th:each="r : ${T(com.ttn.reap.enums.Role).values()}"
-                                th:selected="${r.getValue() == u.getRole().getValue()}"
+                                th:selected="${r.getValue() == badgeBal.getUserId().getRole().getValue()}"
                                 th:text="${r.getValue()}" th:value="${r.getValue()}"></option>
                     </select>
                 </td>
                 <td>
                     <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input isAdmin-checkbox" th:checked="*{u.isAdmin()}"
+                        <input class="custom-control-input isAdmin-checkbox"
+                               th:checked="*{badgeBal.getUserId().isAdmin()}"
                                type="checkbox"/>
                     </div>
                 </td>
                 <td>
                     <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input isActive-checkbox" th:checked="*{u.isActive()}"
+                        <input class="custom-control-input isActive-checkbox"
+                               th:checked="*{badgeBal.getUserId().isActive()}"
                                type="checkbox"/>
                     </div>
                 </td>
-                <td th:text="*{u.getEmail()}"></td>
+                <td th:text="*{badgeBal.getUserId().getEmail()}"></td>
                 <td>
-                    <input class="input-availPoints" style="width: 50px" th:value="*{u.getAvailPoints()}" type="text"/>
+                    <input class="input-availPoints" style="width: 50px"
+                           th:value="*{badgeBal.getUserId().getAvailPoints()}" type="text"/>
                 </td>
-                <td th:text="*{u.getRedeemedPoints()}"></td>
-                <td th:with="badgeBal=${(badgeBalances.get(count.index))}">
-                    <input class="input-goldCount" style="width: 50px" th:value="${badgeBal.getGoldCount()}"
+                <td th:text="*{badgeBal.getUserId().getRedeemedPoints()}"></td>
+                <td>
+                    <input class="input-goldCount" id="goldCount" name="goldCount" style="width: 50px"
+                           th:value="*{badgeBal.getGoldCount()}"
                            type="text"/>
-                    <input class="input-silverCount" style="width: 50px" th:value="${badgeBal.getSilverCount()}"
+                    <input class="input-silverCount" style="width: 50px" th:value="*{badgeBal.getSilverCount()}"
                            type="text"/>
-                    <input class="input-bronzeCount" style="width: 50px" th:value="${badgeBal.getBronzeCount()}"
+                    <input class="input-bronzeCount" style="width: 50px" th:value="*{badgeBal.getBronzeCount()}"
                            type="text"/>
                 </td>
             </tr>
-            <!--
-                        <tr th:each="badgeBal : ${badgeBalances}" th:id="${badgeBal.getUserId().getId()}">
-                            <td th:text="*{badgeBal.getUserId().getName()}"></td>
-                            <td>
-                                <select class="table-dropdown-role">
-                                    <option disabled="disabled">Select Role</option>
-                                    <option th:each="r : ${T(com.ttn.reap.enums.Role).values()}"
-                                            th:selected="${r.getValue() == badgeBal.getUserId().getRole().getValue()}"
-                                            th:text="${r.getValue()}" th:value="${r.getValue()}"></option>
-                                </select>
-                            </td>
-                            <td>
-                                <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input isAdmin-checkbox" th:checked="*{badgeBal.getUserId().isAdmin()}"
-                                           type="checkbox"/>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input isActive-checkbox" th:checked="*{badgeBal.getUserId().isActive()}"
-                                           type="checkbox"/>
-                                </div>
-                            </td>
-                            <td th:text="*{badgeBal.getUserId().getEmail()}"></td>
-                            <td>
-                                <input class="input-availPoints" style="width: 50px" th:value="*{badgeBal.getUserId().getAvailPoints()}" type="text"/>
-                            </td>
-                            <td th:text="*{badgeBal.getUserId().getRedeemedPoints()}"></td>
-                            <td>
-                                <input class="input-goldCount" style="width: 50px" id="goldCount" name="goldCount" th:value="*{badgeBal.getGoldCount()}"
-                                       type="text"/>
-                                <input class="input-silverCount" style="width: 50px" th:value="*{badgeBal.getSilverCount()}"
-                                       type="text"/>
-                                <input class="input-bronzeCount" style="width: 50px" th:value="*{badgeBal.getBronzeCount()}"
-                                       type="text"/>
-                            </td>
-                        </tr>
-            -->
         </table>
     </div>
 </section>
 
-<input type="hidden" id="ugoldcount"/>
-<input type="hidden" id="usilvercount"/>
-<input type="hidden" id="ubronzecount"/>
+<input id="ugoldcount" type="hidden"/>
+<input id="usilvercount" type="hidden"/>
+<input id="ubronzecount" type="hidden"/>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>

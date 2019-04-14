@@ -6,8 +6,10 @@ import com.ttn.reap.entity.User;
 import com.ttn.reap.enums.Badge;
 import com.ttn.reap.service.BadgeBalanceService;
 import com.ttn.reap.service.BadgeTransactionService;
+import com.ttn.reap.service.EmailService;
 import com.ttn.reap.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +29,11 @@ public class AdminController {
     private BadgeBalanceService badgeBalanceService;
     @Autowired
     private BadgeTransactionService badgeTransactionService;
+    @Autowired
+    EmailService emailService;
+    @Value("${spring.mail.username}")
+    String fromMail;
+
 
     @GetMapping("/manage")
     public ModelAndView manageUsers(HttpSession session) {
@@ -101,5 +108,12 @@ public class AdminController {
     @ResponseBody
     public void updateBronzeCount(@RequestParam("bronzeCount") String bronzeCount, @RequestParam("userId") String userId) {
         userService.updateBronzeCount(bronzeCount, userId);
+    }
+
+    @PostMapping("/revokeTxn")
+    public String revokeTransaction(@RequestParam String optradio, @RequestParam String others, @RequestParam String txnId) {
+        emailService.revokeMailSend(fromMail, Long.parseLong(txnId), optradio, others);
+        badgeTransactionService.revokeNewTranscation(Long.parseLong(txnId), optradio, others, fromMail);
+        return "redirect:/user";
     }
 }

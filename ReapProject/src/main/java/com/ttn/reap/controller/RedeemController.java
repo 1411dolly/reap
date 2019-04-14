@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 @Controller
 public class RedeemController {
@@ -94,12 +97,9 @@ public class RedeemController {
         }
         System.out.println("totalpoints::" + totalpoint);
         long deductedpoint = user.getAvailPoints() - totalpoint;
-//        System.out.println("deducted poins::"+deductedpoint);
         user.setAvailPoints(deductedpoint);
         long redeemedPoint = user.getRedeemedPoints();
-//        System.out.println("redeemed point::"+redeemedPoint);
         redeemedPoint += totalpoint;
-//        System.out.println("now redeemed point::"+redeemedPoint);
         user.setRedeemedPoints(redeemedPoint);
         userService.save(user);
         bag.clear();

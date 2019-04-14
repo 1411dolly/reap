@@ -89,7 +89,6 @@ public class UserController {
         return modelAndView;
     }
 
-    //check for ADMIN and redirect to admin dashboard.....now user dashboard......
     @PostMapping("user")
     String user(@ModelAttribute("user") User user, Model model, HttpSession session) throws ParseException {
         User checkuser = userService.checkemailandpassword(user.getEmail(), user.getPassword());

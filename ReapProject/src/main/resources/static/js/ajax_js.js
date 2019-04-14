@@ -24,22 +24,6 @@ $("#searchNewer").autocomplete({
     }
 });
 
-// $(document).ready(function () {
-//     $(".col-md-6").click(function (e) {
-//         e.preventDefault();
-//         $.ajax({
-//             type: 'GET',
-//             url: '/logout',
-//             success: function (data) {
-//                 window.location.reload();
-//             },
-//             error: function () {
-//                 console.log("Logout failed")
-//             }
-//         })
-//     })
-// })
-
 $(".table-dropdown-role").change(function () {
     var x = this.value;
     var y = $(this).parent().parent().attr('id');

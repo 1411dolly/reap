@@ -4,7 +4,6 @@ var globalcost = 0;
 $(document).on('click', '.sipperbutton', function () {
     var item = this.id;
     populateitems(item);
-    // $(this).attr("disabled", true);
 });
 $(function () {
     $('body').on('click', '.close', function () {
@@ -43,19 +42,9 @@ var populateitems = function (x) {
             $(".populate").append("<div class='row '>"
                 + "<div class='col-sm-2'><img class='itemimg' src='" + data.imageSource + "'/></div>"
                 + "<div class='col-sm-4'>" + data.itemName + "</div>"
-                // +"<div class='col-sm-2 dropdownval'><select class='allitem'>"
-                // +s
-                // +"</select></div>"
                 + "<div class='col-sm-2 itemvalue quantityval' " + " id='q" + data.id + "'" + ">" + data.itemValue + "</div>"
                 + "<span class='col-sm-2 close' " + " id='" + data.id + "'" + ">&times;</span></div>");
 
-            // $('.allitem').on('change', function () {
-            //     selectedval = $(this).val();
-            //     cost = selectedval * data.itemValue;
-            //     ($(this).parent('.dropdownval').parent('.row').children('.quantityval')).each(function (elem) {
-            //         $(this).html(cost);
-            //     });
-            // });
             totalpoint = totalpoint + data.itemValue;
             $(".subtotal").text(totalpoint);
 

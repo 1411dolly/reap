@@ -30,7 +30,7 @@ public class Bootstrap {
     @Autowired
     PurchaseHistoryRepository purchaseHistoryRepository;
 
-    @EventListener(ContextStartedEvent.class)
+    @EventListener(ContextRefreshedEvent.class)
     void setup() {
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         Date date1;
@@ -61,16 +61,16 @@ public class Bootstrap {
         badgeBalanceRepository.save(badgeBalance3);
         badgeBalanceRepository.save(badgeBalance4);
         try {
-            date1 = format.parse("2019/01/10");
-            date2 = format.parse("2018/02/09");
-            date3 = format.parse("2017/03/08");
-            date4 = format.parse("2016/04/07");
-            date5 = format.parse("2019/04/06");
-            date6 = format.parse("2019/04/05");
-            date7 = format.parse("2019/04/04");
-            date8 = format.parse("2015/08/03");
-            date9 = format.parse("2019/04/02");
-            date10 = format.parse("2019/01/01");
+            date1 = format.parse("2019/04/10");
+            date2 = format.parse("2019/03/09");
+            date3 = format.parse("2019/03/28");
+            date4 = format.parse("2019/04/07");
+            date5 = format.parse("2019/04/12");
+            date6 = format.parse("2019/04/12");
+            date7 = format.parse("2019/04/13");
+            date8 = format.parse("2019/04/14");
+            date9 = format.parse("2019/04/14");
+            date10 = format.parse("2019/04/15");
 
             BadgeTransaction badgeTransaction1 = new BadgeTransaction(user1, user2, date1, "reason1", Badge.GOLD);
             BadgeTransaction badgeTransaction2 = new BadgeTransaction(user2, user3, date2, "reason2", Badge.SILVER);
