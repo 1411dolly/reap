@@ -1,19 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>REAP</title>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
-    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <!--<link href="css/bootstrap.min.css" rel="stylesheet"/>-->
-    <!--<script href="js/jquery.min.js"></script>-->
-    <!--<script href="js/bootstrap.min.js"></script>-->
-
-    <link href="../img/ttn.ico" rel="icon" sizes="20x20" type="image/gif"/>
-    <link rel="stylesheet" th:href="@{css/dashStyle.css}"/>
+<head th:include="commonTemplate::head">
+    <title>Badges</title>
 </head>
+
 <body class="wrap">
 
 <div th:include="commonTemplate::nav"></div>
