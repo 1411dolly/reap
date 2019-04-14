@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,62 +82,69 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUserRole(String role,String userId) {
+    public void updateUserRole(String role, String userId) {
         User user = userRepository.findById(Long.parseLong(userId));
-        BadgeBalance badgeBalance=badgeBalanceService.getBadgeByUserId(user);
-        if(role.equals("SUPERVISOR")) {
+        BadgeBalance badgeBalance = badgeBalanceService.getBadgeByUserId(user);
+        if (role.equals("SUPERVISOR")) {
             user.setRole(Role.SUPERVISOR);
             badgeBalance.setGoldCount(2);
             badgeBalance.setSilverCount(3);
             badgeBalance.setBronzeCount(6);
-        }else if(role.equals("PRACTICE_HEAD")){
+        } else if (role.equals("PRACTICE_HEAD")) {
             user.setRole(Role.PRACTICE_HEAD);
             badgeBalance.setGoldCount(3);
             badgeBalance.setSilverCount(6);
             badgeBalance.setBronzeCount(9);
-        }else if(role.equals("USER")) {
+        } else if (role.equals("USER")) {
             user.setRole(Role.USER);
             badgeBalance.setGoldCount(1);
             badgeBalance.setSilverCount(2);
             badgeBalance.setBronzeCount(3);
         }
     }
+
     @Transactional
-    public void updateAdminRole(String isAdmin,String userId) {
+    public void updateAdminRole(String isAdmin, String userId) {
         User user = userRepository.findById(Long.parseLong(userId));
-        if(isAdmin.equals("true"))
+        if (isAdmin.equals("true"))
             user.setAdmin(true);
         else
             user.setAdmin(false);
     }
-    public User updateUserActive(@RequestParam("isActive") Boolean isActive, @RequestParam("userId") Long userId) {
-        User user=userRepository.findById(userId);
-        user.setAdmin(isActive);
-        return user;
-    }
-    public User updateAvailPoints(@RequestParam("availPoints") Integer availPoints, @RequestParam("userId") Long userId) {
-        User user=userRepository.findById(userId);
-        user.setAvailPoints(availPoints);
-        return user;
+
+    @Transactional
+    public void updateUserActive(String isActive, String userId) {
+        User user = userRepository.findById(Long.parseLong(userId));
+        if (isActive.equals("true"))
+            user.setActive(true);
+        else
+            user.setActive(false);
     }
 
-    public User updateGoldCount(@RequestParam("goldCount") Integer goldCount, @RequestParam("badgeBalance") BadgeBalance badgeBalance,@RequestParam("userId") Long userId) {
-        User user = userRepository.findById(userId);
-        badgeBalance=badgeBalanceService.getBadgeByUserId(user);
-        badgeBalance.setGoldCount(goldCount);
-        return user;
-    }
-    public User updateSilverCount(@RequestParam("silverCount") Integer silverCount, @RequestParam("badgeBalance") BadgeBalance badgeBalance,@RequestParam("userId") Long userId) {
-        User user = userRepository.findById(userId);
-        badgeBalance=badgeBalanceService.getBadgeByUserId(user);
-        badgeBalance.setSilverCount(silverCount);
-        return user;
-    }
-    public User updateBronzeCount(@RequestParam("bronzeCount") Integer bronzeCount, @RequestParam("badgeBalance") BadgeBalance badgeBalance,@RequestParam("userId") Long userId) {
-        User user = userRepository.findById(userId);
-        badgeBalance=badgeBalanceService.getBadgeByUserId(user);
-        badgeBalance.setBronzeCount(bronzeCount);
-        return user;
+    @Transactional
+    public void updateAvailPoints(String availPoints, String userId) {
+        User user = userRepository.findById(Long.parseLong(userId));
+        user.setAvailPoints(Integer.parseInt(availPoints));
     }
 
+    @Transactional
+    public void updateGoldCount(String goldCount, String userId) {
+        User user = userRepository.findById(Long.parseLong(userId));
+        BadgeBalance badgeBalance = badgeBalanceService.getBadgeByUserId(user);
+        badgeBalance.setGoldCount(Integer.parseInt(goldCount));
+    }
+
+    @Transactional
+    public void updateSilverCount(String silverCount, String userId) {
+        User user = userRepository.findById(Long.parseLong(userId));
+        BadgeBalance badgeBalance = badgeBalanceService.getBadgeByUserId(user);
+        badgeBalance.setSilverCount(Integer.parseInt(silverCount));
+    }
+
+    @Transactional
+    public void updateBronzeCount(String bronzeCount, String userId) {
+        User user = userRepository.findById(Long.parseLong(userId));
+        BadgeBalance badgeBalance = badgeBalanceService.getBadgeByUserId(user);
+        badgeBalance.setBronzeCount(Integer.parseInt(bronzeCount));
+    }
 }

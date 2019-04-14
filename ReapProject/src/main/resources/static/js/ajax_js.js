@@ -40,15 +40,15 @@ $("#searchNewer").autocomplete({
 //     })
 // })
 
-$(".table-dropdown-role").change(function(){
+$(".table-dropdown-role").change(function () {
     var x = this.value;
     var y = $(this).parent().parent().attr('id');
     $.ajax({
         url: "/updateUserRole",
         type: "POST",
-        data:{
-            role : x,
-            userId : y
+        data: {
+            role: x,
+            userId: y
         },
         success: function (data) {
             location.reload();
@@ -56,21 +56,105 @@ $(".table-dropdown-role").change(function(){
     });
 });
 
-$(".isAdmin-checkbox").change(function(){
+$(".isAdmin-checkbox").change(function () {
     var x;
     var y = $(this).parent().parent().parent().attr('id');
-    if ($(this).is(":checked"))
-    {
-     x="true";
-    }else{
-        x="false";
+    if ($(this).is(":checked")) {
+        x = "true";
+    } else {
+        x = "false";
     }
     $.ajax({
         url: "/updateAdminRole",
         type: "POST",
-        data:{
-            isAdmin : x,
-            userId : y
+        data: {
+            isAdmin: x,
+            userId: y
+        },
+        success: function (data) {
+            location.reload();
+        }
+    });
+});
+
+$(".isActive-checkbox").change(function () {
+    var x;
+    var y = $(this).parent().parent().parent().attr('id');
+    if ($(this).is(":checked")) {
+        x = "true";
+    } else {
+        x = "false";
+    }
+    $.ajax({
+        url: "/updateUserActive",
+        type: "POST",
+        data: {
+            isActive: x,
+            userId: y
+        },
+        success: function (data) {
+            location.reload();
+        }
+    });
+});
+
+$(".input-availPoints").change(function () {
+    var x = this.value;
+    var y = $(this).parent().parent().attr('id');
+     $.ajax({
+        url: "/updateAvailPoints",
+        type: "POST",
+        data: {
+            availPoints: x,
+            userId: y
+        },
+        success: function (data) {
+            location.reload();
+        }
+    });
+});
+
+$(".input-goldCount").change(function () {
+    var x = this.value;
+    var y = $(this).parent().parent().attr('id');
+    $.ajax({
+        url: "/updateGoldCount",
+        type: "POST",
+        data: {
+            goldCount: x,
+            userId: y
+        },
+        success: function (data) {
+            location.reload();
+        }
+    });
+});
+
+$(".input-silverCount").change(function (request, response) {
+    var x = this.value;
+    var y = $(this).parent().parent().attr('id');
+    $.ajax({
+        url: "/updateSilverCount",
+        type: "POST",
+        data: {
+            silverCount: x,
+            userId: y
+        },
+        success: function (data) {
+            location.reload();
+        }
+    });
+});
+
+$(".input-bronzeCount").change(function () {
+    var x = this.value;
+    var y = $(this).parent().parent().attr('id');
+    $.ajax({
+        url: "/updateBronzeCount",
+        type: "POST",
+        data: {
+            bronzeCount: x,
+            userId: y
         },
         success: function (data) {
             location.reload();
