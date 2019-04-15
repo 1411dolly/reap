@@ -71,6 +71,9 @@ public class RedeemController {
     @GetMapping("deleteitems")
     @ResponseBody
     public Item deleteitem(@RequestParam String itemId) {
+        if(itemId.length()==2){
+            itemId = itemId.substring(1);
+        }
         Item item = itemService.findById(Long.parseLong(itemId));
         System.out.println("item to be removed" + item);
         System.out.println("bag" + bag);

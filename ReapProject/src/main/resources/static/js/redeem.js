@@ -3,11 +3,14 @@ var userpoint = 0;
 var globalcost = 0;
 $(document).on('click', '.sipperbutton', function () {
     var item = this.id;
+    $(this).attr("disabled",true);
     populateitems(item);
 });
 $(function () {
     $('body').on('click', '.close', function () {
         var id = this.id;
+        var id2 = this.id;
+        document.getElementById(id2.substring(1)).disabled = false;
         deleteitems(id);
     });
 });
@@ -43,12 +46,15 @@ var populateitems = function (x) {
                 + "<div class='col-sm-2'><img class='itemimg' src='" + data.imageSource + "'/></div>"
                 + "<div class='col-sm-4'>" + data.itemName + "</div>"
                 + "<div class='col-sm-2 itemvalue quantityval' " + " id='q" + data.id + "'" + ">" + data.itemValue + "</div>"
-                + "<span class='col-sm-2 close' " + " id='" + data.id + "'" + ">&times;</span></div>");
+                + "<span class='col-sm-2 close' " + " id='c" + data.id + "'" + ">&times;</span></div>");
 
             totalpoint = totalpoint + data.itemValue;
             $(".subtotal").text(totalpoint);
 
-        } else alert("Not enough points!!!!")
+        } else {
+            alert("Not enough points!!!!");
+            deleteitems(x);
+        }
     });
     sipper.fail(function (jqXHR, textStatus) {
         console.log("Error in fetching item");
@@ -63,7 +69,8 @@ var deleteitems = function (y) {
         }
     });
     iteem.done(function (datay) {
-        var cur = document.getElementById(datay.id);
+        var cur = document.getElementById('c'.concat(datay.id));
+        // console.log("cur::"+cur);
         cur.parentElement.remove();
         userpoint = userpoint + datay.itemValue;
         totalpoint = totalpoint - datay.itemValue;
