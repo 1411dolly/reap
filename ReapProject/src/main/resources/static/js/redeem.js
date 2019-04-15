@@ -33,6 +33,7 @@ var populateitems = function (x) {
     });
     sipper.done(function (data) {
         if (data.itemValue <= userpoint) {
+            console.log("userpoint::"+userpoint);
             userpoint = userpoint - data.itemValue;
             var selectedval, cost;
             var s = "<option value='1' class='optionval'>1</option>";
@@ -46,6 +47,7 @@ var populateitems = function (x) {
                 + "<span class='col-sm-2 close' " + " id='" + data.id + "'" + ">&times;</span></div>");
 
             totalpoint = totalpoint + data.itemValue;
+            console.log("totalpoint::"+totalpoint);
             $(".subtotal").text(totalpoint);
 
         } else alert("Not enough points!!!!")
@@ -66,7 +68,9 @@ var deleteitems = function (y) {
         var cur = document.getElementById(datay.id);
         cur.parentElement.remove();
         userpoint = userpoint + datay.itemValue;
+        console.log("userpoint::"+userpoint);
         totalpoint = totalpoint - datay.itemValue;
+        totalpoint = totalpoint + data.itemValue;
         $(".subtotal").text(totalpoint);
     });
     iteem.fail(function (jqXHR, textStatus) {

@@ -3,7 +3,6 @@ package com.ttn.reap.controller;
 import com.ttn.reap.entity.BadgeTransaction;
 import com.ttn.reap.service.BadgeTransactionService;
 import com.ttn.reap.service.DateService;
-import com.ttn.reap.service.FileStorageService;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,14 +33,12 @@ public class CSVController {
     @Autowired
     BadgeTransactionService badgeTransactionService;
     @Autowired
-    FileStorageService fileStorageService;
-    @Autowired
     DateService dateService;
 
     public ResponseEntity<Resource> createCSV(@RequestParam("start") String start, @RequestParam("end") String end) throws IOException, ParseException {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate = format.parse(start);
-        Date lastDate=dateService.solveDate(end);
+        Date lastDate = dateService.solveDate(end);
         List<BadgeTransaction> transactions = badgeTransactionService.findAllByDateBetween(startDate, lastDate);
         File file = new File("users_new.csv");
         FileWriter out = new FileWriter(file);
@@ -73,9 +67,9 @@ public class CSVController {
                 .contentType(MediaType.parseMediaType("text/csv"))
                 .body(resource);
     }
-    
+
     @GetMapping("downloadCSV")
-    public ResponseEntity<Resource> downloadCSV(HttpSession session) throws IOException,ParseException{
-        return createCSV((String)session.getAttribute("startDate"),(String)session.getAttribute("endDate"));
+    public ResponseEntity<Resource> downloadCSV(HttpSession session) throws IOException, ParseException {
+        return createCSV((String) session.getAttribute("startDate"), (String) session.getAttribute("endDate"));
     }
 }
