@@ -21,6 +21,7 @@
                 <b>MY BADGES</b>
             </div>
             <div class="panel-body" th:object="${user}">
+                <input id="user-id" th:value="${user.getId()}" type="hidden"/>
                 <div class="col-md-3">
                     <img alt='User Image' class='user-image' th:src="@{${user.getFileName()}}"/>
                 </div>
