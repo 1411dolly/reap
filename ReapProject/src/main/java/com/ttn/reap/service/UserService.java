@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -146,5 +147,10 @@ public class UserService {
         User user = userRepository.findById(Long.parseLong(userId));
         BadgeBalance badgeBalance = badgeBalanceService.getBadgeByUserId(user);
         badgeBalance.setBronzeCount(Integer.parseInt(bronzeCount));
+    }
+    
+    @Transactional
+    public void saveToken(User user){
+        user.setToken(UUID.randomUUID().toString());
     }
 }

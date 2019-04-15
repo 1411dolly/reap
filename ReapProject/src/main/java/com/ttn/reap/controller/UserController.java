@@ -187,8 +187,7 @@ public class UserController {
             model.addAttribute("error", "Email id not registered!!!");
             return "forgotPassword";
         } else {
-            user.setToken(UUID.randomUUID().toString());
-            userService.save(user);
+            userService.saveToken(user);
             String appUrl = request.getScheme() + "://" + request.getServerName();
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setFrom(fromMail);
@@ -196,11 +195,12 @@ public class UserController {
             mailMessage.setSubject("Forgot Password Link");
             mailMessage.setText("To reset your password, click the link below: \n" + appUrl + ":8080/reset?token=" + user.getToken());
             emailService.sendEmail(mailMessage);
-            model.addAttribute(new User());
+            model.addAttribute("user",new User());
             return "redirect:/login";
         }
     }
 
+    
     @GetMapping("/reset")
     public String resetPassByToken(@RequestParam("token") String token, Model model) {
         model.addAttribute("token", token);

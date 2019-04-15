@@ -75,9 +75,8 @@ var deleteitems = function (y) {
         // console.log("cur::"+cur);
         cur.parentElement.remove();
         userpoint = userpoint + datay.itemValue;
-        console.log("userpoint::"+userpoint);
         totalpoint = totalpoint - datay.itemValue;
-        totalpoint = totalpoint + data.itemValue;
+        console.log("totalpoint::"+totalpoint);
         $(".subtotal").text(totalpoint);
     });
     iteem.fail(function (jqXHR, textStatus) {
