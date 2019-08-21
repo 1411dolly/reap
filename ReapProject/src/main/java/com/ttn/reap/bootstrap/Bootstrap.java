@@ -18,7 +18,7 @@ import java.util.Date;
 
 @Component
 public class Bootstrap {
-
+//avveyyy hi
     @Autowired
     UserRepository userRepository;
     @Autowired
