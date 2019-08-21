@@ -31,6 +31,8 @@ public class Bootstrap {
     @Autowired
     PurchaseHistoryRepository purchaseHistoryRepository;
 
+    //test comments
+
     @EventListener(ContextRefreshedEvent.class)
     void setup() {
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
