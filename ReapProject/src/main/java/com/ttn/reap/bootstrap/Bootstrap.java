@@ -18,6 +18,7 @@ import java.util.Date;
 
 @Component
 public class Bootstrap {
+
     @Autowired
     UserRepository userRepository;
     @Autowired
